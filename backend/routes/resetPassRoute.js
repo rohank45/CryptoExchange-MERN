@@ -1,8 +1,8 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
-import crypto from "crypto";
+const crypto = require("crypto");
 
-import User from "../models/userSchema";
+const User = require("../models/userSchema");
 
 router.post("/reset/password/:token", async (req, res, next) => {
   try {
@@ -15,18 +15,20 @@ router.post("/reset/password/:token", async (req, res, next) => {
     });
 
     if (!user) {
-      return next(new Error("Token is expired"));
+      return res.status(401).json({ message: "Token is expired!" });
     }
 
     const newPassword = req.body.newPasswords;
     const confirmPassword = req.body.confirmPasswords;
 
     if (!confirmPassword || !newPassword) {
-      return next(new Error("All fields are mandatory!"));
+      return res.status(401).json({ message: "All fields are mandatory!" });
     }
 
     if (confirmPassword !== newPassword) {
-      return next(new Error("New Password and confirm password not matching!"));
+      return res
+        .status(401)
+        .json({ message: "New Password and confirm password not matching!" });
     }
 
     user.passwords = newPassword;
@@ -34,10 +36,10 @@ router.post("/reset/password/:token", async (req, res, next) => {
     user.forgetPassExpiry = undefined;
     await user.save();
 
-    res.status(201).send("password changed successfully!");
+    res.status(201).json({ message: "Password changed successfully!" });
   } catch (error) {
-    return next(new Error(error.message));
+    console.log(error.message);
   }
 });
 
-export default router;
+module.exports = router;

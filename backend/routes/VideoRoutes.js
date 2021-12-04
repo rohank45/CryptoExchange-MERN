@@ -1,7 +1,7 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
-import multer from "multer";
-import path from "path";
+const multer = require("multer");
+const path = require("path");
 
 const storage = multer.diskStorage({
   destination: "../CryptoWebApp/cryptoapp/src/Uploads/Videos",
@@ -31,4 +31,4 @@ router.post("/video", (req, res) => {
   });
 });
 
-export default router;
+module.exports = router;

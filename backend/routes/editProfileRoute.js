@@ -1,11 +1,11 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
-import cloudinary from "cloudinary";
+const cloudinary = require("cloudinary");
 
-import User from "../models/userSchema";
-import authenticate from "../middleware/authMiddleWare";
+const authMiddleWare = require("../middleware/authMiddleWare");
+const User = require("../models/userSchema");
 
-router.post("/edit/profile", authenticate, async (req, res, next) => {
+router.post("/edit/profile", authMiddleWare, async (req, res, next) => {
   try {
     const newData = {
       name: req.body.name,
@@ -14,9 +14,9 @@ router.post("/edit/profile", authenticate, async (req, res, next) => {
     };
 
     if (req.files) {
-      const editUser = User.findById(req.user.id);
+      const user = await User.findById(req.user.id);
 
-      const imageID = editUser.profilePic.id;
+      const imageID = user.profilePic.id;
       await cloudinary.v2.uploader.destroy(imageID);
 
       const result = await cloudinary.v2.uploader.upload(
@@ -34,18 +34,16 @@ router.post("/edit/profile", authenticate, async (req, res, next) => {
       };
     }
 
-    const userProfile = await User.findByIdAndUpdate(req.user.id, newData, {
+    await User.findByIdAndUpdate(req.user.id, newData, {
       new: true,
       reunValidators: true,
       useFindAndModify: false,
     });
 
-    userProfile.passwords = undefined;
-
-    res.status(201).send({ "Details Changed Hit refreshed": userProfile });
+    res.status(201).json({ message: "User details Changed successfully" });
   } catch (error) {
-    return next(new Error(error.message));
+    console.log(error.message);
   }
 });
 
-export default router;
+module.exports = router;

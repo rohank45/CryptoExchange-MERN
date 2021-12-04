@@ -4,37 +4,41 @@ import login from "../Images/signup.png";
 import { FcGoogle } from "react-icons/fc";
 import NavBar from "../Components/NavBar";
 import { UserContext } from "../App";
+import axios from "axios";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [passwords, setPasswords] = useState("");
   const history = useHistory();
   const { dispatch } = useContext(UserContext);
+
+  const [userLogin, setUserLogin] = useState({
+    email: "",
+    passwords: "",
+  });
+
+  const handleInputs = (e) => {
+    const { name, value } = e.target;
+    setUserLogin({ ...userLogin, [name]: value });
+  };
 
   const submitLoginForm = async (e) => {
     e.preventDefault();
 
-    if (!email || !passwords) {
-      return alert("please fill the data!");
-    }
+    try {
+      const { email, passwords } = userLogin;
+      if (!email || !passwords) {
+        return alert("please fill the data!");
+      }
 
-    const res = await fetch("/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, passwords }),
-    });
+      const res = await axios.post("/login", userLogin);
+      const data = res.data;
 
-    const data = res.json();
-
-    if (!data) {
-      history.push("/login");
-      return alert("login failed! try again.");
-    } else {
-      dispatch({ type: "User", payload: true });
-      history.push("/");
-      return alert("login successful");
+      if (data) {
+        dispatch({ type: "User", payload: true });
+        history.push("/");
+        return alert("login successful");
+      }
+    } catch (error) {
+      return alert(error.response.data.message);
     }
   };
 
@@ -55,11 +59,7 @@ const Login = () => {
               <div className="max-w-sm mx-auto px-6">
                 <div className="relative flex flex-wrap">
                   <div className="w-full relative">
-                    <form
-                      method="POST"
-                      autoComplete="off"
-                      onSubmit={submitLoginForm}
-                    >
+                    <form autoComplete="off" onSubmit={submitLoginForm}>
                       <div className="py-1">
                         <span className="px-1 text-lg font-semibold text-gray-700">
                           Email
@@ -67,27 +67,31 @@ const Login = () => {
                         <input
                           type="email"
                           placeholder="email"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
+                          name="email"
+                          value={userLogin.email}
+                          onChange={handleInputs}
                           className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
                             shadow-md focus:bg-white focus:border-gray-600 focus:outline-none my-4"
                         />
                       </div>
+
                       <div className="py-1">
                         <span className="px-1 text-lg font-semibold text-gray-700">
                           Password
                         </span>
                         <input
                           type="password"
-                          placeholder="password (8 characters minimum)"
-                          value={passwords}
                           minLength="8"
                           maxLength="10"
-                          onChange={(e) => setPasswords(e.target.value)}
+                          placeholder="password"
+                          name="passwords"
+                          value={userLogin.passwords}
+                          onChange={handleInputs}
                           className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
                             shadow-md focus:bg-white focus:border-gray-600 focus:outline-none my-4"
                         />
                       </div>
+
                       <button
                         type="submit"
                         className="mt-3 text-lg font-semibold hover:text-white hover:bg-black bg-gray-800 
@@ -118,7 +122,7 @@ const Login = () => {
                       </span>
 
                       <span className="border-l border-gray-50 h-6 w-1 block"></span>
-                      <span className="pl-3">Sign up with Google</span>
+                      <button className="pl-3">Sign up with Google</button>
                     </div>
                   </div>
                 </div>

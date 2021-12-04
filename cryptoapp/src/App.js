@@ -40,13 +40,13 @@ const Routing = () => {
 
         <Route path="/register" exact component={Register} />
         <Route path="/login" exact component={Login} />
+        <Route path="/logout" exact component={Logout} />
         <Route path="/profile" exact component={Profile} />
         <Route path="/editprofile" exact component={EditProfile} />
-        <Route path="/sendotp" exact component={SendEmail} />
-        <Route path="/resetpass" exact component={ResetPassword} />
         <Route path="/changepass" exact component={ChangePassword} />
+        <Route path="/sendotp" exact component={SendEmail} />
+        <Route path="/reset/password/:token" exact component={ResetPassword} />
         <Route path="/deleteprofile" exact component={DeleteProfile} />
-        <Route path="/logout" exact component={Logout} />
 
         <Route path="/aboutus" exact component={AboutUs} />
         <Route path="*" exact component={ErrorPage} />

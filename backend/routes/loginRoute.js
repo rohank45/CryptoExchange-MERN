@@ -1,27 +1,30 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
-import bcrypt from "bcryptjs";
+const bcrypt = require("bcrypt");
 
-import User from "../models/userSchema";
+const User = require("../models/userSchema");
 
 router.post("/login", async (req, res, next) => {
   try {
     const { email, passwords } = req.body;
 
     if (!email || !passwords) {
-      return next(new Error("All fields are mandatory"));
+      return res.status(401).json({ message: "All fields are mandatory" });
     }
 
     //checking email
-    const checkUser = await User.findOne({ email: email });
+    const checkUser = await User.findOne({ email: email }).select("+passwords");
+
     if (!checkUser) {
-      return next(new Error("Invalid Credentials"));
+      return res
+        .status(401)
+        .json({ message: "Invalid Credentials please register!" });
     }
 
     //checking password
     const checkPassword = await bcrypt.compare(passwords, checkUser.passwords);
     if (!checkPassword) {
-      return next(new Error("Invalid Credentials"));
+      return res.status(401).json({ message: "Invalid Credentials!" });
     }
 
     const token = await checkUser.generateToken();
@@ -32,10 +35,10 @@ router.post("/login", async (req, res, next) => {
       httpOnly: true,
     });
 
-    res.status(201).send("User Login successFully!");
+    res.status(201).json({ message: "User Login successFully!" });
   } catch (error) {
-    return next(new Error(error));
+    console.log(error.message);
   }
 });
 
-export default router;
+module.exports = router;

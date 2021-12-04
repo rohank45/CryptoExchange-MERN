@@ -1,39 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import ProfilePng from "../Images/profile.png";
-
 import NavBar from "../Components/NavBar";
+import axios from "axios";
 
 const Profile = () => {
   const [userData, setUserData] = useState();
   const history = useHistory();
 
+  const openAboutPage = async () => {
+    try {
+      const res = await axios.get("/profile");
+
+      const data = await res.data;
+      setUserData(data);
+    } catch (err) {
+      history.push("/login");
+      return alert("Login to access profile page");
+    }
+  };
+
   useEffect(() => {
-    const openAboutPage = async () => {
-      try {
-        const res = await fetch("/profile", {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        });
-
-        const data = await res.json();
-        setUserData(data);
-        console.log("about page data", data);
-
-        if (!data) {
-          return alert("there is no data availble plzz login");
-        }
-      } catch (err) {
-        console.log("about auth F", err);
-        alert("Login to access profile page");
-        history.push("/login");
-      }
-    };
-
     openAboutPage();
   }, []);
 
@@ -43,7 +30,7 @@ const Profile = () => {
       <div className="flex justify-center">
         <div className="font-nunito w-3/5 py-5 px-8 laptop:w-4/5 tablet:w-full mobile:w-full">
           <form method="GET">
-            <div className="pt-40">
+            <div className="pt-40 pb-20">
               <div className="mx-5 px-5 bg-gray-50 py-10 border-2 border-gray-300 hover:border-black rounded-lg shadow-xl">
                 <div className="flex items-center justify-around p-10 mobile:px-0 mobile:py-2">
                   <div>
@@ -51,7 +38,7 @@ const Profile = () => {
                       <div className="rounded-full w-24 h-24">
                         <img
                           // "http://daisyui.com/tailwind-css-component-profile-5@56w.png"
-                          src={`/Images/${userData?.myprofilePic}`}
+                          src={userData?.userProfile.profilePic.secure_url}
                           alt="use profile pic"
                         />
                       </div>
@@ -61,7 +48,7 @@ const Profile = () => {
                         Full Name :
                       </label>
                       <p className="text-2xl font-medium text-gray-700">
-                        {userData?.name}
+                        {userData?.userProfile.name}
                       </p>
                     </div>
                     <div className="pt-5">
@@ -69,7 +56,7 @@ const Profile = () => {
                         Contact No :
                       </label>
                       <p className="text-2xl font-medium text-gray-700">
-                        {userData?.contact}
+                        {userData?.userProfile.contactNo}
                       </p>
                     </div>
                     <div className="pt-5">
@@ -77,8 +64,31 @@ const Profile = () => {
                         Email id :
                       </label>
                       <p className="text-2xl font-medium text-gray-700">
-                        {userData?.email}
+                        {userData?.userProfile.email}
                       </p>
+                    </div>
+
+                    <div className="flex flex-col">
+                      <button
+                        className="bg-gray-600 text-white font-nunito font-semibold p-2 text-xl rounded-md shadow-xl mt-10 
+                          mobile:text-lg mobile:py-2 w-48 mobile:w-full"
+                      >
+                        <Link to="/editprofile">Edit Profile</Link>
+                      </button>
+
+                      <button
+                        className="bg-indigo-600 text-white font-nunito font-semibold p-2 text-lg rounded-md shadow-xl mt-10 
+                          mobile:text-base mobile:py-2 w-48 mobile:w-full"
+                      >
+                        <Link to="/changepass">Change Password</Link>
+                      </button>
+
+                      <button
+                        className="bg-red-600 text-white font-nunito font-semibold p-2 text-lg rounded-md shadow-xl mt-10 
+                          mobile:text-base mobile:py-2 w-48 mobile:w-full"
+                      >
+                        <Link to="/deleteprofile">Delete Account</Link>
+                      </button>
                     </div>
                   </div>
 

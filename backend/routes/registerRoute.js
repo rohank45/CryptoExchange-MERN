@@ -1,57 +1,69 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
-import cloudinary from "cloudinary";
+const cloudinary = require("cloudinary");
 
-import User from "../models/userSchema";
+const User = require("../models/userSchema");
 
 router.post("/register", async (req, res, next) => {
   try {
     let result;
 
     if (req.files) {
-      const userProfilePic = req.files.profilePic;
-
       result = await cloudinary.v2.uploader.upload(
-        userProfilePic.tempFilePath,
+        req.files.profilePic.tempFilePath,
         {
           folder: "users",
           width: 150,
           crop: "scale",
         }
       );
+    } else {
+      return res.status(401).json({ message: "Please provide a profile pic!" });
     }
 
     const { name, email, contactNo, passwords, cpasswords } = req.body;
 
     if (!name || !email || !contactNo || !passwords || !cpasswords) {
-      return next(new Error("All fields are mandatory"));
+      return res.status(401).json({ message: "All fields are mandatory" });
     }
 
     if (passwords !== cpasswords) {
-      return next(new Error("Password and Confirm Password not matching"));
+      return res
+        .status(401)
+        .json({ message: "Password and Confirm Password not matching" });
     }
 
     const userExists = await User.findOne({ email: email });
 
     if (userExists) {
-      return next(new Error("Already registered please Login"));
+      return res
+        .status(401)
+        .json({ message: "Already registered please Login" });
+    }
+
+    const userCheckNo = await User.findOne({ contactNo: contactNo });
+
+    if (userCheckNo) {
+      return res
+        .status(401)
+        .json({ message: "Please provide another contact No" });
     }
 
     await User.create({
-      // profilePic: {
-      //   id: result.public_id,
-      //   secure_url: result.secure_url,
-      // },
+      profilePic: {
+        id: result.public_id,
+        secure_url: result.secure_url,
+      },
       name,
       email,
       contactNo,
       passwords,
     });
 
-    res.status(201).send("User registered successFully!");
+    res.status(201).json({ message: "User registered successFully!" });
   } catch (error) {
-    return next(new Error(error));
+    console.log(error.message);
   }
 });
 
-export default router;
+module.exports = router;

@@ -1,5 +1,5 @@
-import jwt from "jsonwebtoken";
-import User from "../models/userSchema";
+const jwt = require("jsonwebtoken");
+const User = require("../models/userSchema");
 
 const authMiddleWare = async (req, res, next) => {
   try {
@@ -7,7 +7,9 @@ const authMiddleWare = async (req, res, next) => {
       req.cookies.token || req.header("Authorization").replace("Bearer", "");
 
     if (!token) {
-      return next(new Error("Login first to access this page"));
+      return res
+        .status(401)
+        .json({ message: "Login first to access this page" });
     }
 
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
@@ -19,4 +21,4 @@ const authMiddleWare = async (req, res, next) => {
   }
 };
 
-export default authMiddleWare;
+module.exports = authMiddleWare;

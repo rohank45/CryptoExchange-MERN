@@ -1,18 +1,25 @@
-import express from "express";
-import authMiddleWare from "../middleware/authMiddleWare";
-import User from "../models/userSchema";
+const express = require("express");
 const router = express.Router();
+const cloudinary = require("cloudinary");
 
-router.delete("/deleteUser", authMiddleWare, async (req, res, next) => {
+const authMiddleWare = require("../middleware/authMiddleWare");
+const User = require("../models/userSchema");
+
+router.delete("/deleteUser", authMiddleWare, async (req, res) => {
   try {
-    const userId = await User.findById(req.user.id);
+    const user = await User.findById(req.user.id);
 
-    await User.deleteOne({ userId });
+    const imageID = user.profilePic.id;
+    await cloudinary.v2.uploader.destroy(imageID);
 
-    res.status(201).send("User deleted successfully");
+    await User.findByIdAndRemove(req.user.id);
+
+    res.clearCookie("token");
+
+    res.status(201).json({ message: "User deleted successfully" });
   } catch (error) {
-    return next(new Error(error));
+    console.log(error.message);
   }
 });
 
-export default router;
+module.exports = router;

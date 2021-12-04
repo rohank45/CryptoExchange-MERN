@@ -1,17 +1,17 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
-const database = () => {
-  const DB =
-    "mongodb+srv://rohan:540640740@cluster0.husya.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-
+const dbConn = () => {
   mongoose
-    .connect(DB, { useNewUrlParser: true, useUnifiedTopology: true })
+    .connect(process.env.DATABASE_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
     .then(() => {
-      console.log("database connected...");
+      console.log("database connected");
     })
     .catch((err) => {
-      console.log("database error :", err);
+      console.log(err);
     });
 };
 
-export default database;
+module.exports = dbConn;

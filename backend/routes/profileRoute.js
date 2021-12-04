@@ -1,10 +1,10 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
 
-import User from "../models/userSchema";
-import authenticate from "../middleware/authMiddleWare";
+const authMiddleWare = require("../middleware/authMiddleWare");
+const User = require("../models/userSchema");
 
-router.get("/profile", authenticate, async (req, res, next) => {
+router.get("/profile", authMiddleWare, async (req, res, next) => {
   try {
     const userProfile = await User.findById(req.user.id);
 
@@ -12,8 +12,8 @@ router.get("/profile", authenticate, async (req, res, next) => {
 
     res.status(201).send({ userProfile });
   } catch (error) {
-    return next(new Error(error.message));
+    console.log(error.message);
   }
 });
 
-export default router;
+module.exports = router;

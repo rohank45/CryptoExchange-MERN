@@ -1,8 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import newPass from "../Images/New campaign_Outline.png";
 import NavBar from "../Components/NavBar";
+import { useHistory } from "react-router";
+import axios from "axios";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const ChangePassword = () => {
+  const history = useHistory();
+  const [visible, setVisible] = useState(false);
+  const InputType = visible ? "text" : "password";
+
+  const [state, setstate] = useState({
+    oldPasswords: "",
+    newPasswords: "",
+  });
+
+  const handleInputs = (e) => {
+    const { name, value } = e.target;
+    setstate({ ...state, [name]: value });
+  };
+
+  const changePassword = async (e) => {
+    e.preventDefault();
+
+    try {
+      const { oldPasswords, newPasswords } = state;
+
+      if (!oldPasswords || !newPasswords) {
+        return alert("All fields are mandatory!");
+      }
+
+      if (oldPasswords === newPasswords) {
+        return alert("Old password and New password should not be the same!");
+      }
+
+      const data = await axios.post("/change/password", state);
+
+      if (data) {
+        history.push("/profile");
+        return alert("Password Changed Successfully!");
+      }
+    } catch (error) {
+      return alert(error.response.data.message);
+    }
+  };
+
   return (
     <>
       <NavBar />
@@ -19,21 +61,59 @@ const ChangePassword = () => {
               <div className="max-w-sm mx-auto px-6">
                 <div className="relative flex flex-wrap">
                   <div className="w-full relative">
-                    <form method="POST" autoComplete="off">
+                    <form autoComplete="off" onSubmit={changePassword}>
                       <div className="py-1">
-                        <input
-                          type="password"
-                          placeholder="Old password"
-                          className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
+                        <span className="flex items-center">
+                          <input
+                            type={InputType}
+                            name="oldPasswords"
+                            value={state.oldPasswords}
+                            onChange={handleInputs}
+                            placeholder="Old password"
+                            minLength="8"
+                            maxLength="10"
+                            className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
                             shadow-md focus:bg-white focus:border-gray-600 focus:outline-none my-4"
-                        />
+                          />
+                          <span
+                            className="text-2xl cursor-pointer -ml-8"
+                            onClick={() =>
+                              setVisible((visibilty) => !visibilty)
+                            }
+                          >
+                            {visible ? (
+                              <AiOutlineEyeInvisible />
+                            ) : (
+                              <AiOutlineEye />
+                            )}
+                          </span>
+                        </span>
 
-                        <input
-                          type="password"
-                          placeholder="new password"
-                          className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
+                        <span className="flex items-center">
+                          <input
+                            type={InputType}
+                            name="newPasswords"
+                            value={state.newPasswords}
+                            onChange={handleInputs}
+                            placeholder="New password"
+                            minLength="8"
+                            maxLength="10"
+                            className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
                             shadow-md focus:bg-white focus:border-gray-600 focus:outline-none my-4"
-                        />
+                          />
+                          <span
+                            className="text-2xl cursor-pointer -ml-8"
+                            onClick={() =>
+                              setVisible((visibilty) => !visibilty)
+                            }
+                          >
+                            {visible ? (
+                              <AiOutlineEyeInvisible />
+                            ) : (
+                              <AiOutlineEye />
+                            )}
+                          </span>
+                        </span>
 
                         <button
                           type="submit"

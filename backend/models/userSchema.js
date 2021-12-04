@@ -1,15 +1,17 @@
-import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import crypto from "crypto";
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 
 const userSchema = new mongoose.Schema({
   profilePic: {
     id: {
       type: String,
+      required: true,
     },
     secure_url: {
       type: String,
+      required: true,
     },
   },
   name: {
@@ -28,6 +30,7 @@ const userSchema = new mongoose.Schema({
   },
   passwords: {
     type: String,
+    select: false,
     required: true,
   },
   role: {
@@ -73,5 +76,5 @@ userSchema.methods.getForgetPasswordToken = function () {
   return generateToken;
 };
 
-const User = mongoose.model("USER", userSchema);
-export default User;
+const User = mongoose.model("crypto-users", userSchema);
+module.exports = User;

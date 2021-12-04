@@ -43,11 +43,7 @@ const Home = () => {
       </div>
 
       <LimExchanges />
-
-      <div data-aos="fade-up">
-        <LimNews />
-      </div>
-
+      <LimNews />
       <BasicQue />
       <CustomerReview />
       <Footer />

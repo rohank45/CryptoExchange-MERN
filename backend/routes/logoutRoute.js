@@ -1,10 +1,10 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
-import authenticate from "../middleware/authMiddleWare";
+const authMiddleWare = require("../middleware/authMiddleWare");
 
-router.get("/logout", authenticate, (req, res) => {
+router.get("/logout", authMiddleWare, (req, res) => {
   res.clearCookie("token", { path: "/" });
   res.status(201).send("User logout!");
 });
 
-export default router;
+module.exports = router;

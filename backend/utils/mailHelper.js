@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer";
+const nodemailer = require("nodemailer");
 
 const mailHelper = async (user) => {
   let transporter = nodemailer.createTransport({
@@ -14,10 +14,10 @@ const mailHelper = async (user) => {
     from: "tpcoin08@gmail.com",
     to: user.email,
     subject: user.subject,
-    text: user.message,
+    html: user.message,
   };
 
   await transporter.sendMail(info);
 };
 
-export default mailHelper;
+module.exports = mailHelper;

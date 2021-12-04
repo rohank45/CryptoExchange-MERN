@@ -1,26 +1,24 @@
 //dotenv connection
-import dotenv from "dotenv";
-dotenv.config();
-
-import express from "express";
+require("dotenv").config();
+const express = require("express");
 const app = express();
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 //database connection
-import database from "./config/database";
+const database = require("./config/database");
 database.call();
 
 //cors policy issue
-import cors from "cors";
+const cors = require("cors");
 app.use(cors());
 
 //cookie parser
-import cookieParser from "cookie-parser";
+const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 
 //fileupload
-import fileUpload from "express-fileupload";
+const fileUpload = require("express-fileupload");
 app.use(
   fileUpload({
     useTempFiles: true,
@@ -28,41 +26,75 @@ app.use(
   })
 );
 
+//cloudinary setup
+const cloudinary = require("cloudinary");
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRETE,
+});
+
+//passport initialization
+const passport = require("passport");
+app.use(passport.initialize());
+app.use(passport.session());
+
+//passport cookie session
+const cookieSession = require("cookie-session");
+app.use(
+  cookieSession({
+    maxAge: 1 * 24 * 60 * 60 * 1000,
+    keys: [process.env.PASSPORT_SECRET_KEY],
+  })
+);
+
 //register route
-import registerRoute from "./routes/registerRoute";
+const registerRoute = require("./routes/registerRoute");
 app.use("/", registerRoute);
 
 //login route
-import loginRoute from "./routes/loginRoute";
+const loginRoute = require("./routes/loginRoute");
 app.use("/", loginRoute);
 
 //logout route
-import logoutRoute from "./routes/logoutRoute";
+const logoutRoute = require("./routes/logoutRoute");
 app.use("/", logoutRoute);
 
 //profile route
-import profileRoute from "./routes/profileRoute";
+const profileRoute = require("./routes/profileRoute");
 app.use("/", profileRoute);
 
 //edit profile route
-import editProfileRoute from "./routes/editProfileRoute";
+const editProfileRoute = require("./routes/editProfileRoute");
 app.use("/", editProfileRoute);
 
 //delete route
-import deleteRoute from "./routes/deleteRoute";
+const deleteRoute = require("./routes/deleteRoute");
 app.use("/", deleteRoute);
 
 //forgot pass sending link
-import forgotPassRoute from "./routes/forgotPassRoute";
+const forgotPassRoute = require("./routes/forgotPassRoute");
 app.use("/", forgotPassRoute);
 
 //reset password
-import resetPassRoute from "./routes/resetPassRoute";
+const resetPassRoute = require("./routes/resetPassRoute");
 app.use("/", resetPassRoute);
 
 //change password
-import changePassRoute from "./routes/changePassRoute";
+const changePassRoute = require("./routes/changePassRoute");
 app.use("/", changePassRoute);
+
+//google oauth login
+const userLogin = require("./routes/googleOauth/userLogin");
+app.use("/", userLogin);
+
+//google oauth profile
+const userProfile = require("./routes/googleOauth/userProfile");
+app.use("/", userProfile);
+
+//google oauth logout
+const userLogout = require("./routes/googleOauth/userLogout");
+app.use("/", userLogout);
 
 //listing app on PORT
 app.listen(process.env.PORT, () => {

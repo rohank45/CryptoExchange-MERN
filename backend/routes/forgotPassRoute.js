@@ -1,32 +1,31 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
 
-import User from "../models/userSchema";
-import mailHelper from "../utils/mailHelper";
+const User = require("../models/userSchema");
+const mailHelper = require("../utils/mailHelper");
 
 router.post("/forgot/password", async (req, res, next) => {
   try {
     const { email } = req.body;
     if (!email) {
-      return next(new Error("please provide a email"));
+      return res.status(401).json({ message: "Please provide a email!" });
     }
 
     const user = await User.findOne({ email: email });
     if (!user) {
-      return next(new Error("please provide a valid email"));
+      return res
+        .status(401)
+        .json({ message: "User dont exists with that email!" });
     }
 
     //generating and saving a forgot password token
     const forgotToken = user.getForgetPasswordToken();
     await user.save({ validateBeforeSave: false });
 
-    const url = `${req.protocol}://${req.get(
-      "host"
-    )}/reset/password/${forgotToken}`;
+    const url = `http://localhost:3000/reset/password/${forgotToken}`;
 
-    const message = `Copy Paste this link and hit enter to reset password. \n\n ${url}`;
-
-    //https://mailtrap.io/inboxes/1541600/messages site
+    // const message = `Copy-Paste this link and hit enter to reset password. \n\n ${url}`;
+    const message = `<h2><a target="_blank" rel="noopener noreferrer" href=${url} >Click</a> to reset a password.</h2>`;
 
     //sending token through email
     try {
@@ -36,16 +35,16 @@ router.post("/forgot/password", async (req, res, next) => {
         message,
       });
 
-      res.status(201).send("Reset Link sended, please check email!");
+      res.status(201).send("Password reset Link sended, please check email!");
     } catch (error) {
       (user.forgetPassToken = undefined), (user.forgetPassExpiry = undefined);
       await user.save({ validateBeforeSave: false });
 
-      return next(new Error(error.message));
+      console.log(error.message);
     }
   } catch (error) {
-    return next(new Error(error.message));
+    console.log(error.message);
   }
 });
 
-export default router;
+module.exports = router;
