@@ -5,6 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import signImg from "../Images/signup.png";
 import NavBar from "../Components/NavBar";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const history = useHistory();
@@ -39,11 +40,17 @@ const Register = () => {
     const { name, email, contactNo, passwords, cpasswords } = user;
 
     if (!name || !email || !contactNo || !passwords || !cpasswords) {
-      return alert("please fill the data!");
+      return toast.error("All fields are mandatory!", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
     }
 
     if (passwords !== cpasswords) {
-      return alert("password and confirm password are not matching");
+      return toast.error("Password and Confirm Password are not matching!", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
     }
 
     try {
@@ -67,10 +74,16 @@ const Register = () => {
 
       if (data) {
         history.push("/login");
-        return alert("register Successfully!");
+        return toast.success("Registration Successful!", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
       }
     } catch (error) {
-      return alert(error.response.data.message);
+      return toast.error(error.response.data.message, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
     }
   };
 
@@ -109,6 +122,7 @@ const Register = () => {
                           type="text"
                           minLength="2"
                           maxLength="20"
+                          pattern="[a-zA-Z]+"
                           name="name"
                           value={user.name}
                           onChange={handleInputs}
@@ -122,29 +136,36 @@ const Register = () => {
                           name="email"
                           value={user.email}
                           onChange={handleInputs}
-                          placeholder="email@email.com"
+                          pattern="[a-z0-9.]+@[a-z0-9.]+\.[a-z]{2,6}$"
+                          placeholder="valid email@email.com only"
                           className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
                             shadow-md focus:bg-white focus:border-gray-600 focus:outline-none my-4"
                         />
+
+                        {/* starting with 9,8,7 international but indian numbers allowed */}
 
                         <input
                           type="tel"
                           minLength="10"
                           maxLength="10"
-                          // pattern="[0-9]"
+                          pattern="^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$"
                           name="contactNo"
                           value={user.contactNo}
                           onChange={handleInputs}
-                          placeholder="contact number"
+                          placeholder="valid contact number only"
                           className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
                             shadow-md focus:bg-white focus:border-gray-600 focus:outline-none my-4"
                         />
 
+                        <p className="text-sm text-red-700 font-nunito">
+                          at least 1 (Uppercase, Lowercase, Number, Symbol)
+                        </p>
                         <span className="flex items-center">
                           <input
                             type={InputType}
                             minLength="8"
-                            maxLength="10"
+                            maxLength="12"
+                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
                             name="passwords"
                             value={user.passwords}
                             onChange={handleInputs}
@@ -169,7 +190,8 @@ const Register = () => {
                         <input
                           type="password"
                           minLength="8"
-                          maxLength="10"
+                          maxLength="12"
+                          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
                           name="cpasswords"
                           value={user.cpasswords}
                           onChange={handleInputs}
@@ -177,13 +199,11 @@ const Register = () => {
                           className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
                             shadow-md focus:bg-white focus:border-gray-600 focus:outline-none my-4"
                         />
-
                         {/* <ReCAPTCHA
                           // sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
                           sitekey="6Ld5uQkdAAAAALIYFBt8B0aVz58aB-ZSmz8Ao9Kg"
                           type="image"
                         /> */}
-
                         <div className="flex flex-col justify-start">
                           <label className="text-gray-500 font-bold my-4 flex flex-col">
                             <p>
@@ -214,7 +234,6 @@ const Register = () => {
                             </div>
                           </label>
                         </div>
-
                         <button
                           type="submit"
                           className="mt-3 text-lg font-semibold hover:text-white hover:bg-black bg-gray-800 

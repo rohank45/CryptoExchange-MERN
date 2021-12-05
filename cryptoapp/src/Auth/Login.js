@@ -5,6 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import NavBar from "../Components/NavBar";
 import { UserContext } from "../App";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const history = useHistory();
@@ -26,7 +27,10 @@ const Login = () => {
     try {
       const { email, passwords } = userLogin;
       if (!email || !passwords) {
-        return alert("please fill the data!");
+        return toast.error("All fields are mandatory!", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
       }
 
       const res = await axios.post("/login", userLogin);
@@ -35,10 +39,16 @@ const Login = () => {
       if (data) {
         dispatch({ type: "User", payload: true });
         history.push("/");
-        return alert("login successful");
+        return toast.success("Login successful!", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
       }
     } catch (error) {
-      return alert(error.response.data.message);
+      return toast.error(error.response.data.message, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
     }
   };
 
@@ -66,7 +76,8 @@ const Login = () => {
                         </span>
                         <input
                           type="email"
-                          placeholder="email"
+                          pattern="[a-z0-9.]+@[a-z0-9.]+\.[a-z]{2,6}$"
+                          placeholder="valid email@email.com only"
                           name="email"
                           value={userLogin.email}
                           onChange={handleInputs}

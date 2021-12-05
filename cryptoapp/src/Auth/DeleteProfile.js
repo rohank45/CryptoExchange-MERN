@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect } from "react";
 import { useHistory } from "react-router";
+import { toast } from "react-toastify";
 import { UserContext } from "../App";
 
 const DeleteProfile = () => {
@@ -14,7 +15,10 @@ const DeleteProfile = () => {
       dispatch({ type: "User", payload: false });
 
       history.push("/");
-      return alert("Account deleted!");
+      return toast.success("Account deleted!", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
     } catch (error) {
       console.log(error);
     }

@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import ProfilePng from "../Images/profile.png";
 import NavBar from "../Components/NavBar";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const [userData, setUserData] = useState();
@@ -16,7 +17,10 @@ const Profile = () => {
       setUserData(data);
     } catch (err) {
       history.push("/login");
-      return alert("Login to access profile page");
+      return toast.warning("Login to access profile page!", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
     }
   };
 

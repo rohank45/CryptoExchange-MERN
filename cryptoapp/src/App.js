@@ -8,7 +8,6 @@ import Portfolio from "./FrontEnd/Portfolio";
 import WatchList from "./FrontEnd/Watchlist";
 import Exchanges from "./FrontEnd/Exchanges";
 import News from "./FrontEnd/News";
-import AboutUs from "./Profile/AboutUs";
 
 import Register from "./Auth/Register";
 import Login from "./Auth/Login";
@@ -48,7 +47,6 @@ const Routing = () => {
         <Route path="/reset/password/:token" exact component={ResetPassword} />
         <Route path="/deleteprofile" exact component={DeleteProfile} />
 
-        <Route path="/aboutus" exact component={AboutUs} />
         <Route path="*" exact component={ErrorPage} />
       </Switch>
     </Router>

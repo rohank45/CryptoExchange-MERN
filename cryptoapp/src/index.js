@@ -6,7 +6,9 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "react-alice-carousel/lib/alice-carousel.css";
 import CryptoContext from "./Components/CryptoContext";
 
-import Demo from "./Demo";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+toast.configure();
 
 ReactDOM.render(
   <React.StrictMode>

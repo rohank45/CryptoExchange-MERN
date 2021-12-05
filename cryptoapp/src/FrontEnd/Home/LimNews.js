@@ -21,7 +21,6 @@ const LimNews = () => {
       );
 
       const data = await res.json();
-      console.log(data);
       setLimitedNews(data.articles);
     } catch (err) {
       console.log(err);

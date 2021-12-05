@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import ProfilePng from "../Images/profile.png";
 import NavBar from "../Components/NavBar";
+import { toast } from "react-toastify";
 
 const EditProfile = () => {
   const [user, setUser] = useState({
@@ -23,7 +24,10 @@ const EditProfile = () => {
       setUserData(data);
     } catch (err) {
       history.push("/login");
-      return alert("Login to access profile page");
+      return toast.warning("Login to access profile page!", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
     }
   };
 
@@ -62,10 +66,16 @@ const EditProfile = () => {
 
       if (data) {
         history.push("/profile");
-        return alert("Profile details updated Successfully!");
+        return toast.success("Profile details updated Successfully!", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
       } else {
         history.push("/");
-        return alert("Something went wrong try later!");
+        return toast.warning("Something went wrong try later!", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
       }
     } catch (error) {
       console.log(error);
@@ -105,6 +115,7 @@ const EditProfile = () => {
                         type="text"
                         minLength="2"
                         maxLength="20"
+                        pattern="[a-zA-Z]+"
                         name="name"
                         value={userData?.userProfile.name}
                         onChange={handleInputs}
@@ -122,10 +133,11 @@ const EditProfile = () => {
                         type="tel"
                         minLength="10"
                         maxLength="10"
+                        pattern="^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$"
                         name="contactNo"
                         value={userData?.userProfile.contactNo}
                         onChange={handleInputs}
-                        placeholder="contact number"
+                        placeholder="valid contact number only"
                         className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
                             shadow-md focus:bg-white focus:border-gray-600 focus:outline-none my-4"
                       />
@@ -140,7 +152,8 @@ const EditProfile = () => {
                         name="email"
                         value={userData?.userProfile.email}
                         onChange={handleInputs}
-                        placeholder="email@email.com"
+                        pattern="[a-z0-9.]+@[a-z0-9.]+\.[a-z]{2,6}$"
+                        placeholder="valid email@email.com only"
                         className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
                             shadow-md focus:bg-white focus:border-gray-600 focus:outline-none my-4"
                       />

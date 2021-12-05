@@ -16,7 +16,6 @@ const LimCryptos = () => {
     try {
       setLoading(true);
       const res = await axios.get(CoinList(currency));
-      console.log(res.data);
       setCoins(res.data);
       setLoading(false);
     } catch (err) {

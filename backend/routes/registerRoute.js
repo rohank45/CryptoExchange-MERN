@@ -18,19 +18,21 @@ router.post("/register", async (req, res, next) => {
         }
       );
     } else {
-      return res.status(401).json({ message: "Please provide a profile pic!" });
+      return res
+        .status(401)
+        .json({ message: "Please provide a profile picture!" });
     }
 
     const { name, email, contactNo, passwords, cpasswords } = req.body;
 
     if (!name || !email || !contactNo || !passwords || !cpasswords) {
-      return res.status(401).json({ message: "All fields are mandatory" });
+      return res.status(401).json({ message: "All fields are mandatory!" });
     }
 
     if (passwords !== cpasswords) {
       return res
         .status(401)
-        .json({ message: "Password and Confirm Password not matching" });
+        .json({ message: "Password and Confirm Password not matching!" });
     }
 
     const userExists = await User.findOne({ email: email });
@@ -38,7 +40,7 @@ router.post("/register", async (req, res, next) => {
     if (userExists) {
       return res
         .status(401)
-        .json({ message: "Already registered please Login" });
+        .json({ message: "Already registered please Login!" });
     }
 
     const userCheckNo = await User.findOne({ contactNo: contactNo });
@@ -46,7 +48,7 @@ router.post("/register", async (req, res, next) => {
     if (userCheckNo) {
       return res
         .status(401)
-        .json({ message: "Please provide another contact No" });
+        .json({ message: "Please provide another contact Number!" });
     }
 
     await User.create({

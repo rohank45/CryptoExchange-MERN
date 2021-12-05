@@ -20,7 +20,6 @@ const GlobalStats = () => {
       );
 
       const responce = res.data.data;
-      console.log(responce);
       setStats(responce);
     } catch (err) {
       console.log(err);

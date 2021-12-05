@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Spinner from "../Components/Spinner";
 import NavBar from "../Components/NavBar";
+import { toast } from "react-toastify";
 
 const Exchanges = () => {
   const [exchanges, setExchanges] = useState([]);
@@ -22,7 +23,6 @@ const Exchanges = () => {
       );
 
       const responce = res.data.data.exchanges;
-      console.log(responce);
       setExchanges(responce);
     } catch (err) {
       console.log(err);
@@ -34,7 +34,10 @@ const Exchanges = () => {
   }, []);
 
   useEffect(() => {
-    alert("tap to see deatils");
+    return toast.info("Tap to see Deatils!", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+    });
   }, []);
 
   return (

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect } from "react";
 import { useHistory } from "react-router";
+import { toast } from "react-toastify";
 import { UserContext } from "../App";
 
 const Logout = () => {
@@ -14,7 +15,10 @@ const Logout = () => {
       dispatch({ type: "User", payload: false });
 
       history.push("/login");
-      return alert("Logout Successfully!");
+      return toast.success("Logout Successfully!", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
     } catch (error) {
       console.log(error);
     }

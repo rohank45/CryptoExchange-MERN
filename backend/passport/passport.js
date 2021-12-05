@@ -18,32 +18,35 @@ passport.use(
       clientID: process.env.OAUTH_GOOGLE_ID,
       clientSecret: process.env.OAUTH_GOOGLE_SECRET,
       callbackURL: process.env.OAUTH_GOOGLE_CALLBACK_URL,
-      passReqToCallback: true,
       proxy: true,
     },
     (accessToken, refreshToken, profile, next) => {
-      googleOauthModel.findOne({ email: profile._json.email }).then((user) => {
-        if (user) {
-          next(null, user);
-        } else {
-          googleOauthModel
-            .create({
-              photo: profile._json.picture,
-              username: profile.username,
-              name: profile.displayName,
-              email: profile._json.email,
-              googleId: profile.id,
-            })
-            .then((user) => {
-              next(null, user);
-            })
-            .catch((error) => {
-              return next(new Error(error));
-            });
-        }
+      console.log(profile);
 
-        next(null, user);
-      });
+      googleOauthModel
+        .findOne({ googleId: profile.id })
+        .then((existingUser) => {
+          if (existingUser) {
+            next(null, existingUser);
+          } else {
+            googleOauthModel
+              .create({
+                googleId: profile.id,
+                username: profile.displayName,
+                name: profile.displayName,
+                email: profile._json.email,
+                photo: profile._json.picture,
+              })
+              .then((user) => {
+                next(null, user);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+
+          next(null, user);
+        });
     }
   )
 );

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const googleUserSchema = new mongoose.Schema({
+  googleId: String,
   photo: {
     type: String,
   },
@@ -13,9 +14,6 @@ const googleUserSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
-  },
-  googleId: {
-    type: String,
   },
 });
 

@@ -64,7 +64,7 @@ userSchema.methods.generateToken = async function () {
 
 //generating forget password token
 userSchema.methods.getForgetPasswordToken = function () {
-  const generateToken = crypto.randomBytes(20).toString("hex");
+  const generateToken = crypto.randomBytes(30).toString("hex");
 
   this.forgetPassToken = crypto
     .createHash("sha256")

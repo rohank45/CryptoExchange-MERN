@@ -4,6 +4,7 @@ import NavBar from "../Components/NavBar";
 import axios from "axios";
 import { useHistory } from "react-router";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 const ResetPassword = () => {
   const history = useHistory();
@@ -27,11 +28,17 @@ const ResetPassword = () => {
       const { newPasswords, confirmPasswords } = state;
 
       if (!newPasswords || !confirmPasswords) {
-        return alert("All fields are mandatory!");
+        return toast.error("All fields are mandatory!", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
       }
 
       if (newPasswords !== confirmPasswords) {
-        return alert("New Password and confirm password not matching!");
+        return toast.error("New Password and confirm password not matching!", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
       }
 
       const res = await axios.post("/reset/password/:token", state);
@@ -39,10 +46,16 @@ const ResetPassword = () => {
 
       if (data) {
         history.push("/login");
-        return alert("Password Changed Successfully!");
+        return toast.success("Password Changed Successfully!", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
       }
     } catch (error) {
-      return alert(error.response.data.message);
+      return toast.error(error.response.data.message, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
     }
   };
 
@@ -65,6 +78,9 @@ const ResetPassword = () => {
                   <div className="w-full relative">
                     <form autoComplete="off" onSubmit={saveResetPassword}>
                       <div className="py-1">
+                        <p className="text-sm text-red-700 font-nunito">
+                          At least 1 (Uppercase, Lowercase, Number, Symbol)
+                        </p>
                         <span className="flex items-center">
                           <input
                             type={InputType}
@@ -73,6 +89,7 @@ const ResetPassword = () => {
                             name="newPasswords"
                             value={state.newPasswords}
                             onChange={handleInputs}
+                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
                             placeholder="new password"
                             className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
                             shadow-md focus:bg-white focus:border-gray-600 focus:outline-none my-4"

@@ -4,6 +4,7 @@ import NavBar from "../Components/NavBar";
 import { useHistory } from "react-router";
 import axios from "axios";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 const ChangePassword = () => {
   const history = useHistory();
@@ -27,21 +28,36 @@ const ChangePassword = () => {
       const { oldPasswords, newPasswords } = state;
 
       if (!oldPasswords || !newPasswords) {
-        return alert("All fields are mandatory!");
+        return toast.error("All fields are mandatory!", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
       }
 
       if (oldPasswords === newPasswords) {
-        return alert("Old password and New password should not be the same!");
+        return toast.warning(
+          "Old password and New password should not be the same!",
+          {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+          }
+        );
       }
 
       const data = await axios.post("/change/password", state);
 
       if (data) {
         history.push("/profile");
-        return alert("Password Changed Successfully!");
+        return toast.success("Password Changed Successfully!", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
       }
     } catch (error) {
-      return alert(error.response.data.message);
+      return toast.error(error.response.data.message, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
     }
   };
 
@@ -63,6 +79,9 @@ const ChangePassword = () => {
                   <div className="w-full relative">
                     <form autoComplete="off" onSubmit={changePassword}>
                       <div className="py-1">
+                        <p className="text-sm text-red-700 font-nunito">
+                          at least 1 (Uppercase, Lowercase, Number, Symbol)
+                        </p>
                         <span className="flex items-center">
                           <input
                             type={InputType}
@@ -72,6 +91,7 @@ const ChangePassword = () => {
                             placeholder="Old password"
                             minLength="8"
                             maxLength="10"
+                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
                             className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
                             shadow-md focus:bg-white focus:border-gray-600 focus:outline-none my-4"
                           />
@@ -98,6 +118,7 @@ const ChangePassword = () => {
                             placeholder="New password"
                             minLength="8"
                             maxLength="10"
+                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
                             className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
                             shadow-md focus:bg-white focus:border-gray-600 focus:outline-none my-4"
                           />

@@ -22,7 +22,6 @@ const LimExchanges = () => {
       );
 
       const responce = res.data.data.exchanges;
-      console.log(responce);
       setLimitedExchanges(responce);
     } catch (err) {
       console.log(err);

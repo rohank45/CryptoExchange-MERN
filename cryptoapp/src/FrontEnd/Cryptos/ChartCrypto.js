@@ -26,8 +26,6 @@ const ChartCrypto = () => {
   const getHistoryData = async () => {
     try {
       const res = await axios.get(HistoricalChart(id, days, currency));
-      console.log("fetched coins id" + id);
-
       setCoinHistory(res.data.prices);
     } catch (err) {
       console.log(err);

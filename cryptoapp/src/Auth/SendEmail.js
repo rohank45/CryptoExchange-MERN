@@ -3,6 +3,7 @@ import login from "../Images/signup.png";
 import NavBar from "../Components/NavBar";
 import axios from "axios";
 import { useHistory } from "react-router";
+import { toast } from "react-toastify";
 
 const SendEmail = () => {
   const history = useHistory();
@@ -21,7 +22,10 @@ const SendEmail = () => {
     try {
       const { email } = getEmail;
       if (!email) {
-        return alert("Please provide a email!");
+        return toast.error("Please provide a email!", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
       }
 
       const res = await axios.post("/forgot/password", getEmail);
@@ -29,10 +33,16 @@ const SendEmail = () => {
 
       if (data) {
         history.push("/login");
-        return alert("Password reset link sended, check your email!");
+        return toast.success("Password reset link sended, check your email!", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
       }
     } catch (error) {
-      return alert(error.response.data.message);
+      return toast.error(error.response.data.message, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
     }
   };
 
@@ -52,11 +62,7 @@ const SendEmail = () => {
               <div className="max-w-sm mx-auto px-6">
                 <div className="relative flex flex-wrap">
                   <div className="w-full relative">
-                    <form
-                      action="/forgot/password"
-                      autoComplete="off"
-                      onSubmit={sendOtpMail}
-                    >
+                    <form autoComplete="off" onSubmit={sendOtpMail}>
                       <div className="py-1">
                         <span className="px-1 text-lg font-semibold text-gray-700">
                           Email
@@ -66,7 +72,8 @@ const SendEmail = () => {
                           name="email"
                           value={getEmail.email}
                           onChange={handleInputs}
-                          placeholder="send email"
+                          pattern="[a-z0-9.]+@[a-z0-9.]+\.[a-z]{2,6}$"
+                          placeholder="valid email@email.com only"
                           className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
                             shadow-md focus:bg-white focus:border-gray-600 focus:outline-none my-4"
                         />

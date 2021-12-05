@@ -21,7 +21,6 @@ const News = () => {
       );
 
       const data = await res.json();
-      console.log(data);
       setNews(data.articles);
     } catch (err) {
       console.log(err);

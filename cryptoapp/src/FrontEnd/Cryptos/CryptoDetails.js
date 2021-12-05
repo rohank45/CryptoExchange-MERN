@@ -20,8 +20,6 @@ const CryptoDetails = () => {
     }
   };
 
-  console.log("details", coin);
-
   useEffect(() => {
     getData();
   }, []);

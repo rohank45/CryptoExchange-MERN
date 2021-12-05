@@ -6,6 +6,7 @@ import { CryptoState } from "../../Components/CryptoContext";
 import Spinner from "../../Components/Spinner";
 import { RiSearch2Line } from "react-icons/ri";
 import NavBar from "../../Components/NavBar";
+import { toast } from "react-toastify";
 
 const Cryptos = () => {
   const [coins, setCoins] = useState([]);
@@ -18,7 +19,6 @@ const Cryptos = () => {
     try {
       setLoading(true);
       const res = await axios.get(CoinList(currency));
-      console.log(res.data);
       setCoins(res.data);
       setLoading(false);
     } catch (err) {
@@ -30,9 +30,12 @@ const Cryptos = () => {
     getData();
   }, [currency]);
 
-  // useEffect(() => {
-  //   alert("tap to see deatils");
-  // }, []);
+  useEffect(() => {
+    return toast.info("Tap to see Deatils!", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+    });
+  }, []);
 
   return (
     <>

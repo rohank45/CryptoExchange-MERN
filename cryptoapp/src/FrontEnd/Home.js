@@ -17,6 +17,7 @@ import CustomerReview from "../Components/CustomerReview";
 import ScrollToTop from "../Extras/ScrollToTop";
 
 import { UserContext } from "../App";
+import { toast } from "react-toastify";
 
 const Home = () => {
   const { state } = useContext(UserContext);
@@ -25,12 +26,14 @@ const Home = () => {
     Aos.init({ duration: 2000 });
   }, []);
 
-  // useEffect(() => {
-  //   if (!state) {
-  //     // return <p className="alert alert-warning"> please login.. </p>;
-  //     alert("please login...");
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!state) {
+      return toast.warning("Please Login...!", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
+    }
+  }, []);
 
   return (
     <div className="font-nunito scrollbar-hide overflow-x-hidden">
