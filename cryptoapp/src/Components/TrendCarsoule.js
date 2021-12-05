@@ -19,7 +19,6 @@ const TrendCarsoule = () => {
     try {
       setLoading(true);
       const { data } = await axios.get(TrendingCoinsURL(currency));
-      console.log("trending" + data);
       setTrending(data);
       setLoading(false);
     } catch (err) {

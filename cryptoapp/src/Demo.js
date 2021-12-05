@@ -2,7 +2,7 @@ import React from "react";
 
 const Demo = () => {
   return (
-    <form onSubmit={(e) => e.preventDefault()}>
+    <form>
       <button
         type="submit"
         className="bg-gray-800 text-center text-white font-bold text-3xl rounded-lg p-5"

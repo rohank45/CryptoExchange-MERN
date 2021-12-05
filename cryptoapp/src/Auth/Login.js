@@ -6,8 +6,12 @@ import NavBar from "../Components/NavBar";
 import { UserContext } from "../App";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Login = () => {
+  const [visible, setVisible] = useState(false);
+  const InputType = visible ? "text" : "password";
+
   const history = useHistory();
   const { dispatch } = useContext(UserContext);
 
@@ -38,8 +42,9 @@ const Login = () => {
 
       if (data) {
         dispatch({ type: "User", payload: true });
+
         history.push("/");
-        return toast.success("Login successful!", {
+        return toast.success("Login Successful!", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
         });
@@ -90,17 +95,32 @@ const Login = () => {
                         <span className="px-1 text-lg font-semibold text-gray-700">
                           Password
                         </span>
-                        <input
-                          type="password"
-                          minLength="8"
-                          maxLength="10"
-                          placeholder="password"
-                          name="passwords"
-                          value={userLogin.passwords}
-                          onChange={handleInputs}
-                          className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
+
+                        <span className="flex items-center">
+                          <input
+                            type={InputType}
+                            minLength="8"
+                            maxLength="10"
+                            placeholder="password"
+                            name="passwords"
+                            value={userLogin.passwords}
+                            onChange={handleInputs}
+                            className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
                             shadow-md focus:bg-white focus:border-gray-600 focus:outline-none my-4"
-                        />
+                          />
+                          <span
+                            className="text-2xl cursor-pointer -ml-8"
+                            onClick={() =>
+                              setVisible((visibilty) => !visibilty)
+                            }
+                          >
+                            {visible ? (
+                              <AiOutlineEyeInvisible />
+                            ) : (
+                              <AiOutlineEye />
+                            )}
+                          </span>
+                        </span>
                       </div>
 
                       <button

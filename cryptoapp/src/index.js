@@ -6,15 +6,21 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "react-alice-carousel/lib/alice-carousel.css";
 import CryptoContext from "./Components/CryptoContext";
 
-import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-toast.configure();
+// toast.configure();
+
+import Demo from "./Demo";
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <CryptoContext>
-        <App />
+        <Demo />
+        <ToastContainer
+          className="foo"
+          style={{ width: "400px", fontWeight: "bold" }}
+        />
       </CryptoContext>
     </Router>
   </React.StrictMode>,

@@ -6,34 +6,14 @@ import NavBar from "../Components/NavBar";
 import { toast } from "react-toastify";
 
 const EditProfile = () => {
+  const history = useHistory();
+
   const [user, setUser] = useState({
     profilePic: "",
     name: "",
     email: "",
     contactNo: "",
   });
-
-  const [userData, setUserData] = useState();
-  const history = useHistory();
-
-  const openAboutPage = async () => {
-    try {
-      const res = await axios.get("/profile");
-
-      const data = await res.data;
-      setUserData(data);
-    } catch (err) {
-      history.push("/login");
-      return toast.warning("Login to access profile page!", {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 3000,
-      });
-    }
-  };
-
-  useEffect(() => {
-    openAboutPage();
-  }, []);
 
   const handleInputs = (e) => {
     const { name, value } = e.target;
@@ -44,6 +24,35 @@ const EditProfile = () => {
     setUser({ ...user, profilePic: e.target.files[0] });
   };
 
+  //getting profile data
+  const openEditProfileDetailsPage = async () => {
+    try {
+      const res = await axios.get("/profile");
+      const data = await res.data;
+
+      setUser({
+        ...user,
+        profilePic: data.userProfile.profilePic.secure_url,
+        name: data.userProfile.name,
+        email: data.userProfile.email,
+        contactNo: data.userProfile.contactNo,
+      });
+    } catch (err) {
+      console.log(err.message);
+
+      history.push("/login");
+      return toast.warning("Login to access profile page!", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
+    }
+  };
+
+  useEffect(() => {
+    openEditProfileDetailsPage();
+  }, []);
+
+  //updating user details
   const submitEditProfileDetails = async (e) => {
     e.preventDefault();
 
@@ -89,16 +98,13 @@ const EditProfile = () => {
       <div className="flex justify-center">
         <div className="font-nunito w-3/5 py-5 px-8 laptop:w-4/5 tablet:w-full mobile:w-full">
           <form autoComplete="off" onSubmit={submitEditProfileDetails}>
-            <div className="pt-40 pb-20">
+            <div className="pt-40 pb-20 mobile:pt-24 mobile:pb-10">
               <div className="mx-5 px-5 bg-gray-50 py-10 border-2 border-gray-300 hover:border-black rounded-lg shadow-xl">
                 <div className="flex items-center justify-around p-10 mobile:px-0 mobile:py-2">
                   <div>
                     <div className="avatar online">
                       <div className="rounded-full w-24 h-24">
-                        <img
-                          src={userData?.userProfile.profilePic.secure_url}
-                          alt="use profile pic"
-                        />
+                        <img src={user?.profilePic} alt="user profile pic" />
                       </div>
                     </div>
                     <input
@@ -115,9 +121,9 @@ const EditProfile = () => {
                         type="text"
                         minLength="2"
                         maxLength="20"
-                        pattern="[a-zA-Z]+"
+                        pattern="[a-zA-Z]+([ ]?[a-zA-Z]+)*"
                         name="name"
-                        value={userData?.userProfile.name}
+                        value={user?.name}
                         onChange={handleInputs}
                         placeholder="name"
                         className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
@@ -135,7 +141,7 @@ const EditProfile = () => {
                         maxLength="10"
                         pattern="^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$"
                         name="contactNo"
-                        value={userData?.userProfile.contactNo}
+                        value={user?.contactNo}
                         onChange={handleInputs}
                         placeholder="valid contact number only"
                         className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
@@ -150,7 +156,7 @@ const EditProfile = () => {
                       <input
                         type="email"
                         name="email"
-                        value={userData?.userProfile.email}
+                        value={user?.email}
                         onChange={handleInputs}
                         pattern="[a-z0-9.]+@[a-z0-9.]+\.[a-z]{2,6}$"
                         placeholder="valid email@email.com only"
@@ -161,7 +167,7 @@ const EditProfile = () => {
 
                     <button
                       type="submit"
-                      className="bg-gray-900 text-white px-4 py-2 text-2xl my-5"
+                      className="bg-blue-500 text-white px-4 py-2 text-2xl my-5 font-semibold rounded-lg"
                     >
                       Save Edit
                     </button>
