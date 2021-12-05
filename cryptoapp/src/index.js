@@ -16,7 +16,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
       <CryptoContext>
-        <Demo />
+        <App />
         <ToastContainer
           className="foo"
           style={{ width: "400px", fontWeight: "bold" }}

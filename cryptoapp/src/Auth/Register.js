@@ -208,13 +208,11 @@ const Register = () => {
                             shadow-md focus:bg-white focus:border-gray-600 focus:outline-none my-4"
                         />
 
-                        <ReCAPTCHA
-                          // sitekey="6LcVynwdAAAAADJFSapf-lAHI7QyiG1RA4bLSDly"
-                          // secretKey="6LcVynwdAAAAAAUFaz-_XcPGkAlzsjfoNjNgqnOh"
-                          sitekey="6LcVynwdAAAAADJFSapf-lAHI7QyiG1RA4bLSDly"
+                        {/* <ReCAPTCHA
+                          sitekey={process.env.RECAPTCHA_SITE_KEY}
                           type="image"
                           verifyCallback={verifyCallback}
-                        />
+                        /> */}
 
                         <div className="flex flex-col justify-start">
                           <label className="text-gray-500 font-bold my-4 flex flex-col">
