@@ -1,7 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { CryptoState } from "./CryptoContext";
-import { UserContext } from "../App";
 
 import { GiHamburgerMenu } from "react-icons/gi";
 import { CgClose } from "react-icons/cg";
@@ -18,12 +17,11 @@ import cImg from "../Images/FinanceappMonochromatic.png";
 
 const NavBar = () => {
   const [isSideMenuOpen, setisSideMenuOpen] = useState(false);
-  const { state } = useContext(UserContext);
-  const { currency, setCurrency } = CryptoState();
-
   const showSideMenu = () => {
     isSideMenuOpen ? setisSideMenuOpen(false) : setisSideMenuOpen(true);
   };
+
+  const { currency, setCurrency } = CryptoState();
 
   return (
     <div
@@ -39,12 +37,13 @@ const NavBar = () => {
         </p>
       </div>
 
+      {/* login logout toggle */}
       <div
         className="flex gap-4 items-center text-lg absolute right-24 
             mobile:gap-1 mobile:right-0 mobile:relative mobile:text-sm"
       >
         <div>
-          {state ? (
+          {localStorage.getItem("isLogin") ? (
             <button className="px-1 py-2 font-semibold text-gray-800 hover:underline">
               <Link to="/logout">Log out</Link>
             </button>

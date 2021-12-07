@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 
 import Aos from "aos";
 import "aos/dist/aos.css";
@@ -16,18 +16,15 @@ import Middle from "../Components/Middle";
 import CustomerReview from "../Components/CustomerReview";
 import ScrollToTop from "../Extras/ScrollToTop";
 
-import { UserContext } from "../App";
 import { toast } from "react-toastify";
 
 const Home = () => {
-  const { state } = useContext(UserContext);
-
   useEffect(() => {
     Aos.init({ duration: 2000 });
   }, []);
 
   useEffect(() => {
-    if (!state) {
+    if (!localStorage.getItem("isLogin")) {
       return toast.warning("Please Login...!", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,

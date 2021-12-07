@@ -1,9 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import login from "../Images/signup.png";
 import { FcGoogle } from "react-icons/fc";
 import NavBar from "../Components/NavBar";
-import { UserContext } from "../App";
+
 import axios from "axios";
 import { toast } from "react-toastify";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
@@ -13,7 +13,6 @@ const Login = () => {
   const InputType = visible ? "text" : "password";
 
   const history = useHistory();
-  const { dispatch } = useContext(UserContext);
 
   const [userLogin, setUserLogin] = useState({
     email: "",
@@ -41,7 +40,8 @@ const Login = () => {
       const data = res.data;
 
       if (data) {
-        dispatch({ type: "User", payload: true });
+        //localstorgae
+        localStorage.setItem("isLogin", "true");
 
         history.push("/");
         return toast.success("Login Successful!", {

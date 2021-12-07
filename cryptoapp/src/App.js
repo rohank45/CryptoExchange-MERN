@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Home from "./FrontEnd/Home";
@@ -21,11 +21,7 @@ import ChangePassword from "./Auth/ChangePassword";
 
 import ErrorPage from "./Components/ErrorPage";
 
-import { initialState, reducer } from "./reducers/UseReducers";
-
-export const UserContext = createContext();
-
-const Routing = () => {
+const App = () => {
   return (
     <Router>
       <Switch>
@@ -50,18 +46,6 @@ const Routing = () => {
         <Route path="*" exact component={ErrorPage} />
       </Switch>
     </Router>
-  );
-};
-
-const App = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  return (
-    <>
-      <UserContext.Provider value={{ state, dispatch }}>
-        <Routing />
-      </UserContext.Provider>
-    </>
   );
 };
 

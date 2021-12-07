@@ -88,17 +88,13 @@ app.use("/", resetPassRoute);
 const changePassRoute = require("./routes/changePassRoute");
 app.use("/", changePassRoute);
 
-//google oauth login
-const userLogin = require("./routes/googleOauth/userLogin");
-app.use("/", userLogin);
+//google oauth login logout and profile
+const googleLogin = require("./routes/googleOauth/googleLogin");
+app.use("/", googleLogin);
 
-//google oauth profile
-const userProfile = require("./routes/googleOauth/userProfile");
-app.use("/", userProfile);
-
-//google oauth logout
-const userLogout = require("./routes/googleOauth/userLogout");
-app.use("/", userLogout);
+//payment using razorpay key
+const razorpayPayment = require("./routes/razorpayPayment");
+app.use("/", razorpayPayment);
 
 //listing app on PORT
 app.listen(process.env.PORT, () => {

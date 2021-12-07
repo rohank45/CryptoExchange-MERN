@@ -1,11 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import TrendCarsoule from "./TrendCarsoule";
 import { useHistory } from "react-router";
-import { UserContext } from "../App";
 
 const Header = () => {
   const history = useHistory();
-  const { state } = useContext(UserContext);
 
   return (
     <div className="relative top-28 px-52 mb-20 bg-gray-200 mobile:px-1 tablet:px-10 laptop:px-32">
@@ -19,7 +17,7 @@ const Header = () => {
             Invest in genuine Crypto Currency in One-Click for a better future.
           </p>
           <div>
-            {state ? (
+            {localStorage.getItem("isLogin") ? (
               <button
                 className="my-5 text-2xl font-semibold bg-gray-800 hover:bg-black text-gray-50 rounded-md px-5 py-2 mobile:text-xl hidden"
                 onClick={() => history.push("/register")}

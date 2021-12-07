@@ -5,7 +5,25 @@ import { SingleCoin } from "../../Config/Api";
 import { CryptoState } from "../../Components/CryptoContext";
 import ChartCrypto from "./ChartCrypto";
 import NavBar from "../../Components/NavBar";
+import { toast } from "react-toastify";
 
+function loadScript(src) {
+  return new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = src;
+    script.onload = () => {
+      resolve(true);
+    };
+    script.onerror = () => {
+      resolve(false);
+    };
+    document.body.appendChild(script);
+  });
+}
+
+const __dev__ = document.domain === "localhost";
+
+//main function
 const CryptoDetails = () => {
   const { id } = useParams();
   const [coin, setCoin] = useState();
@@ -23,6 +41,51 @@ const CryptoDetails = () => {
   useEffect(() => {
     getData();
   }, []);
+
+  //payment
+  const displayRazorPay = async () => {
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
+
+    if (!res) {
+      return toast.error("Payment failed!, check your connection!", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
+    }
+
+    const amount = coin?.market_data.current_price.inr;
+
+    const options = {
+      key: __dev__ ? "rzp_test_nvbgBY8uNQpEwZ" : "Production key here",
+      name: "TP-Coin",
+      description: "Transaction for buying cryptos.",
+      image: "https://example.com/your_logo",
+      currency: "INR",
+      amount: amount * 100,
+
+      handler: function(response) {
+        // console.log(response.razorpay_payment_id);
+
+        return toast.success("Payment Succuess!", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
+      },
+      prefill: {
+        name: "rohan",
+        email: "test.rohan@example.com",
+        contact: "9898989898",
+      },
+      theme: {
+        color: "#3B3B3B",
+      },
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  };
 
   return (
     <>
@@ -55,10 +118,9 @@ const CryptoDetails = () => {
               </p>
               <p className="font-nunito font-semibold flex gap-1 text-lg py-1">
                 <p className="font-bold flex gap-3 text-xl lowercase">
-                  <p>Current Price:</p>
-                  {symbols}
+                  <p>Current Price:</p>₹
                 </p>
-                {coin?.market_data.current_price[currency.toLowerCase()]}
+                {coin?.market_data.current_price.inr}
               </p>
               <p className="font-nunito font-semibold flex gap-1 text-lg py-1">
                 <p className="font-bold flex gap-3 text-xl lowercase">
@@ -125,6 +187,7 @@ const CryptoDetails = () => {
 
           <div className="flex justify-evenly font-nunito mt-10">
             <button
+              onClick={displayRazorPay}
               className="font-bold text-xl w-52 rounded-lg bg-green-300 py-3 border-2 border-gray-600 mobile:rounded-none 
                 mobile:w-1/2 mobile:px-0 mobile:border-none hover:bg-green-600 hover:text-white"
             >

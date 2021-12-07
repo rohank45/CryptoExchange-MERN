@@ -1,18 +1,16 @@
 import axios from "axios";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router";
 import { toast } from "react-toastify";
-import { UserContext } from "../App";
-
 const Logout = () => {
-  const { dispatch } = useContext(UserContext);
   const history = useHistory();
 
   const LogoutFunction = async () => {
     try {
       await axios.get("/logout");
 
-      dispatch({ type: "User", payload: false });
+      //localstorgae
+      localStorage.removeItem("isLogin");
 
       history.push("/login");
       return toast.success("Logout Successfully!", {

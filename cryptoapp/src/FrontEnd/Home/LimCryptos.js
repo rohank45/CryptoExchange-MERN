@@ -97,12 +97,7 @@ const LimCryptos = () => {
                         ) : (
                           <tr key={id}>
                             <td className="px-6 py-5 whitespace-nowrap mobile:px-0">
-                              <div
-                                className="flex items-center cursor-pointer"
-                                onClick={() =>
-                                  history.push(`/coins/${curElem.id}`)
-                                }
-                              >
+                              <div className="flex items-center cursor-pointer">
                                 <div className="flex-shrink-0 h-10 w-10">
                                   <img
                                     className="h-10 w-10 rounded-full"
@@ -158,8 +153,13 @@ const LimCryptos = () => {
                             </td>
 
                             <td className="pr-20 py-4 whitespace-nowrap text-right font-medium tablet:hidden mobile:hidden">
-                              <button className="text-indigo-600 hover:underline">
-                                Buy
+                              <button
+                                onClick={() =>
+                                  history.push(`/coins/${curElem.id}`)
+                                }
+                                className="text-indigo-600 hover:underline"
+                              >
+                                View Details
                               </button>
                             </td>
                           </tr>

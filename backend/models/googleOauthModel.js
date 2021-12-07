@@ -1,11 +1,8 @@
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 
 const googleUserSchema = new mongoose.Schema({
-  googleId: String,
   photo: {
-    type: String,
-  },
-  username: {
     type: String,
   },
   name: {
@@ -15,7 +12,19 @@ const googleUserSchema = new mongoose.Schema({
     type: String,
     unique: true,
   },
+  role: {
+    type: String,
+    default: "user",
+  },
+  googleId: {
+    type: String,
+  },
 });
+
+//generating JWT token
+googleUserSchema.methods.generateToken = async function () {
+  return jwt.sign({ id: this._id }, process.env.PASSPORT_SECRET_KEY);
+};
 
 const googleUser = mongoose.model("GoogleUser", googleUserSchema);
 module.exports = googleUser;
