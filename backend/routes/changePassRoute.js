@@ -14,11 +14,11 @@ router.post("/change/password", authMiddleWare, async (req, res, next) => {
       return res.status(401).json({ message: "All fields are mandatory!" });
     }
 
-    // if (oldPassword === newPassword) {
-    //   return res.status(401).json({
-    //     message: "Old password and New password should not be the same!",
-    //   });
-    // }
+    if (oldPassword === newPassword) {
+      return res.status(401).json({
+        message: "Old password and New password should not be the same!",
+      });
+    }
 
     const userId = req.user.id;
     const user = await User.findById(userId).select("+passwords");

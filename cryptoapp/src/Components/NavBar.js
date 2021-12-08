@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Cookies from "universal-cookie";
 import { Link } from "react-router-dom";
 import { CryptoState } from "./CryptoContext";
 
@@ -16,6 +17,7 @@ import cLogo from "../Images/icons8-cryptocurrency-64.png";
 import cImg from "../Images/FinanceappMonochromatic.png";
 
 const NavBar = () => {
+  const cookies = new Cookies();
   const [isSideMenuOpen, setisSideMenuOpen] = useState(false);
   const showSideMenu = () => {
     isSideMenuOpen ? setisSideMenuOpen(false) : setisSideMenuOpen(true);
@@ -43,7 +45,7 @@ const NavBar = () => {
             mobile:gap-1 mobile:right-0 mobile:relative mobile:text-sm"
       >
         <div>
-          {localStorage.getItem("isLogin") ? (
+          {cookies.get("isLogin") ? (
             <button className="px-1 py-2 font-semibold text-gray-800 hover:underline">
               <Link to="/logout">Log out</Link>
             </button>
@@ -66,13 +68,13 @@ const NavBar = () => {
           <option value="USD">USD</option>
         </select>
 
-        {/* <select
+        <select
           name="currencies"
           className="bg-gray-400 outline-none font-semibold cursor-pointer"
         >
           <option value="LIGHT">Light</option>
           <option value="DARK">Dark</option>
-        </select> */}
+        </select>
       </div>
 
       <button

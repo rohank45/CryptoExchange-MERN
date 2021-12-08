@@ -1,6 +1,7 @@
 //dotenv connection
 require("dotenv").config();
 
+//express setup
 const express = require("express");
 const app = express();
 app.use(express.json());
@@ -16,7 +17,7 @@ app.use(morgan("tiny"));
 
 //cors policy issue
 const cors = require("cors");
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors());
 
 //cookie parser
 const cookieParser = require("cookie-parser");
@@ -52,27 +53,27 @@ app.use(
   })
 );
 
-//register route
+//register
 const registerRoute = require("./routes/registerRoute");
 app.use("/", registerRoute);
 
-//login route
+//login
 const loginRoute = require("./routes/loginRoute");
 app.use("/", loginRoute);
 
-//logout route
+//logout
 const logoutRoute = require("./routes/logoutRoute");
 app.use("/", logoutRoute);
 
-//profile route
+//get profile
 const profileRoute = require("./routes/profileRoute");
 app.use("/", profileRoute);
 
-//edit profile route
+//edit profile
 const editProfileRoute = require("./routes/editProfileRoute");
 app.use("/", editProfileRoute);
 
-//delete route
+//delete user
 const deleteRoute = require("./routes/deleteRoute");
 app.use("/", deleteRoute);
 
@@ -80,11 +81,11 @@ app.use("/", deleteRoute);
 const forgotPassRoute = require("./routes/forgotPassRoute");
 app.use("/", forgotPassRoute);
 
-//reset password
+//reset password before login
 const resetPassRoute = require("./routes/resetPassRoute");
 app.use("/", resetPassRoute);
 
-//change password
+//change password after login
 const changePassRoute = require("./routes/changePassRoute");
 app.use("/", changePassRoute);
 
@@ -95,6 +96,18 @@ app.use("/", googleLogin);
 //payment using razorpay key
 const razorpayPayment = require("./routes/razorpayPayment");
 app.use("/", razorpayPayment);
+
+//saving only buy coins to db
+const buyCoinRoute = require("./routes/portfolioRoutes/buyCoinRoute");
+app.use("/", buyCoinRoute);
+
+//removing only sell coins from db
+const sellCoinRoute = require("./routes/portfolioRoutes/sellCoinRoute");
+app.use("/", sellCoinRoute);
+
+//sending data of saved coins to client
+const getPortfolioData = require("./routes/portfolioRoutes/getPortfolioData");
+app.use("/", getPortfolioData);
 
 //listing app on PORT
 app.listen(process.env.PORT, () => {

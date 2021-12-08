@@ -52,6 +52,7 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "tailwind-scrollbar-hide": "^1.0.3",
+    "universal-cookie": "^4.0.4",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

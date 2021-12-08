@@ -10,8 +10,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // toast.configure();
 
-import Demo from "./Demo";
-
 ReactDOM.render(
   <React.StrictMode>
     <Router>
@@ -19,7 +17,7 @@ ReactDOM.render(
         <App />
         <ToastContainer
           className="foo"
-          style={{ width: "400px", fontWeight: "bold" }}
+          style={{ width: "350px", fontWeight: "bold" }}
         />
       </CryptoContext>
     </Router>

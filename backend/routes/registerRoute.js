@@ -32,11 +32,10 @@ router.post("/register", async (req, res, next) => {
     if (passwords !== cpasswords) {
       return res
         .status(401)
-        .json({ message: "Password and Confirm Password not matching!" });
+        .json({ message: "Password and Confirm Password are not matching!" });
     }
 
     const userExists = await User.findOne({ email: email });
-
     if (userExists) {
       return res
         .status(401)
@@ -44,7 +43,6 @@ router.post("/register", async (req, res, next) => {
     }
 
     const userCheckNo = await User.findOne({ contactNo: contactNo });
-
     if (userCheckNo) {
       return res
         .status(401)
@@ -62,7 +60,7 @@ router.post("/register", async (req, res, next) => {
       passwords,
     });
 
-    res.status(201).json({ message: "User registered successFully!" });
+    res.status(201).json({ message: "User registered successfully!" });
   } catch (error) {
     console.log(error.message);
   }

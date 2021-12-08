@@ -1,8 +1,10 @@
 import React from "react";
+import Cookies from "universal-cookie";
 import TrendCarsoule from "./TrendCarsoule";
 import { useHistory } from "react-router";
 
 const Header = () => {
+  const cookies = new Cookies();
   const history = useHistory();
 
   return (
@@ -17,7 +19,7 @@ const Header = () => {
             Invest in genuine Crypto Currency in One-Click for a better future.
           </p>
           <div>
-            {localStorage.getItem("isLogin") ? (
+            {cookies.get("isLogin") ? (
               <button
                 className="my-5 text-2xl font-semibold bg-gray-800 hover:bg-black text-gray-50 rounded-md px-5 py-2 mobile:text-xl hidden"
                 onClick={() => history.push("/register")}

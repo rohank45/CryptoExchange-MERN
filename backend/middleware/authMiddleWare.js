@@ -3,8 +3,10 @@ const User = require("../models/userSchema");
 
 const authMiddleWare = async (req, res, next) => {
   try {
-    const token =
-      req.cookies.token || req.header("Authorization").replace("Bearer", "");
+    // const token =
+    //   req.cookies.token || req.header("Authorization").replace("Bearer", "");
+
+    const token = req.cookies.token;
 
     if (!token) {
       return res
@@ -17,7 +19,8 @@ const authMiddleWare = async (req, res, next) => {
 
     next();
   } catch (err) {
-    return next(new Error("Token not found plzz Login", err.message));
+    console.log(err);
+    return res.status(401).json({ message: "Token not found plzz Login!" });
   }
 };
 

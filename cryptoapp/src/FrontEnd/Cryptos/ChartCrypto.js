@@ -32,8 +32,6 @@ const ChartCrypto = () => {
     }
   };
 
-  console.log("data", coinHistory);
-
   useEffect(() => {
     getHistoryData();
   }, [days]);

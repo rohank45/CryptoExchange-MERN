@@ -6,7 +6,9 @@ import { CryptoState } from "../../Components/CryptoContext";
 import ChartCrypto from "./ChartCrypto";
 import NavBar from "../../Components/NavBar";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
+//razorpay script
 function loadScript(src) {
   return new Promise((resolve) => {
     const script = document.createElement("script");
@@ -27,8 +29,20 @@ const __dev__ = document.domain === "localhost";
 const CryptoDetails = () => {
   const { id } = useParams();
   const [coin, setCoin] = useState();
+  const history = useHistory();
   const { currency, symbols } = CryptoState();
 
+  //increment and decrement
+  const [counter, setCounter] = useState(1);
+
+  const incrementCounter = () => setCounter(counter + 1);
+  let decrementCounter = () => setCounter(counter - 1);
+
+  if (counter <= 1) {
+    decrementCounter = () => setCounter(1);
+  }
+
+  //get details of selected coin
   const getData = async () => {
     try {
       const res = await axios.get(SingleCoin(id));
@@ -44,47 +58,104 @@ const CryptoDetails = () => {
 
   //payment
   const displayRazorPay = async () => {
-    const res = await loadScript(
-      "https://checkout.razorpay.com/v1/checkout.js"
-    );
+    try {
+      const res = await loadScript(
+        "https://checkout.razorpay.com/v1/checkout.js"
+      );
 
-    if (!res) {
-      return toast.error("Payment failed!, check your connection!", {
+      if (!res) {
+        return toast.warning("Payment failed!, check your connection.", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
+      }
+
+      const response = await axios.post("/razorpay/payment", {
+        amount: coin?.market_data.current_price.inr * 100 * counter,
+      });
+      const convertRes = await response.data;
+      const { order } = convertRes;
+
+      const options = {
+        key: __dev__ ? "rzp_test_nvbgBY8uNQpEwZ" : "Production key here",
+        name: "TP-Coin",
+        description: "Transaction for buying cryptos.",
+        image: "https://example.com/your_logo",
+        currency: "INR",
+        amount: coin?.market_data.current_price.inr * 100 * counter,
+        order_id: order.id,
+
+        handler: async function(response) {
+          console.log("frontend paymentId", response.razorpay_payment_id);
+          console.log("frontend order_id", response.razorpay_order_id);
+          console.log("frontend signature", response.razorpay_signature);
+
+          localStorage.setItem("isBuyCoin", "true");
+
+          localStorage.setItem("quantity", counter);
+
+          return toast.success("Payment successfully, please Buy a Coin!", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+          });
+        },
+        //remove this seaction while hosting
+        prefill: {
+          name: "rohit",
+          email: "test.rohit@example.com",
+          contact: "9898989898",
+        },
+        theme: {
+          color: "#3B3B3B",
+        },
+      };
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+    } catch (error) {
+      history.push("/login");
+      return toast.warning("Login to Make a Payment!", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
       });
     }
+  };
 
-    const amount = coin?.market_data.current_price.inr;
+  //buy this coin and saving to db
+  const buyCoin = async () => {
+    const coins = {
+      coinId: coin?.id,
+      image: coin?.image.large,
+      symbol: coin?.symbol,
+      name: coin?.name,
+      quanity: localStorage.getItem("quantity"),
+    };
 
-    const options = {
-      key: __dev__ ? "rzp_test_nvbgBY8uNQpEwZ" : "Production key here",
-      name: "TP-Coin",
-      description: "Transaction for buying cryptos.",
-      image: "https://example.com/your_logo",
-      currency: "INR",
-      amount: amount * 100,
+    console.log(counter);
 
-      handler: function(response) {
-        // console.log(response.razorpay_payment_id);
+    try {
+      const res = await axios.post("/buy/coins", coins, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-        return toast.success("Payment Succuess!", {
+      const data = res.data;
+
+      if (data) {
+        localStorage.removeItem("isBuyCoin");
+
+        localStorage.removeItem("quantity");
+
+        history.push("/");
+        return toast.success("Coin buy Successfully, please check portfolio!", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
         });
-      },
-      prefill: {
-        name: "rohan",
-        email: "test.rohan@example.com",
-        contact: "9898989898",
-      },
-      theme: {
-        color: "#3B3B3B",
-      },
-    };
-
-    const paymentObject = new window.Razorpay(options);
-    paymentObject.open();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -185,19 +256,70 @@ const CryptoDetails = () => {
         <div className="w-1/2 mobile:w-full tablet:w-full">
           <ChartCrypto />
 
-          <div className="flex justify-evenly font-nunito mt-10">
-            <button
-              onClick={displayRazorPay}
-              className="font-bold text-xl w-52 rounded-lg bg-green-300 py-3 border-2 border-gray-600 mobile:rounded-none 
-                mobile:w-1/2 mobile:px-0 mobile:border-none hover:bg-green-600 hover:text-white"
-            >
-              Buy Now
+          <div className="flex justify-center items-center gap-2 mt-8 pc:hidden laptop:hidden tablet:hidden">
+            <button className="bg-red-700 text-white text-4xl font-black rounded-lg shadow-md px-5 pt-1 pb-3">
+              -
             </button>
+
+            <input className="border-2 border-gray-600 w-14 h-14 p-3 font-bold font-nunito rounded-lg" />
+
+            <button className="bg-green-700 text-white text-4xl font-black rounded-lg shadow-md px-4 pt-1 pb-3">
+              +
+            </button>
+          </div>
+
+          <div className="flex justify-evenly font-nunito mt-10">
+            {localStorage.getItem("isBuyCoin") ? (
+              <button
+                onClick={buyCoin}
+                className="font-bold text-xl w-52 rounded-lg bg-green-400 py-3 border-2 border-gray-900 mobile:rounded-none 
+                mobile:w-1/2 mobile:px-0 mobile:border-none hover:bg-green-600 hover:text-white mobile:py-4"
+              >
+                Buy Now
+              </button>
+            ) : (
+              <button
+                onClick={displayRazorPay}
+                className="font-bold text-xl w-52 rounded-lg bg-blue-400 py-3 border-2 border-indigo-900 mobile:rounded-none 
+                mobile:w-1/2 mobile:px-0 mobile:border-none hover:bg-blue-600 hover:text-white mobile:py-4"
+              >
+                Make Payment
+              </button>
+            )}
+
+            <div className="flex justify-center items-center gap-2 mobile:hidden">
+              <button
+                onClick={decrementCounter}
+                className="bg-red-700 text-white text-5xl font-black rounded-lg shadow-md text-center px-5 py-3
+                  mobile:py-2 mobile:px-4 mobile:text-3xl"
+              >
+                -
+              </button>
+
+              <input
+                value={
+                  localStorage.getItem("quantity")
+                    ? localStorage.getItem("quantity")
+                    : counter
+                }
+                className="border-2 border-gray-600 w-14 h-14 px-5 py-3 font-bold font-nunito rounded-lg
+                  mobile:w-12 mobile:h-12"
+              />
+
+              <button
+                onClick={incrementCounter}
+                className="bg-green-700 text-white text-5xl font-black rounded-lg shadow-md text-center px-4 py-3
+                  mobile:py-2 mobile:px-4 mobile:text-2xl"
+              >
+                +
+              </button>
+            </div>
+
             <button
               className="font-bold text-xl w-52 rounded-lg bg-gray-300 border-2 border-gray-600 mobile:rounded-none 
-                mobile:w-1/2 py-3 mobile:px-0 mobile:border-none hover:bg-gray-600 hover:text-white"
+                mobile:w-1/2 py-3 mobile:px-0 mobile:border-none hover:bg-gray-600 hover:text-white mobile:py-4"
             >
-              ADD to watchlist
+              Add to Watchlist
             </button>
           </div>
         </div>

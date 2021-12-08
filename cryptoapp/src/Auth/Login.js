@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Cookies from "universal-cookie";
 import { Link, useHistory } from "react-router-dom";
 import login from "../Images/signup.png";
 import { FcGoogle } from "react-icons/fc";
@@ -9,6 +10,7 @@ import { toast } from "react-toastify";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Login = () => {
+  const cookies = new Cookies();
   const [visible, setVisible] = useState(false);
   const InputType = visible ? "text" : "password";
 
@@ -40,8 +42,10 @@ const Login = () => {
       const data = res.data;
 
       if (data) {
-        //localstorgae
-        localStorage.setItem("isLogin", "true");
+        let expirestimeCookie = new Date();
+        expirestimeCookie.setTime(expirestimeCookie.getTime() + 30 * 60 * 1000);
+
+        cookies.set("isLogin", "true", { expires: expirestimeCookie });
 
         history.push("/");
         return toast.success("Login Successful!", {
@@ -153,7 +157,11 @@ const Login = () => {
                       </span>
 
                       <span className="border-l border-gray-50 h-6 w-1 block"></span>
-                      <button className="pl-3">Sign up with Google</button>
+                      <button className="pl-3">
+                        <a href="http://localhost:5000/auth/google">
+                          Sign up with Google
+                        </a>
+                      </button>
                     </div>
                   </div>
                 </div>

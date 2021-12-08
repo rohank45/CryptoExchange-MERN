@@ -37,9 +37,25 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
-  token: {
-    type: String,
-  },
+  coins: [
+    {
+      coinId: {
+        type: String,
+      },
+      image: {
+        type: String,
+      },
+      symbol: {
+        type: String,
+      },
+      name: {
+        type: String,
+      },
+      quanity: {
+        type: Number,
+      },
+    },
+  ],
   forgetPassToken: String,
   forgetPassExpiry: Date,
   createdAt: {

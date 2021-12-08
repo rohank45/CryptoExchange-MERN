@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Cookies from "universal-cookie";
 
 import Aos from "aos";
 import "aos/dist/aos.css";
@@ -14,17 +15,18 @@ import VoiceAss from "../voice-assistant/VoiceAss";
 import BasicQue from "../Components/BasicQue";
 import Middle from "../Components/Middle";
 import CustomerReview from "../Components/CustomerReview";
-import ScrollToTop from "../Extras/ScrollToTop";
+import ScrollToTop from "../Components/ScrollToTop";
 
 import { toast } from "react-toastify";
 
 const Home = () => {
+  const cookies = new Cookies();
   useEffect(() => {
     Aos.init({ duration: 2000 });
   }, []);
 
   useEffect(() => {
-    if (!localStorage.getItem("isLogin")) {
+    if (!cookies.get("isLogin")) {
       return toast.warning("Please Login...!", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,

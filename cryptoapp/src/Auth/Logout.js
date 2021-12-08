@@ -1,16 +1,18 @@
 import axios from "axios";
+import Cookies from "universal-cookie";
 import React, { useEffect } from "react";
 import { useHistory } from "react-router";
 import { toast } from "react-toastify";
+
 const Logout = () => {
+  const cookies = new Cookies();
   const history = useHistory();
 
   const LogoutFunction = async () => {
     try {
       await axios.get("/logout");
 
-      //localstorgae
-      localStorage.removeItem("isLogin");
+      cookies.remove("isLogin");
 
       history.push("/login");
       return toast.success("Logout Successfully!", {
