@@ -4,6 +4,7 @@ const cloudinary = require("cloudinary");
 
 const authMiddleWare = require("../middleware/authMiddleWare");
 const User = require("../models/userSchema");
+const mailHelper = require("../utils/mailHelper");
 
 router.delete("/deleteUser", authMiddleWare, async (req, res) => {
   try {
@@ -15,6 +16,14 @@ router.delete("/deleteUser", authMiddleWare, async (req, res) => {
     await User.findByIdAndRemove(req.user.id);
 
     res.clearCookie("token");
+
+    //mail sent
+    await mailHelper({
+      email: user.email,
+      subject: "Account Delete At TP-Coin",
+      message:
+        "You've successfully Deleted your account at TP-Coin CryptoWebApp!",
+    });
 
     res.status(201).json({ message: "User deleted successfully" });
   } catch (error) {

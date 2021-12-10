@@ -3,6 +3,7 @@ const router = express.Router();
 const cloudinary = require("cloudinary");
 
 const User = require("../models/userSchema");
+const mailHelper = require("../utils/mailHelper");
 
 router.post("/register", async (req, res, next) => {
   try {
@@ -58,6 +59,14 @@ router.post("/register", async (req, res, next) => {
       email,
       contactNo,
       passwords,
+    });
+
+    //mail sent
+    await mailHelper({
+      email: email,
+      subject: "Registration At TP-Coin",
+      message:
+        "You've successfully completed Registration at TP-Coin CryptoWebApp!",
     });
 
     res.status(201).json({ message: "User registered successfully!" });

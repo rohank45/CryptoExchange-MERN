@@ -93,7 +93,11 @@ const Watchlist = () => {
                           <Spinner />
                         ) : (
                           coin.map((curElem, id) => {
-                            const { image, symbol, name } = curElem;
+                            const {
+                              watchlist_image,
+                              watchlist_symbol,
+                              watchlist_name,
+                            } = curElem;
                             return (
                               <>
                                 <tr key={id}>
@@ -101,22 +105,24 @@ const Watchlist = () => {
                                     <div
                                       className="flex items-center cursor-pointer"
                                       onClick={() =>
-                                        history.push(`/coins/${curElem.coinId}`)
+                                        history.push(
+                                          `/coins/${curElem.watchlist_coinId}`
+                                        )
                                       }
                                     >
                                       <div className="flex-shrink-0 h-10 w-10">
                                         <img
                                           className="h-10 w-10 rounded-full"
-                                          src={image}
+                                          src={watchlist_image}
                                           alt="crypto icon"
                                         />
                                       </div>
                                       <div className="ml-4 flex gap-4 mobile:flex-col mobile:gap-2">
                                         <div className="mobile:text-sm text-lg font-bold text-gray-900 uppercase">
-                                          {symbol}
+                                          {watchlist_symbol}
                                         </div>
                                         <div className="mobile:text-sm text-lg text-gray-500">
-                                          {name}
+                                          {watchlist_name}
                                         </div>
                                       </div>
                                     </div>
@@ -124,10 +130,11 @@ const Watchlist = () => {
                                   <td
                                     onClick={async () => {
                                       const watchlists = {
-                                        coinId: curElem.coinId,
-                                        image: image,
-                                        name: name,
-                                        symbol: symbol,
+                                        watchlist_coinId:
+                                          curElem.watchlist_coinId,
+                                        watchlist_image: watchlist_image,
+                                        watchlist_name: watchlist_name,
+                                        watchlist_symbol: watchlist_symbol,
                                       };
 
                                       try {
@@ -146,7 +153,7 @@ const Watchlist = () => {
                                         if (data) {
                                           history.push("/");
                                           return toast.success(
-                                            `${name} removed from watchlist!`,
+                                            `${watchlist_name} removed from watchlist!`,
                                             {
                                               position:
                                                 toast.POSITION.TOP_CENTER,

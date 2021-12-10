@@ -5,14 +5,19 @@ const authMiddleWare = require("../../middleware/authMiddleWare");
 
 router.post("/add/coins/watchlist", authMiddleWare, async (req, res) => {
   try {
-    const { coinId, image, symbol, name } = req.body;
+    const {
+      watchlist_coinId,
+      watchlist_image,
+      watchlist_symbol,
+      watchlist_name,
+    } = req.body;
     const loginUser = await User.findById(req.user.id);
 
     const watchlistCoins = {
-      coinId,
-      image,
-      symbol,
-      name,
+      watchlist_coinId,
+      watchlist_image,
+      watchlist_symbol,
+      watchlist_name,
     };
 
     await User.findOneAndUpdate(

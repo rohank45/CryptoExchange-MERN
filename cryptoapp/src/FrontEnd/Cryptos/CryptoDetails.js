@@ -172,10 +172,10 @@ const CryptoDetails = () => {
   //add to watchlist
   const addWatchlist = async () => {
     const coinData = {
-      coinId: coin?.id,
-      image: coin?.image.large,
-      symbol: coin?.symbol,
-      name: coin?.name,
+      watchlist_coinId: coin?.id,
+      watchlist_image: coin?.image.large,
+      watchlist_symbol: coin?.symbol,
+      watchlist_name: coin?.name,
     };
 
     try {

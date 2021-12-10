@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 
 const User = require("../models/userSchema");
+const mailHelper = require("../utils/mailHelper");
 
 router.post("/login", async (req, res, next) => {
   try {
@@ -33,6 +34,13 @@ router.post("/login", async (req, res, next) => {
     res.status(201).cookie("token", token, {
       expires: new Date(Date.now() + 1800000),
       httpOnly: true,
+    });
+
+    //mail sent
+    await mailHelper({
+      email: email,
+      subject: "Login At TP-Coin",
+      message: "You've successfully Login at TP-Coin CryptoWebApp!",
     });
 
     res.status(201).json({ message: "User Login successFully!" });

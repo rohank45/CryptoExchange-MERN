@@ -41,19 +41,15 @@ const userSchema = new mongoose.Schema({
     {
       coinId: {
         type: String,
-        unique: true,
       },
       image: {
         type: String,
-        unique: true,
       },
       symbol: {
         type: String,
-        unique: true,
       },
       name: {
         type: String,
-        unique: true,
       },
       quantity: {
         type: Number,
@@ -62,21 +58,17 @@ const userSchema = new mongoose.Schema({
   ],
   watchlists: [
     {
-      coinId: {
+      watchlist_coinId: {
         type: String,
-        unique: true,
       },
-      image: {
+      watchlist_image: {
         type: String,
-        unique: true,
       },
-      symbol: {
+      watchlist_symbol: {
         type: String,
-        unique: true,
       },
-      name: {
+      watchlist_name: {
         type: String,
-        unique: true,
       },
     },
   ],
