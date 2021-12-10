@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Cookies from "universal-cookie";
 import { Link } from "react-router-dom";
-import { CryptoState } from "./CryptoContext";
+import { CryptoState } from "../context/CryptoContext";
 
 import { GiHamburgerMenu } from "react-icons/gi";
 import { CgClose } from "react-icons/cg";

@@ -8,7 +8,7 @@ const User = require("../models/userSchema");
 router.post("/edit/profile", authMiddleWare, async (req, res, next) => {
   try {
     const newData = {
-      name: req.body.name,
+      fullName: req.body.fullName,
       email: req.body.email,
       contactNo: req.body.contactNo,
     };

@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { CoinList } from "../../Config/Api";
-import { CryptoState } from "../../Components/CryptoContext";
+import { CryptoState } from "../../context/CryptoContext";
 import Spinner from "../../Components/Spinner";
 import { RiSearch2Line } from "react-icons/ri";
 import NavBar from "../../Components/NavBar";

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { CoinList } from "../../Config/Api";
-import { CryptoState } from "../../Components/CryptoContext";
+import { CryptoState } from "../../context/CryptoContext";
 import Spinner from "../../Components/Spinner";
 
 const LimCryptos = () => {

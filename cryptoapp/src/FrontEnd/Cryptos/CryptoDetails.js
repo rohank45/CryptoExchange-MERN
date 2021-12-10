@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { SingleCoin } from "../../Config/Api";
-import { CryptoState } from "../../Components/CryptoContext";
+import { CryptoState } from "../../context/CryptoContext";
 import ChartCrypto from "./ChartCrypto";
 import NavBar from "../../Components/NavBar";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
+import { createContext } from "react";
+import Spinner from "../../Components/Spinner";
 
 //razorpay script
 function loadScript(src) {
@@ -25,10 +27,13 @@ function loadScript(src) {
 
 const __dev__ = document.domain === "localhost";
 
+export const CartContext = createContext();
+
 //main function
 const CryptoDetails = () => {
   const { id } = useParams();
   const [coin, setCoin] = useState();
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
   const { currency, symbols } = CryptoState();
 
@@ -45,8 +50,10 @@ const CryptoDetails = () => {
   //get details of selected coin
   const getData = async () => {
     try {
+      setLoading(true);
       const res = await axios.get(SingleCoin(id));
       setCoin(res.data);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -94,11 +101,14 @@ const CryptoDetails = () => {
 
           localStorage.setItem("quantity", counter);
 
-          return toast.success("Payment successfully, please Buy a Coin!", {
+          toast.success("Payment successfully, please Buy a Coin!", {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 3000,
           });
+
+          window.location.reload(false);
         },
+
         //remove this seaction while hosting
         prefill: {
           name: "rohit",
@@ -128,10 +138,8 @@ const CryptoDetails = () => {
       image: coin?.image.large,
       symbol: coin?.symbol,
       name: coin?.name,
-      quanity: localStorage.getItem("quantity"),
+      quantity: localStorage.getItem("quantity"),
     };
-
-    console.log(counter);
 
     try {
       const res = await axios.post("/buy/coins", coins, {
@@ -148,13 +156,55 @@ const CryptoDetails = () => {
         localStorage.removeItem("quantity");
 
         history.push("/");
-        return toast.success("Coin buy Successfully, please check portfolio!", {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 3000,
-        });
+        return toast.success(
+          `${coin?.name} buy Successfully, please check portfolio!`,
+          {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+          }
+        );
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  //add to watchlist
+  const addWatchlist = async () => {
+    const coinData = {
+      coinId: coin?.id,
+      image: coin?.image.large,
+      symbol: coin?.symbol,
+      name: coin?.name,
+    };
+
+    try {
+      const res = await axios.post("/add/coins/watchlist", coinData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = res.data;
+
+      if (data) {
+        history.push("/");
+        return toast.success(
+          `${coin?.name} added to watchlist, please check watchlist!`,
+          {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+          }
+        );
+      }
+    } catch (error) {
+      console.log(error);
+
+      history.push("/login");
+      return toast.warning(`Login to Add a ${coin?.name} to WatchList!`, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
     }
   };
 
@@ -166,104 +216,121 @@ const CryptoDetails = () => {
         className="py-32 mobile:py-0 mobile:pt-32 mx-20 laptop:mx-10 tablet:mx-10 mobile:mx-0 
           flex gap-8 tablet:gap-0 mobile:gap-0 mobile:flex-col tablet:flex-col overflow-x-hidden"
       >
-        <div className="w-1/2 mobile:pl-2 mobile:w-full tablet:w-full">
-          <div className="flex flex-col gap-3">
-            <div className="avatar flex gap-2">
-              <div className="w-16 h-16 mask mask-squircle">
-                <img src={coin?.image.large} alt="crypto icon" />
+        {loading ? (
+          <Spinner />
+        ) : (
+          <div className="w-1/2 mobile:pl-2 mobile:w-full tablet:w-full">
+            <div className="flex flex-col gap-3">
+              <div className="avatar flex gap-2">
+                <div className="w-16 h-16 mask mask-squircle">
+                  <img src={coin?.image.large} alt="crypto icon" />
+                </div>
+                <div className="font-nunito font-bold pt-5 text-2xl uppercase">
+                  {coin?.symbol}
+                </div>
+                <div className="font-nunito font-semibold pt-5 text-2xl">
+                  {coin?.name}
+                </div>
               </div>
-              <div className="font-nunito font-bold pt-5 text-2xl uppercase">
-                {coin?.symbol}
-              </div>
-              <div className="font-nunito font-semibold pt-5 text-2xl">
-                {coin?.name}
-              </div>
-            </div>
-            <div>
-              <p className="font-nunito text-xs py-8">
-                {coin?.description.en}.
-              </p>
-              <p className="font-nunito font-bold flex gap-1 text-lg py-1">
-                <p className="font-bold text-xl lowercase">Rank:</p>
-                {coin?.market_cap_rank}
-              </p>
-              <p className="font-nunito font-semibold flex gap-1 text-lg py-1">
-                <p className="font-bold flex gap-3 text-xl lowercase">
-                  <p>Current Price:</p>₹
+              <div>
+                <p className="font-nunito text-xs py-8">
+                  {coin?.description.en}.
                 </p>
-                {coin?.market_data.current_price.inr}
-              </p>
-              <p className="font-nunito font-semibold flex gap-1 text-lg py-1">
-                <p className="font-bold flex gap-3 text-xl lowercase">
-                  <p>Market Cap:</p>
-                  {symbols}
+                <p className="font-nunito font-bold flex gap-1 text-lg py-1">
+                  <p className="font-bold text-xl lowercase">Rank:</p>
+                  {coin?.market_cap_rank}
                 </p>
-                {coin?.market_data.market_cap[currency.toLowerCase()]}M
-              </p>
-
-              <p className="font-nunito font-semibold flex gap-1 text-lg py-1">
-                <p className="font-bold flex gap-3 text-xl lowercase">
-                  <p>Change:</p>
-                  {symbols}
-                </p>
-                {coin?.market_data.price_change_24h_in_currency[
-                  currency.toLowerCase()
-                ] < 0 ? (
-                  <p className="text-red-600 font-bold">
-                    {coin?.market_data.price_change_24h_in_currency[
-                      currency.toLowerCase()
-                    ].toFixed(2)}
+                <p className="font-nunito font-semibold flex gap-1 text-lg py-1">
+                  <p className="font-bold flex gap-3 text-xl lowercase">
+                    <p>Current Price:</p>₹
                   </p>
-                ) : (
-                  <p className="text-green-500 font-bold">
-                    +{" "}
-                    {coin?.market_data.price_change_24h_in_currency[
-                      currency.toLowerCase()
-                    ].toFixed(2)}
+                  {coin?.market_data.current_price.inr}
+                </p>
+                <p className="font-nunito font-semibold flex gap-1 text-lg py-1">
+                  <p className="font-bold flex gap-3 text-xl lowercase">
+                    <p>Market Cap:</p>
+                    {symbols}
                   </p>
-                )}
-              </p>
+                  {coin?.market_data.market_cap[currency.toLowerCase()]}M
+                </p>
 
-              <p className="font-nunito font-semibold flex gap-1 text-lg py-1">
-                <p className="font-bold flex gap-3 text-xl lowercase">
-                  <p>volume:</p>
-                  {symbols}
+                <p className="font-nunito font-semibold flex gap-1 text-lg py-1">
+                  <p className="font-bold flex gap-3 text-xl lowercase">
+                    <p>Change:</p>
+                    {symbols}
+                  </p>
+                  {coin?.market_data.price_change_24h_in_currency[
+                    currency.toLowerCase()
+                  ] < 0 ? (
+                    <p className="text-red-600 font-bold">
+                      {coin?.market_data.price_change_24h_in_currency[
+                        currency.toLowerCase()
+                      ].toFixed(2)}
+                    </p>
+                  ) : (
+                    <p className="text-green-500 font-bold">
+                      +{" "}
+                      {coin?.market_data.price_change_24h_in_currency[
+                        currency.toLowerCase()
+                      ].toFixed(2)}
+                    </p>
+                  )}
                 </p>
-                {coin?.market_data.total_volume[currency.toLowerCase()]}
-              </p>
-              <p className="font-nunito font-semibold flex gap-1 text-lg py-1 text-blue-600">
-                <p className="font-bold flex gap-3 text-xl text-gray-900 lowercase">
-                  <p>LINK:</p>
+
+                <p className="font-nunito font-semibold flex gap-1 text-lg py-1">
+                  <p className="font-bold flex gap-3 text-xl lowercase">
+                    <p>volume:</p>
+                    {symbols}
+                  </p>
+                  {coin?.market_data.total_volume[currency.toLowerCase()]}
                 </p>
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={coin?.links.homepage[0]}
-                >
-                  {coin?.links.homepage[0]}
-                </a>
-              </p>
-              <p className="font-nunito font-semibold flex gap-1 text-lg py-1">
-                <p className="font-bold flex gap-3 text-lg lowercase">
-                  <p>Last updated time:</p>
+                <p className="font-nunito font-semibold flex gap-1 text-lg py-1 text-blue-600">
+                  <p className="font-bold flex gap-3 text-xl text-gray-900 lowercase">
+                    <p>LINK:</p>
+                  </p>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={coin?.links.homepage[0]}
+                  >
+                    {coin?.links.homepage[0]}
+                  </a>
                 </p>
-                {coin?.last_updated}
-              </p>
+                <p className="font-nunito font-semibold flex gap-1 text-lg py-1">
+                  <p className="font-bold flex gap-3 text-lg lowercase">
+                    <p>Last updated time:</p>
+                  </p>
+                  {coin?.last_updated}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className="w-1/2 mobile:w-full tablet:w-full">
           <ChartCrypto />
 
           <div className="flex justify-center items-center gap-2 mt-8 pc:hidden laptop:hidden tablet:hidden">
-            <button className="bg-red-700 text-white text-4xl font-black rounded-lg shadow-md px-5 pt-1 pb-3">
+            <button
+              onClick={decrementCounter}
+              className="bg-red-700 text-white text-4xl font-black rounded-lg shadow-md px-5 pt-1 pb-3"
+            >
               -
             </button>
 
-            <input className="border-2 border-gray-600 w-14 h-14 p-3 font-bold font-nunito rounded-lg" />
+            <input
+              value={
+                localStorage.getItem("quantity")
+                  ? localStorage.getItem("quantity")
+                  : counter
+              }
+              className="border-2 border-gray-600 w-14 h-14 px-5 pt-1 pb-2 font-bold font-nunito rounded-lg"
+            />
 
-            <button className="bg-green-700 text-white text-4xl font-black rounded-lg shadow-md px-4 pt-1 pb-3">
+            <button
+              onClick={incrementCounter}
+              className="bg-green-700 text-white text-4xl font-black rounded-lg shadow-md px-4 pt-1 pb-3"
+            >
               +
             </button>
           </div>
@@ -290,8 +357,7 @@ const CryptoDetails = () => {
             <div className="flex justify-center items-center gap-2 mobile:hidden">
               <button
                 onClick={decrementCounter}
-                className="bg-red-700 text-white text-5xl font-black rounded-lg shadow-md text-center px-5 py-3
-                  mobile:py-2 mobile:px-4 mobile:text-3xl"
+                className="bg-red-700 text-white text-5xl font-black rounded-lg shadow-md text-center px-5 py-3"
               >
                 -
               </button>
@@ -302,20 +368,19 @@ const CryptoDetails = () => {
                     ? localStorage.getItem("quantity")
                     : counter
                 }
-                className="border-2 border-gray-600 w-14 h-14 px-5 py-3 font-bold font-nunito rounded-lg
-                  mobile:w-12 mobile:h-12"
+                className="border-2 border-gray-600 w-14 h-14 px-5 py-3 font-bold font-nunito rounded-lg"
               />
 
               <button
                 onClick={incrementCounter}
-                className="bg-green-700 text-white text-5xl font-black rounded-lg shadow-md text-center px-4 py-3
-                  mobile:py-2 mobile:px-4 mobile:text-2xl"
+                className="bg-green-700 text-white text-5xl font-black rounded-lg shadow-md text-center px-4 py-3"
               >
                 +
               </button>
             </div>
 
             <button
+              onClick={addWatchlist}
               className="font-bold text-xl w-52 rounded-lg bg-gray-300 border-2 border-gray-600 mobile:rounded-none 
                 mobile:w-1/2 py-3 mobile:px-0 mobile:border-none hover:bg-gray-600 hover:text-white mobile:py-4"
             >

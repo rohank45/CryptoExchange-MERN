@@ -10,7 +10,7 @@ const EditProfile = () => {
 
   const [user, setUser] = useState({
     profilePic: "",
-    name: "",
+    fullName: "",
     email: "",
     contactNo: "",
   });
@@ -33,7 +33,7 @@ const EditProfile = () => {
       setUser({
         ...user,
         profilePic: data.userProfile.profilePic.secure_url,
-        name: data.userProfile.name,
+        fullName: data.userProfile.fullName,
         email: data.userProfile.email,
         contactNo: data.userProfile.contactNo,
       });
@@ -60,7 +60,7 @@ const EditProfile = () => {
       const formData = new FormData();
 
       formData.append("profilePic", user.profilePic);
-      formData.append("name", user.name);
+      formData.append("fullName", user.fullName);
       formData.append("email", user.email);
       formData.append("contactNo", user.contactNo);
 
@@ -122,8 +122,8 @@ const EditProfile = () => {
                         minLength="2"
                         maxLength="20"
                         pattern="[a-zA-Z]+([ ]?[a-zA-Z]+)*"
-                        name="name"
-                        value={user?.name}
+                        name="fullName"
+                        value={user?.fullName}
                         onChange={handleInputs}
                         placeholder="name"
                         className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300

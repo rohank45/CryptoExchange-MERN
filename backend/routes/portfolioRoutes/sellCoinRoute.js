@@ -47,3 +47,25 @@ router.post("/sell/coins", authMiddleWare, async (req, res) => {
 });
 
 module.exports = router;
+
+// const { coinId, image, symbol, name, quantity } = req.body;
+// const loginUser = await User.findById(req.user.id);
+
+// const coins = {
+//   coinId,
+//   image,
+//   symbol,
+//   name,
+//   quantity,
+// };
+
+// await User.findOneAndUpdate(
+//   {
+//     email: loginUser.email,
+//   },
+//   {
+//     $push: {
+//       coins: coins,
+//     },
+//   }
+// );

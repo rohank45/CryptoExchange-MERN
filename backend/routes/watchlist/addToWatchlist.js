@@ -3,17 +3,16 @@ const router = express.Router();
 const User = require("../../models/userSchema");
 const authMiddleWare = require("../../middleware/authMiddleWare");
 
-router.post("/buy/coins", authMiddleWare, async (req, res, next) => {
+router.post("/add/coins/watchlist", authMiddleWare, async (req, res) => {
   try {
-    const { coinId, image, symbol, name, quantity } = req.body;
+    const { coinId, image, symbol, name } = req.body;
     const loginUser = await User.findById(req.user.id);
 
-    const coins = {
+    const watchlistCoins = {
       coinId,
       image,
       symbol,
       name,
-      quantity,
     };
 
     await User.findOneAndUpdate(
@@ -22,11 +21,13 @@ router.post("/buy/coins", authMiddleWare, async (req, res, next) => {
       },
       {
         $push: {
-          coins: coins,
+          watchlists: watchlistCoins,
         },
       }
     );
-    res.status(201).json({ message: "Coin buy Successfully!" });
+    res
+      .status(201)
+      .json({ message: "Coin added to watchlist, please check watchlist!" });
   } catch (error) {
     console.log(error.message);
   }

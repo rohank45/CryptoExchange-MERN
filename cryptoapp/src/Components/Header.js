@@ -20,12 +20,7 @@ const Header = () => {
           </p>
           <div>
             {cookies.get("isLogin") ? (
-              <button
-                className="my-5 text-2xl font-semibold bg-gray-800 hover:bg-black text-gray-50 rounded-md px-5 py-2 mobile:text-xl hidden"
-                onClick={() => history.push("/register")}
-              >
-                Register Now
-              </button>
+              ""
             ) : (
               <button
                 className="my-5 text-2xl font-semibold bg-gray-800 hover:bg-black text-gray-50 rounded-md px-5 py-2 mobile:text-xl"

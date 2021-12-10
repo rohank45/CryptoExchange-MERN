@@ -14,6 +14,8 @@ const Logout = () => {
 
       cookies.remove("isLogin");
 
+      localStorage.removeItem("watchlist_data");
+
       history.push("/login");
       return toast.success("Logout Successfully!", {
         position: toast.POSITION.TOP_CENTER,

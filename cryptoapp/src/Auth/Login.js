@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Cookies from "universal-cookie";
 import { Link, useHistory } from "react-router-dom";
 import login from "../Images/signup.png";
-import { FcGoogle } from "react-icons/fc";
+// import { FcGoogle } from "react-icons/fc";
 import NavBar from "../Components/NavBar";
 
 import axios from "axios";
@@ -45,7 +45,9 @@ const Login = () => {
         let expirestimeCookie = new Date();
         expirestimeCookie.setTime(expirestimeCookie.getTime() + 30 * 60 * 1000);
 
-        cookies.set("isLogin", "true", { expires: expirestimeCookie });
+        cookies.set("isLogin", "true", {
+          expires: expirestimeCookie,
+        });
 
         history.push("/");
         return toast.success("Login Successful!", {
@@ -148,7 +150,7 @@ const Login = () => {
                       </Link>
                     </div>
 
-                    <div
+                    {/* <div
                       className="bg-white text-black hover:bg-black hover:text-white shadow py-3 px-5 rounded cursor-pointer 
                         flex justify-start items-center border border-black font-bold font-nunito w-full"
                     >
@@ -158,11 +160,16 @@ const Login = () => {
 
                       <span className="border-l border-gray-50 h-6 w-1 block"></span>
                       <button className="pl-3">
+                        {cookies.get("express:sess") ||
+                        cookies.get("express:sess.sig")
+                          ? cookies.set("isGoogleLogin", "true")
+                          : ""}
+
                         <a href="http://localhost:5000/auth/google">
                           Sign up with Google
                         </a>
                       </button>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

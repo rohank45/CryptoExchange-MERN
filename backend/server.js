@@ -89,10 +89,6 @@ app.use("/", resetPassRoute);
 const changePassRoute = require("./routes/changePassRoute");
 app.use("/", changePassRoute);
 
-//google oauth login logout and profile
-const googleLogin = require("./routes/googleOauth/googleLogin");
-app.use("/", googleLogin);
-
 //payment using razorpay key
 const razorpayPayment = require("./routes/razorpayPayment");
 app.use("/", razorpayPayment);
@@ -108,6 +104,22 @@ app.use("/", sellCoinRoute);
 //sending data of saved coins to client
 const getPortfolioData = require("./routes/portfolioRoutes/getPortfolioData");
 app.use("/", getPortfolioData);
+
+//add coin to watchlist in db
+const addToWatchlist = require("./routes/watchlist/addToWatchlist");
+app.use("/", addToWatchlist);
+
+//remove coin to watchlist in db
+const removeFromWatchlist = require("./routes/watchlist/removeFromWatchlist");
+app.use("/", removeFromWatchlist);
+
+//sending data of coin saved in watchlist in db
+const getWatchlistData = require("./routes/watchlist/getWatchlistData");
+app.use("/", getWatchlistData);
+
+//remove all coin to watchlist in db
+const removeAllWatchlist = require("./routes/watchlist/removeAllWatchlist");
+app.use("/", removeAllWatchlist);
 
 //listing app on PORT
 app.listen(process.env.PORT, () => {

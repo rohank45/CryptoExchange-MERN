@@ -4,15 +4,21 @@ import { useHistory } from "react-router";
 import { toast } from "react-toastify";
 import NavBar from "../Components/NavBar";
 import portfolio from "../Images/portfolio.png";
+import Spinner from "../Components/Spinner";
 
 const Portfolio = () => {
   const history = useHistory();
+  const [loading, setLoading] = useState(false);
   const [coin, setCoin] = useState([]);
 
   const getPortfolioData = async () => {
     try {
+      setLoading(true);
+
       const res = await axios.get("/portfolio");
       setCoin(res.data.userProfile.coins);
+
+      setLoading(false);
     } catch (error) {
       history.push("/login");
       return toast.warning("Login to access a portfolio!", {
@@ -61,88 +67,92 @@ const Portfolio = () => {
                       </thead>
 
                       <tbody className="bg-white divide-y divide-gray-200">
-                        {coin.map((curElem, id) => {
-                          const { image, symbol, name, quanity } = curElem;
+                        {loading ? (
+                          <Spinner />
+                        ) : (
+                          coin.map((curElem, id) => {
+                            const { image, symbol, name, quantity } = curElem;
 
-                          return (
-                            <>
-                              <tr key={id}>
-                                <td className="px-6 py-5 whitespace-nowrap mobile:px-0 tablet:px-2">
-                                  <div
-                                    className="flex items-center cursor-pointer"
-                                    onClick={() =>
-                                      history.push(`/coins/${curElem.coinId}`)
-                                    }
-                                  >
-                                    <div className="flex-shrink-0 h-10 w-10">
-                                      <img
-                                        className="h-10 w-10 rounded-full"
-                                        src={image}
-                                        alt="crypto icon"
-                                      />
+                            return (
+                              <>
+                                <tr key={id}>
+                                  <td className="px-6 py-5 whitespace-nowrap mobile:px-0 tablet:px-2">
+                                    <div
+                                      className="flex items-center cursor-pointer"
+                                      onClick={() =>
+                                        history.push(`/coins/${curElem.coinId}`)
+                                      }
+                                    >
+                                      <div className="flex-shrink-0 h-10 w-10">
+                                        <img
+                                          className="h-10 w-10 rounded-full"
+                                          src={image}
+                                          alt="crypto icon"
+                                        />
+                                      </div>
+                                      <div className="ml-4 flex gap-4 mobile:flex-col mobile:gap-2">
+                                        <div className="mobile:text-sm text-lg font-bold text-gray-900 uppercase">
+                                          {symbol}
+                                        </div>
+                                        <div className="mobile:text-sm text-lg text-gray-500">
+                                          {name}
+                                        </div>
+                                        <div className="mobile:text-sm text-lg font-bold text-gray-900 uppercase">
+                                          {quantity}
+                                        </div>
+                                      </div>
                                     </div>
-                                    <div className="ml-4 flex gap-4 mobile:flex-col mobile:gap-2">
-                                      <div className="mobile:text-sm text-lg font-bold text-gray-900 uppercase">
-                                        {symbol}
-                                      </div>
-                                      <div className="mobile:text-sm text-lg text-gray-500">
-                                        {name}
-                                      </div>
-                                      <div className="mobile:text-sm text-lg font-bold text-gray-900 uppercase">
-                                        {quanity}
-                                      </div>
-                                    </div>
-                                  </div>
-                                </td>
+                                  </td>
 
-                                <td className="py-4 whitespace-nowrap mobile:pl-2 mobile:px-0">
-                                  <button
-                                    onClick={async () => {
-                                      const coins = {
-                                        coinId: curElem.coinId,
-                                        image: image,
-                                        name: name,
-                                        symbol: symbol,
-                                        quanity: quanity,
-                                      };
+                                  <td className="py-4 whitespace-nowrap mobile:pl-2 mobile:px-0">
+                                    <button
+                                      onClick={async () => {
+                                        const coins = {
+                                          coinId: curElem.coinId,
+                                          image: image,
+                                          name: name,
+                                          symbol: symbol,
+                                          quantity: quantity,
+                                        };
 
-                                      try {
-                                        const res = await axios.post(
-                                          "/sell/coins",
-                                          coins,
-                                          {
-                                            headers: {
-                                              "Content-Type":
-                                                "application/json",
-                                            },
-                                          }
-                                        );
-
-                                        const data = res.data;
-                                        if (data) {
-                                          history.push("/");
-                                          return toast.success(
-                                            "Coin sell Successfully, Refund will get in 3 working days!",
+                                        try {
+                                          const res = await axios.post(
+                                            "/sell/coins",
+                                            coins,
                                             {
-                                              position:
-                                                toast.POSITION.TOP_CENTER,
-                                              autoClose: 3000,
+                                              headers: {
+                                                "Content-Type":
+                                                  "application/json",
+                                              },
                                             }
                                           );
+
+                                          const data = res.data;
+                                          if (data) {
+                                            history.push("/");
+                                            return toast.success(
+                                              "Coin sell Successfully, Refund will get in 3 working days!",
+                                              {
+                                                position:
+                                                  toast.POSITION.TOP_CENTER,
+                                                autoClose: 3000,
+                                              }
+                                            );
+                                          }
+                                        } catch (error) {
+                                          console.log(error.message);
                                         }
-                                      } catch (error) {
-                                        console.log(error.message);
-                                      }
-                                    }}
-                                    className="text-2xl bg-red-700 text-white font-semibold font-nunito mobile:text-sm mobile:px-2 px-4 mx-6 mobile:mx-0 py-2 rounded-md"
-                                  >
-                                    Sell Coin
-                                  </button>
-                                </td>
-                              </tr>
-                            </>
-                          );
-                        })}
+                                      }}
+                                      className="text-2xl bg-red-700 text-white font-semibold font-nunito mobile:text-sm mobile:px-2 px-4 mx-6 mobile:mx-0 py-2 rounded-md"
+                                    >
+                                      Sell Coin
+                                    </button>
+                                  </td>
+                                </tr>
+                              </>
+                            );
+                          })
+                        )}
                       </tbody>
                     </table>
                   </div>

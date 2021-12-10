@@ -25,7 +25,7 @@ const Register = () => {
   };
 
   const [user, setUser] = useState({
-    name: "",
+    fullName: "",
     email: "",
     contactNo: "",
     passwords: "",
@@ -45,9 +45,9 @@ const Register = () => {
   const submitRegisterForm = async (e) => {
     e.preventDefault();
 
-    const { name, email, contactNo, passwords, cpasswords } = user;
+    const { fullName, email, contactNo, passwords, cpasswords } = user;
 
-    if (!name || !email || !contactNo || !passwords || !cpasswords) {
+    if (!fullName || !email || !contactNo || !passwords || !cpasswords) {
       return toast.error("All fields are mandatory!", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
@@ -65,7 +65,7 @@ const Register = () => {
       const formData = new FormData();
 
       formData.append("profilePic", user.profilePic);
-      formData.append("name", user.name);
+      formData.append("fullName", user.fullName);
       formData.append("email", user.email);
       formData.append("contactNo", user.contactNo);
       formData.append("passwords", user.passwords);
@@ -131,8 +131,8 @@ const Register = () => {
                           minLength="2"
                           maxLength="20"
                           pattern="[a-zA-Z]+([ ]?[a-zA-Z]+)*"
-                          name="name"
-                          value={user.name}
+                          name="fullName"
+                          value={user.fullName}
                           onChange={handleInputs}
                           placeholder="name"
                           className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300

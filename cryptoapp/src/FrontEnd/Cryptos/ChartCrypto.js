@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-import { CryptoState } from "../../Components/CryptoContext";
+import { CryptoState } from "../../context/CryptoContext";
 import { HistoricalChart } from "../../Config/Api";
 import { chartDays } from "../../Config/ChartData";
 import Spinner from "../../Components/Spinner";

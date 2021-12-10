@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { CryptoState } from "./CryptoContext";
+import { CryptoState } from "../context/CryptoContext";
 import { makeStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import AliceCarousel from "react-alice-carousel";

@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
       required: true,
     },
   },
-  name: {
+  fullName: {
     type: String,
     required: true,
   },
@@ -41,18 +41,42 @@ const userSchema = new mongoose.Schema({
     {
       coinId: {
         type: String,
+        unique: true,
       },
       image: {
         type: String,
+        unique: true,
       },
       symbol: {
         type: String,
+        unique: true,
       },
       name: {
         type: String,
+        unique: true,
       },
-      quanity: {
+      quantity: {
         type: Number,
+      },
+    },
+  ],
+  watchlists: [
+    {
+      coinId: {
+        type: String,
+        unique: true,
+      },
+      image: {
+        type: String,
+        unique: true,
+      },
+      symbol: {
+        type: String,
+        unique: true,
+      },
+      name: {
+        type: String,
+        unique: true,
       },
     },
   ],

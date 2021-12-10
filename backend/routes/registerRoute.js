@@ -23,9 +23,9 @@ router.post("/register", async (req, res, next) => {
         .json({ message: "Please provide a profile picture!" });
     }
 
-    const { name, email, contactNo, passwords, cpasswords } = req.body;
+    const { fullName, email, contactNo, passwords, cpasswords } = req.body;
 
-    if (!name || !email || !contactNo || !passwords || !cpasswords) {
+    if (!fullName || !email || !contactNo || !passwords || !cpasswords) {
       return res.status(401).json({ message: "All fields are mandatory!" });
     }
 
@@ -54,7 +54,7 @@ router.post("/register", async (req, res, next) => {
         id: result.public_id,
         secure_url: result.secure_url,
       },
-      name,
+      fullName,
       email,
       contactNo,
       passwords,
