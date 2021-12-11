@@ -40,19 +40,6 @@ cloudinary.config({
   api_secret: process.env.CLOUD_API_SECRETE,
 });
 
-//passport initialization
-const passport = require("passport");
-app.use(passport.initialize());
-
-//passport cookie session
-const cookieSession = require("cookie-session");
-app.use(
-  cookieSession({
-    maxAge: 1 * 24 * 60 * 60 * 1000,
-    keys: [process.env.PASSPORT_SECRET_KEY],
-  })
-);
-
 //register
 const registerRoute = require("./routes/registerRoute");
 app.use("/", registerRoute);

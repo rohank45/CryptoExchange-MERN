@@ -38,8 +38,16 @@ const ChartCrypto = () => {
 
   return (
     <div className="font-nunito">
-      <div className="uppercase font-bold text-4xl my-8 mobile:text-3xl mobile:py-5">
-        coin chart :
+      <div className="flex justify-between items-center mx-2">
+        <p className="uppercase font-bold text-4xl my-8 mobile:text-3xl mobile:py-5">
+          coin chart :
+        </p>
+        <button
+          className="text-sm font-semibold text-yellow-900 bg-gray-300 h-10 p-1 rounded-sm uppercase"
+          onClick={() => window.location.reload(false)}
+        >
+          *Refresh Chart
+        </button>
       </div>
       {!coinHistory ? (
         <Spinner />

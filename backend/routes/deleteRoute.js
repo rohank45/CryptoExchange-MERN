@@ -22,7 +22,7 @@ router.delete("/deleteUser", authMiddleWare, async (req, res) => {
       email: user.email,
       subject: "Account Delete At TP-Coin",
       message:
-        "You've successfully Deleted your account at TP-Coin CryptoWebApp!",
+        "You've successfully Deleted your account at TP-Coin India's leading Crypto Currency Exchange!",
     });
 
     res.status(201).json({ message: "User deleted successfully" });

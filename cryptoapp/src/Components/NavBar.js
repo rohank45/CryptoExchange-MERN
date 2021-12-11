@@ -67,21 +67,13 @@ const NavBar = () => {
           <option value="INR">INR</option>
           <option value="USD">USD</option>
         </select>
-
-        <select
-          name="currencies"
-          className="bg-gray-400 outline-none font-semibold cursor-pointer"
-        >
-          <option value="LIGHT">Light</option>
-          <option value="DARK">Dark</option>
-        </select>
       </div>
 
       <button
         onClick={() => {
           showSideMenu();
         }}
-        className="menu-button overflow-x-hidden px-10 text-2xl mobile:px-0 tablet:px-2 mobile:mr-1 tablet:mr-2"
+        className="menu-button overflow-x-hidden text-2xl mr-5"
       >
         {isSideMenuOpen ? <CgClose /> : <GiHamburgerMenu />}
       </button>

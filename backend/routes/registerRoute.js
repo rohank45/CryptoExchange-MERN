@@ -66,7 +66,7 @@ router.post("/register", async (req, res, next) => {
       email: email,
       subject: "Registration At TP-Coin",
       message:
-        "You've successfully completed Registration at TP-Coin CryptoWebApp!",
+        "You've successfully completed Registration at TP-Coin India's leading Crypto Currency Exchange!",
     });
 
     res.status(201).json({ message: "User registered successfully!" });

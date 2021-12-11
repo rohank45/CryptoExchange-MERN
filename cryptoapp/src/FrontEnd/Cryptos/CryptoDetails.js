@@ -93,20 +93,20 @@ const CryptoDetails = () => {
         order_id: order.id,
 
         handler: async function(response) {
-          console.log("frontend paymentId", response.razorpay_payment_id);
-          console.log("frontend order_id", response.razorpay_order_id);
-          console.log("frontend signature", response.razorpay_signature);
+          // console.log("frontend paymentId", response.razorpay_payment_id);
+          // console.log("frontend order_id", response.razorpay_order_id);
+          // console.log("frontend signature", response.razorpay_signature);
 
           localStorage.setItem("isBuyCoin", "true");
 
           localStorage.setItem("quantity", counter);
 
-          toast.success("Payment successfully, please Buy a Coin!", {
+          window.location.reload(false);
+
+          return toast.success("Payment successfully, please Buy a Coin!", {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 3000,
           });
-
-          window.location.reload(false);
         },
 
         //remove this seaction while hosting

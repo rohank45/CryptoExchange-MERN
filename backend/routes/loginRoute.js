@@ -40,7 +40,8 @@ router.post("/login", async (req, res, next) => {
     await mailHelper({
       email: email,
       subject: "Login At TP-Coin",
-      message: "You've successfully Login at TP-Coin CryptoWebApp!",
+      message:
+        "You've successfully Login at TP-Coin India's leading Crypto Currency Exchange!",
     });
 
     res.status(201).json({ message: "User Login successFully!" });

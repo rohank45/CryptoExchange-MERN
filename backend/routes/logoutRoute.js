@@ -11,7 +11,8 @@ router.get("/logout", authMiddleWare, async (req, res) => {
   await mailHelper({
     email: user.email,
     subject: "Logout At TP-Coin",
-    message: "You've successfully Logout at TP-Coin CryptoWebApp!",
+    message:
+      "You've successfully Logout at TP-Coin India's leading Crypto Currency Exchange!",
   });
 
   res.clearCookie("token");

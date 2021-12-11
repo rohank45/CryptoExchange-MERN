@@ -30,6 +30,7 @@ const mailHelper = async (user) => {
   //     pass: process.env.SMTP_PASS,
   //   },
   // });
+
   // const info = {
   //   from: "tpcoin08@gmail.com",
   //   to: user.email,

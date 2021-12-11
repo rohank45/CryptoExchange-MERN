@@ -209,8 +209,13 @@ const Cryptos = () => {
                                 </td>
 
                                 <td className="pr-20 py-4 whitespace-nowrap text-right font-medium tablet:hidden mobile:hidden">
-                                  <button className="text-indigo-600 hover:underline">
-                                    Buy
+                                  <button
+                                    onClick={() =>
+                                      history.push(`/coins/${curElem.id}`)
+                                    }
+                                    className="text-indigo-600 hover:underline"
+                                  >
+                                    View Details
                                   </button>
                                 </td>
                               </tr>
