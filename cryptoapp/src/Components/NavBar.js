@@ -27,7 +27,7 @@ const NavBar = () => {
 
   return (
     <div
-      className="fixed font-nunito w-full py-6 flex justify-between items-center z-40
+      className="fixed select-none font-nunito w-full py-6 flex justify-between items-center z-40
           shadow-lg text-xl bg-gray-400 text-gray-800 mobile:py-5 overflow-x-hidden"
     >
       <div className="flex gap-4 items-center text-3xl px-2 mobile:text-xl mobile:gap-2">

@@ -7,7 +7,7 @@ const ErrorPage = () => {
   return (
     <>
       <NavBar />
-      <div className="flex justify-center pt-32 mobile:pt-40 px-5">
+      <div className="flex justify-center pt-32 mobile:pt-40 px-5 select-none">
         <div className="text-5xl mobile:text-2xl text-center font-bold font-nunito">
           <span className="h-96 w-96">
             <img src={errors} alt="error" />

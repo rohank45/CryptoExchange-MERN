@@ -4,7 +4,7 @@ import Winners from "../Images/Winners.png";
 
 const Middle = () => {
   return (
-    <div className="flex justify-center mt-20">
+    <div className="flex justify-center mt-20 select-none">
       <div className="font-nunito w-3/5 shadow-xl rounded-lg border-2 border-gray-200 py-5 px-8 laptop:w-4/5 tablet:w-full mobile:w-full">
         <div className="flex items-center gap-10">
           <div className="w-full tablet:w-1/2 mobile:hidden">

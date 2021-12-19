@@ -8,7 +8,7 @@ const Header = () => {
   const history = useHistory();
 
   return (
-    <div className="relative top-28 px-52 mb-20 bg-gray-200 mobile:px-1 tablet:px-10 laptop:px-32">
+    <div className="select-none relative top-28 px-52 mb-20 bg-gray-200 mobile:px-1 tablet:px-10 laptop:px-32">
       <div className="bg-taj-mahal bg-no-repeat bg-right bg-opacity-0">
         <div className="p-10 font-nunito">
           <p className="text-5xl font-bold my-5">Welcome to TP-Coin</p>

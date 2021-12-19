@@ -10,7 +10,7 @@ const Footer = () => {
 
   return (
     <div>
-      <footer className="font-nunito p-10 footer bg-gray-400 text-base-content footer-center">
+      <footer className="font-nunito select-none p-10 footer bg-gray-400 text-base-content footer-center">
         <div className="grid grid-flow-col gap-4 text-lg font-semibold">
           <p className="link link-hover">About us</p>
           <p className="link link-hover">Contact</p>

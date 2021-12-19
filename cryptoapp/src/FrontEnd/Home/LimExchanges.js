@@ -34,7 +34,7 @@ const LimExchanges = () => {
 
   return (
     <>
-      <p className="text-center text-5xl font-bold pt-24 uppercase font-nunito">
+      <p className="text-center text-5xl font-bold pt-24 uppercase font-nunito select-none">
         Exchanges
       </p>
 

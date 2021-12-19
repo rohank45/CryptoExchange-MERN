@@ -4,7 +4,7 @@ import imgas from "../Images/FinanceappMonochromatic.png";
 const CustomerReview = () => {
   return (
     <>
-      <div className="my-20 font-nunito ">
+      <div className="my-20 font-nunito select-none">
         <p className="font-bold text-center text-4xl pb-5 mobile:text-2xl">
           Here’s what our customer's think :
         </p>
