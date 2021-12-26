@@ -108,6 +108,19 @@ app.use("/", getWatchlistData);
 const removeAllWatchlist = require("./routes/watchlist/removeAllWatchlist");
 app.use("/", removeAllWatchlist);
 
+// ----------------- production --------------------------
+// const path = require("path");
+
+// __dirname = path.resolve();
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "/client/build")));
+
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+//   });
+// }
+// ----------------- production --------------------------
+
 //listing app on PORT
 app.listen(process.env.PORT, () => {
   console.log("server started...");

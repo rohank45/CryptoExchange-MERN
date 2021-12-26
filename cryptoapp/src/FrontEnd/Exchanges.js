@@ -43,7 +43,7 @@ const Exchanges = () => {
   return (
     <>
       <NavBar />
-      <p className="text-center text-3xl font-bold pt-24 uppercase font-nunito select-none">
+      <p className="text-center text-5xl font-bold pt-32 pb-10 uppercase font-nunito select-none">
         Exchanges
       </p>
 

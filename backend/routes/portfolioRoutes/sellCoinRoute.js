@@ -4,40 +4,16 @@ const User = require("../../models/userSchema");
 const authMiddleWare = require("../../middleware/authMiddleWare");
 
 router.post("/sell/coins", authMiddleWare, async (req, res) => {
-  const { coinId, image, symbol, name, quanity } = req.body;
-  const userEmail = await User.findById(req.user.id);
-
-  // console.log(userEmail.coins);
-
   try {
-    const coins = {
-      coinId,
-      image,
-      symbol,
-      name,
-      quanity,
-    };
-
-    await User.findOneAndUpdate(
-      {
-        email: userEmail.email,
+    await User.findByIdAndUpdate(req.user.id, {
+      $pull: {
+        myCoins: { coinId: req.body.coinId },
       },
-      {
-        $pull: {
-          coins: coins,
-        },
-      }
-    );
+    });
 
-    // await User.findByIdAndDelete(
-    //   {
-    //     coinId: userEmail.coins._id,
-    //   },
-    //   {
-    //     $pull: {
-    //       coins: coins,
-    //     },
-    //   }
+    // await User.findOneAndUpdate(
+    //   { order_uniqueId: req.body.order_uniqueId },
+    //   { quantity: quantity }
     // );
 
     res.status(201).json({ message: "Coin sell Successfully!" });
@@ -47,25 +23,3 @@ router.post("/sell/coins", authMiddleWare, async (req, res) => {
 });
 
 module.exports = router;
-
-// const { coinId, image, symbol, name, quantity } = req.body;
-// const loginUser = await User.findById(req.user.id);
-
-// const coins = {
-//   coinId,
-//   image,
-//   symbol,
-//   name,
-//   quantity,
-// };
-
-// await User.findOneAndUpdate(
-//   {
-//     email: loginUser.email,
-//   },
-//   {
-//     $push: {
-//       coins: coins,
-//     },
-//   }
-// );

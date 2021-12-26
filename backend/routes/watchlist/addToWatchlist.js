@@ -12,8 +12,6 @@ router.post("/add/coins/watchlist", authMiddleWare, async (req, res) => {
       watchlist_name,
     } = req.body;
 
-    const loginUser = await User.findById(req.user.id);
-
     const watchlistCoins = {
       watchlist_coinId,
       watchlist_image,
@@ -21,24 +19,9 @@ router.post("/add/coins/watchlist", authMiddleWare, async (req, res) => {
       watchlist_name,
     };
 
-    // const checkCoinPresence = await loginUser.findOne({ watchlist_coinId });
-
-    // if (checkCoinPresence) {
-    //   return res
-    //     .status(401)
-    //     .json({ message: "A coin is already added to the watchlist!" });
-    // }
-
-    await User.findOneAndUpdate(
-      {
-        email: loginUser.email,
-      },
-      {
-        $push: {
-          watchlists: watchlistCoins,
-        },
-      }
-    );
+    const loginUser = await User.findById(req.user.id);
+    loginUser.watchlists.unshift(watchlistCoins);
+    await loginUser.save();
 
     res
       .status(201)

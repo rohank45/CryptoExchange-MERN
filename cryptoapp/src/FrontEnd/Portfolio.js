@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import NavBar from "../Components/NavBar";
 import portfolio from "../Images/portfolio.png";
 import Spinner from "../Components/Spinner";
+// import empty_cart from "../Images/undraw_empty_cart.png";
 
 const Portfolio = () => {
   const history = useHistory();
@@ -16,7 +17,7 @@ const Portfolio = () => {
       setLoading(true);
 
       const res = await axios.get("/portfolio");
-      setCoin(res.data.userProfile.coins);
+      setCoin(res.data.userProfile.myCoins);
 
       setLoading(false);
     } catch (error) {
@@ -65,18 +66,17 @@ const Portfolio = () => {
                           ></th>
                         </tr>
                       </thead>
-
                       <tbody className="bg-white divide-y divide-gray-200">
                         {loading ? (
                           <Spinner />
                         ) : (
-                          coin.map((curElem, id) => {
+                          coin?.map((curElem, id) => {
                             const { image, symbol, name, quantity } = curElem;
 
                             return (
                               <>
                                 <tr key={id}>
-                                  <td className="px-6 py-5 whitespace-nowrap mobile:px-0 tablet:px-2">
+                                  <td className="flex justify-between items-center px-6 py-5 whitespace-nowrap mobile:px-8 tablet:px-2">
                                     <div
                                       className="flex items-center cursor-pointer"
                                       onClick={() =>
@@ -97,21 +97,20 @@ const Portfolio = () => {
                                         <div className="mobile:text-sm text-lg text-gray-500">
                                           {name}
                                         </div>
-                                        <div className="mobile:text-sm text-lg font-bold text-gray-900 uppercase">
-                                          {quantity}
-                                        </div>
                                       </div>
                                     </div>
-                                  </td>
 
-                                  <td className="py-4 whitespace-nowrap mobile:pl-2 mobile:px-0">
+                                    <div className="mobile:text-sm text-lg font-bold text-gray-900 uppercase px-5">
+                                      {quantity}
+                                    </div>
+
                                     <button
+                                      className="py-2 whitespace-nowrap mobile:pl-2 text-2xl bg-red-700 text-white font-semibold font-nunito mobile:text-sm mobile:px-2 px-4 mx-6 mobile:mx-0 rounded-md"
                                       onClick={async () => {
                                         const coins = {
+                                          order_uniqueId:
+                                            curElem.order_uniqueId,
                                           coinId: curElem.coinId,
-                                          image: image,
-                                          name: name,
-                                          symbol: symbol,
                                           quantity: quantity,
                                         };
 
@@ -130,7 +129,7 @@ const Portfolio = () => {
                                           const data = res.data;
                                           if (data) {
                                             history.push("/");
-                                            return toast.success(
+                                            toast.success(
                                               "Coin sell Successfully, Refund will get in 3 working days!",
                                               {
                                                 position:
@@ -143,7 +142,6 @@ const Portfolio = () => {
                                           console.log(error.message);
                                         }
                                       }}
-                                      className="text-2xl bg-red-700 text-white font-semibold font-nunito mobile:text-sm mobile:px-2 px-4 mx-6 mobile:mx-0 py-2 rounded-md"
                                     >
                                       Sell Coin
                                     </button>
@@ -167,3 +165,5 @@ const Portfolio = () => {
 };
 
 export default Portfolio;
+
+// coin?.length === 0 ? "Your Cart is empty!" :

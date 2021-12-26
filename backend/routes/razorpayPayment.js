@@ -17,7 +17,6 @@ router.post("/razorpay/payment", userAuth, async (req, res, next) => {
     var options = {
       amount,
       currency,
-      //create a token or unique id as a receipt create using crypto or uuid or nanoid
       receipt: "receipt#1",
       notes: {
         key1: "value3",

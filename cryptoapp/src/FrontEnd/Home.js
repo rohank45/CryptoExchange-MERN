@@ -48,10 +48,11 @@ const Home = () => {
       <LimNews />
       <BasicQue />
       <CustomerReview />
-      <Footer />
 
       <ScrollToTop />
       <VoiceAss />
+
+      <Footer />
     </div>
   );
 };

@@ -36,6 +36,7 @@ const CryptoDetails = () => {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const { currency, symbols } = CryptoState();
+  const [paymentToken, setPaymentToken] = useState("");
 
   //increment and decrement
   const [counter, setCounter] = useState(1);
@@ -80,6 +81,7 @@ const CryptoDetails = () => {
       const response = await axios.post("/razorpay/payment", {
         amount: coin?.market_data.current_price.inr * 100 * counter,
       });
+
       const convertRes = await response.data;
       const { order } = convertRes;
 
@@ -92,10 +94,12 @@ const CryptoDetails = () => {
         amount: coin?.market_data.current_price.inr * 100 * counter,
         order_id: order.id,
 
-        handler: async function(response) {
+        handler: async function (response) {
           // console.log("frontend paymentId", response.razorpay_payment_id);
           // console.log("frontend order_id", response.razorpay_order_id);
           // console.log("frontend signature", response.razorpay_signature);
+
+          setPaymentToken(response.razorpay_payment_id);
 
           localStorage.setItem("isBuyCoin", "true");
 
@@ -103,7 +107,7 @@ const CryptoDetails = () => {
 
           window.location.reload(false);
 
-          return toast.success("Payment successfully, please Buy a Coin!", {
+          return toast.success("Payment successfull, please Buy a Coin!", {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 3000,
           });
@@ -133,16 +137,17 @@ const CryptoDetails = () => {
 
   //buy this coin and saving to db
   const buyCoin = async () => {
-    const coins = {
+    const myCoins = {
       coinId: coin?.id,
       image: coin?.image.large,
       symbol: coin?.symbol,
       name: coin?.name,
       quantity: localStorage.getItem("quantity"),
+      paymentToken: paymentToken,
     };
 
     try {
-      const res = await axios.post("/buy/coins", coins, {
+      const res = await axios.post("/buy/coins", myCoins, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -171,6 +176,13 @@ const CryptoDetails = () => {
 
   //add to watchlist
   const addWatchlist = async () => {
+    // if () {
+    //  return toast.warning(`${coin?.name} is already present in a watchlist!`, {
+    //     position: toast.POSITION.TOP_CENTER,
+    //     autoClose: 3000,
+    //   });
+    // }
+
     const coinData = {
       watchlist_coinId: coin?.id,
       watchlist_image: coin?.image.large,

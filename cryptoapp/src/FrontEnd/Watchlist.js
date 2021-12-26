@@ -101,7 +101,7 @@ const Watchlist = () => {
                             return (
                               <>
                                 <tr key={id}>
-                                  <td className="px-6 py-5 whitespace-nowrap mobile:px-0 tablet:px-2">
+                                  <td className="flex justify-between items-center px-6 py-5 whitespace-nowrap mobile:px-10 tablet:px-10">
                                     <div
                                       className="flex items-center cursor-pointer"
                                       onClick={() =>
@@ -126,49 +126,50 @@ const Watchlist = () => {
                                         </div>
                                       </div>
                                     </div>
-                                  </td>
-                                  <td
-                                    onClick={async () => {
-                                      const watchlists = {
-                                        watchlist_coinId:
-                                          curElem.watchlist_coinId,
-                                        watchlist_image: watchlist_image,
-                                        watchlist_name: watchlist_name,
-                                        watchlist_symbol: watchlist_symbol,
-                                      };
 
-                                      try {
-                                        const res = await axios.post(
-                                          "/remove/coins/watchlist",
-                                          watchlists,
-                                          {
-                                            headers: {
-                                              "Content-Type":
-                                                "application/json",
-                                            },
-                                          }
-                                        );
+                                    <div
+                                      onClick={async () => {
+                                        const watchlists = {
+                                          watchlist_coinId:
+                                            curElem.watchlist_coinId,
+                                          watchlist_image: watchlist_image,
+                                          watchlist_name: watchlist_name,
+                                          watchlist_symbol: watchlist_symbol,
+                                        };
 
-                                        const data = res.data;
-                                        if (data) {
-                                          history.push("/");
-                                          return toast.success(
-                                            `${watchlist_name} removed from watchlist!`,
+                                        try {
+                                          const res = await axios.post(
+                                            "/remove/coins/watchlist",
+                                            watchlists,
                                             {
-                                              position:
-                                                toast.POSITION.TOP_CENTER,
-                                              autoClose: 3000,
+                                              headers: {
+                                                "Content-Type":
+                                                  "application/json",
+                                              },
                                             }
                                           );
+
+                                          const data = res.data;
+                                          if (data) {
+                                            history.push("/");
+                                            return toast.success(
+                                              `${watchlist_name} removed from watchlist!`,
+                                              {
+                                                position:
+                                                  toast.POSITION.TOP_CENTER,
+                                                autoClose: 3000,
+                                              }
+                                            );
+                                          }
+                                        } catch (error) {
+                                          console.log(error.message);
                                         }
-                                      } catch (error) {
-                                        console.log(error.message);
-                                      }
-                                    }}
-                                  >
-                                    <button className="text-red-700 text-3xl font-bold rounded-lg p-2 mobile:pl-2 mobile:px-0">
-                                      <BsTrash />
-                                    </button>
+                                      }}
+                                    >
+                                      <button className="text-red-700 text-3xl font-bold rounded-lg p-2 mobile:pl-2 mobile:px-0">
+                                        <BsTrash />
+                                      </button>
+                                    </div>
                                   </td>
                                 </tr>
                               </>

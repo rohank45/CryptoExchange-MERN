@@ -36,7 +36,7 @@ const News2 = () => {
           news.map((curElm, id) => {
             const { title, urlToImage, description, url } = curElm;
             return (
-              <div key={id} className="">
+              <div key={id}>
                 <div
                   className="flex flex-col my-10 overflow-x-hidden w-96 h-100 p-2 border border-gray-400 
                     rounded-lg shadow-xl bg-gray-100 outline-none scrollbar-hide"

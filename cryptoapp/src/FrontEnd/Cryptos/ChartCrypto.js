@@ -80,8 +80,8 @@ const ChartCrypto = () => {
               plugins: {
                 crosshair: {
                   line: {
-                    color: "#F66", // crosshair line color
-                    width: 1, // crosshair line width
+                    color: "#F66",
+                    width: 1,
                   },
                 },
                 zoom: {

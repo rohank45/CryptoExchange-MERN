@@ -42,7 +42,6 @@ const Profile = () => {
                     <div className="avatar online">
                       <div className="rounded-full w-24 h-24">
                         <img
-                          // "http://daisyui.com/tailwind-css-component-profile-5@56w.png"
                           src={userData?.userProfile.profilePic.secure_url}
                           alt="use profile pic"
                         />

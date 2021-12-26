@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import Cookies from "universal-cookie";
 import { Link, useHistory } from "react-router-dom";
-import login from "../Images/signup.png";
-// import { FcGoogle } from "react-icons/fc";
-import NavBar from "../Components/NavBar";
-
 import axios from "axios";
 import { toast } from "react-toastify";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+
+import login from "../Images/signup.png";
+import NavBar from "../Components/NavBar";
 
 const Login = () => {
   const cookies = new Cookies();
@@ -149,27 +148,6 @@ const Login = () => {
                         forget password ?
                       </Link>
                     </div>
-
-                    {/* <div
-                      className="bg-white text-black hover:bg-black hover:text-white shadow py-3 px-5 rounded cursor-pointer 
-                        flex justify-start items-center border border-black font-bold font-nunito w-full"
-                    >
-                      <span className="mr-3 text-3xl">
-                        <FcGoogle />
-                      </span>
-
-                      <span className="border-l border-gray-50 h-6 w-1 block"></span>
-                      <button className="pl-3">
-                        {cookies.get("express:sess") ||
-                        cookies.get("express:sess.sig")
-                          ? cookies.set("isGoogleLogin", "true")
-                          : ""}
-
-                        <a href="http://localhost:5000/auth/google">
-                          Sign up with Google
-                        </a>
-                      </button>
-                    </div> */}
                   </div>
                 </div>
               </div>
