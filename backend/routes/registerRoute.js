@@ -5,7 +5,7 @@ const cloudinary = require("cloudinary");
 const User = require("../models/userSchema");
 const mailHelper = require("../utils/mailHelper");
 
-router.post("/register", async (req, res, next) => {
+router.post("/register", async (req, res) => {
   try {
     let result;
 
@@ -21,33 +21,33 @@ router.post("/register", async (req, res, next) => {
     } else {
       return res
         .status(401)
-        .json({ message: "Please provide a profile picture!" });
+        .json({ message: "please provide a profile picture!" });
     }
 
     const { fullName, email, contactNo, passwords, cpasswords } = req.body;
 
     if (!fullName || !email || !contactNo || !passwords || !cpasswords) {
-      return res.status(401).json({ message: "All fields are mandatory!" });
+      return res.status(401).json({ message: "all fields are mandatory!" });
     }
 
     if (passwords !== cpasswords) {
       return res
         .status(401)
-        .json({ message: "Password and Confirm Password are not matching!" });
+        .json({ message: "password and confirm password are not matching!" });
     }
 
     const userExists = await User.findOne({ email: email });
     if (userExists) {
       return res
         .status(401)
-        .json({ message: "Already registered please Login!" });
+        .json({ message: "already registered please Login!" });
     }
 
     const userCheckNo = await User.findOne({ contactNo: contactNo });
     if (userCheckNo) {
       return res
         .status(401)
-        .json({ message: "Please provide another contact Number!" });
+        .json({ message: "please provide another contact number!" });
     }
 
     await User.create({
@@ -69,7 +69,7 @@ router.post("/register", async (req, res, next) => {
         "You've successfully completed Registration at TP-Coin India's leading Crypto Currency Exchange!",
     });
 
-    res.status(201).json({ message: "User registered successfully!" });
+    res.status(201).json({ message: "Registration successful!" });
   } catch (error) {
     console.log(error.message);
   }

@@ -10,7 +10,7 @@ router.post("/login", async (req, res, next) => {
     const { email, passwords } = req.body;
 
     if (!email || !passwords) {
-      return res.status(401).json({ message: "All fields are mandatory" });
+      return res.status(401).json({ message: "all fields are mandatory!" });
     }
 
     //checking email
@@ -19,13 +19,13 @@ router.post("/login", async (req, res, next) => {
     if (!checkUser) {
       return res
         .status(401)
-        .json({ message: "Invalid Credentials please register!" });
+        .json({ message: "invalid credentials please register!" });
     }
 
     //checking password
     const checkPassword = await bcrypt.compare(passwords, checkUser.passwords);
     if (!checkPassword) {
-      return res.status(401).json({ message: "Invalid Credentials!" });
+      return res.status(401).json({ message: "invalid credentials!" });
     }
 
     const token = await checkUser.generateToken();
@@ -44,7 +44,7 @@ router.post("/login", async (req, res, next) => {
         "You've successfully Login at TP-Coin India's leading Crypto Currency Exchange!",
     });
 
-    res.status(201).json({ message: "User Login successFully!" });
+    res.status(201).json({ message: "Login successful!" });
   } catch (error) {
     console.log(error.message);
   }

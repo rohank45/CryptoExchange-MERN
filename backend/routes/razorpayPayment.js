@@ -4,7 +4,7 @@ const Razorpay = require("razorpay");
 const userAuth = require("../middleware/authMiddleWare");
 
 //payment
-router.post("/razorpay/payment", userAuth, async (req, res, next) => {
+router.post("/razorpay/payment", userAuth, async (req, res) => {
   var instance = new Razorpay({
     key_id: process.env.RAZORPAY_API_KEY,
     key_secret: process.env.RAZORPAY_SECRET_KEY,
@@ -61,4 +61,5 @@ router.post("/razorpay/refund", userAuth, async (req, res, next) => {
     console.log(error);
   }
 });
+
 module.exports = router;

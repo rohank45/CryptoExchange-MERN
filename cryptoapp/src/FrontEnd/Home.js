@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Cookies from "universal-cookie";
-
+import { toast } from "react-toastify";
 import Aos from "aos";
 import "aos/dist/aos.css";
 
@@ -16,8 +16,6 @@ import BasicQue from "../Components/BasicQue";
 import Middle from "../Components/Middle";
 import CustomerReview from "../Components/CustomerReview";
 import ScrollToTop from "../Components/ScrollToTop";
-
-import { toast } from "react-toastify";
 
 const Home = () => {
   const cookies = new Cookies();

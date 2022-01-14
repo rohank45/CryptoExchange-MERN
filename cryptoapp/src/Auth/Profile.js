@@ -9,7 +9,7 @@ const Profile = () => {
   const [userData, setUserData] = useState();
   const history = useHistory();
 
-  const openAboutPage = async () => {
+  const getUserData = async () => {
     try {
       const res = await axios.get("/profile");
 
@@ -25,7 +25,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    openAboutPage();
+    getUserData();
   }, []);
 
   return (

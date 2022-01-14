@@ -16,7 +16,7 @@ router.get("/logout", authMiddleWare, async (req, res) => {
   });
 
   res.clearCookie("token");
-  res.status(201).send("User logout!");
+  res.status(201).send("Logout successful!");
 });
 
 module.exports = router;

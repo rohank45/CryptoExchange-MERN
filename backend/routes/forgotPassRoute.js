@@ -8,14 +8,12 @@ router.post("/forgot/password", async (req, res, next) => {
   try {
     const { email } = req.body;
     if (!email) {
-      return res.status(401).json({ message: "Please provide a email!" });
+      return res.status(401).json({ message: "please provide a email!" });
     }
 
     const user = await User.findOne({ email: email });
     if (!user) {
-      return res
-        .status(401)
-        .json({ message: "User dont exists with that email!" });
+      return res.status(401).json({ message: "invalid email!" });
     }
 
     //generating and saving a forgot password token
@@ -35,7 +33,7 @@ router.post("/forgot/password", async (req, res, next) => {
         message,
       });
 
-      res.status(201).send("Password reset Link sended, please check email!");
+      res.status(201).send("password reset Link sended, please check email!");
     } catch (error) {
       (user.forgetPassToken = undefined), (user.forgetPassExpiry = undefined);
       await user.save({ validateBeforeSave: false });

@@ -11,12 +11,12 @@ router.post("/change/password", authMiddleWare, async (req, res, next) => {
     const newPassword = req.body.newPasswords;
 
     if (!oldPassword || !newPassword) {
-      return res.status(401).json({ message: "All fields are mandatory!" });
+      return res.status(401).json({ message: "all fields are mandatory!" });
     }
 
     if (oldPassword === newPassword) {
       return res.status(401).json({
-        message: "Old password and New password should not be the same!",
+        message: "old and new password should not be the same!",
       });
     }
 
@@ -25,7 +25,7 @@ router.post("/change/password", authMiddleWare, async (req, res, next) => {
 
     const checkUserPass = await bcrypt.compare(oldPassword, user.passwords);
     if (!checkUserPass) {
-      return res.status(401).json({ message: "The old password is wrong!" });
+      return res.status(401).json({ message: "old password is wrong!" });
     }
 
     user.passwords = newPassword;

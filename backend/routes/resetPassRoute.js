@@ -15,20 +15,20 @@ router.post("/reset/password/:token", async (req, res, next) => {
     });
 
     if (!user) {
-      return res.status(401).json({ message: "Token is expired!" });
+      return res.status(401).json({ message: "token is expired!" });
     }
 
     const newPassword = req.body.newPasswords;
     const confirmPassword = req.body.confirmPasswords;
 
     if (!confirmPassword || !newPassword) {
-      return res.status(401).json({ message: "All fields are mandatory!" });
+      return res.status(401).json({ message: "all fields are mandatory!" });
     }
 
     if (confirmPassword !== newPassword) {
       return res
         .status(401)
-        .json({ message: "New Password and confirm password not matching!" });
+        .json({ message: "new password and confirm password not matching!" });
     }
 
     user.passwords = newPassword;

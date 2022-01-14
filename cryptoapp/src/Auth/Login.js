@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
@@ -10,10 +10,43 @@ import NavBar from "../Components/NavBar";
 
 const Login = () => {
   const cookies = new Cookies();
+  const history = useHistory();
   const [visible, setVisible] = useState(false);
   const InputType = visible ? "text" : "password";
+  // const [errors, setErrors] = useState({
+  //   email: null,
+  //   passwords: null,
+  // });
 
-  const history = useHistory();
+  // const validate = () => {
+  //   return new Promise(async (resolve, reject) => {
+  //     let bool = true;
+
+  //     if (!userLogin.email) {
+  //       errors.email = `email is required`;
+  //       bool = false;
+  //     }
+
+  //     if (!userLogin.passwords) {
+  //       errors.passwords = `password is required`;
+  //       bool = false;
+  //     }
+
+  //     setErrors(errors);
+  //     resolve(bool);
+  //   });
+  // };
+
+  useEffect(() => {
+    axios
+      .get("/profile")
+      .then((res) => {
+        if (res) history.push("/");
+      })
+      .catch(() => {
+        history.push("/login");
+      });
+  }, []);
 
   const [userLogin, setUserLogin] = useState({
     email: "",
@@ -23,20 +56,26 @@ const Login = () => {
   const handleInputs = (e) => {
     const { name, value } = e.target;
     setUserLogin({ ...userLogin, [name]: value });
+
+    // if (e.target.value && e.target.value.length > 0) {
+    //   setErrors({
+    //     ...errors,
+    //     email: null,
+    //     passwords: null,
+    //   });
+    // }
   };
 
   const submitLoginForm = async (e) => {
     e.preventDefault();
 
-    try {
-      const { email, passwords } = userLogin;
-      if (!email || !passwords) {
-        return toast.error("All fields are mandatory!", {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 3000,
-        });
-      }
+    // validate().then((isValid) => {
+    //   if (!isValid) {
+    //     history.push("/login");
+    //   }
+    // });
 
+    try {
       const res = await axios.post("/login", userLogin);
       const data = res.data;
 
@@ -94,6 +133,14 @@ const Login = () => {
                           className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
                             shadow-md focus:bg-white focus:border-gray-600 focus:outline-none my-4"
                         />
+
+                        {/* {errors.email ? (
+                          <span className="px-1 font-semibold text-red-500">
+                            {errors.email}
+                          </span>
+                        ) : (
+                          ""
+                        )} */}
                       </div>
 
                       <div className="py-1">
@@ -126,6 +173,14 @@ const Login = () => {
                             )}
                           </span>
                         </span>
+
+                        {/* {errors.passwords ? (
+                          <span className="px-1 font-semibold text-red-500">
+                            {errors.passwords}
+                          </span>
+                        ) : (
+                          ""
+                        )} */}
                       </div>
 
                       <button

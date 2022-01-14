@@ -113,10 +113,10 @@ app.use("/", removeAllWatchlist);
 
 // __dirname = path.resolve();
 // if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname, "/client/build")));
+//   app.use(express.static(path.join(__dirname, "/cryptoapp/build")));
 
 //   app.get("*", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+//     res.sendFile(path.resolve(__dirname, "cryptoapp", "build", "index.html"));
 //   });
 // }
 // ----------------- production --------------------------

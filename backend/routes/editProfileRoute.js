@@ -40,7 +40,7 @@ router.post("/edit/profile", authMiddleWare, async (req, res, next) => {
       useFindAndModify: false,
     });
 
-    res.status(201).json({ message: "User details Changed successfully" });
+    res.status(201).json({ message: "details Changed successfully" });
   } catch (error) {
     console.log(error.message);
   }

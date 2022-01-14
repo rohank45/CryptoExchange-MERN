@@ -105,7 +105,7 @@ const CryptoDetails = () => {
 
           localStorage.setItem("quantity", counter);
 
-          window.location.reload(false);
+          // window.location.reload(false);
 
           return toast.success("Payment successfull, please Buy a Coin!", {
             position: toast.POSITION.TOP_CENTER,
@@ -135,9 +135,12 @@ const CryptoDetails = () => {
     }
   };
 
+  let order_uniqueId = (Math.random() + 1).toString(36).substring(7);
+
   //buy this coin and saving to db
   const buyCoin = async () => {
     const myCoins = {
+      order_uniqueId: order_uniqueId,
       coinId: coin?.id,
       image: coin?.image.large,
       symbol: coin?.symbol,
