@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon backend/server.js",
     "cryptoapp": "npm start --prefix cryptoapp",
-    "dev": "concurrently \"npm start\" \"npm run cryptoapp\""
+    "dev": "concurrently \"npm start\" \"npm run cryptoapp\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix cryptoapp && npm run build --prefix cryptoapp"
   },
   "keywords": [],
   "author": "rohan",

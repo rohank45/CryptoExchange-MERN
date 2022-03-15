@@ -109,16 +109,16 @@ const removeAllWatchlist = require("./routes/watchlist/removeAllWatchlist");
 app.use("/", removeAllWatchlist);
 
 // ----------------- production --------------------------
-// const path = require("path");
+const path = require("path");
 
-// __dirname = path.resolve();
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname, "/cryptoapp/build")));
+__dirname = path.resolve();
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/cryptoapp/build")));
 
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "cryptoapp", "build", "index.html"));
-//   });
-// }
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "cryptoapp", "build", "index.html"));
+  });
+}
 // ----------------- production --------------------------
 
 //listing app on PORT
