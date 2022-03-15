@@ -26,8 +26,7 @@ function loadScript(src) {
 }
 
 // const __dev__ = document.domain === "localhost";
-const __dev__ =
-  document.domain === "https://cryptoexchange-webapp.herokuapp.com/";
+const __dev__ = document.domain === "cryptoexchange-webapp.herokuapp.com";
 
 export const CartContext = createContext();
 
