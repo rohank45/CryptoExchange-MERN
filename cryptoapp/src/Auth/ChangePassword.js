@@ -28,33 +28,30 @@ const ChangePassword = () => {
       const { oldPasswords, newPasswords } = state;
 
       if (!oldPasswords || !newPasswords) {
-        return toast.error("All fields are mandatory!", {
+        toast.error("All fields are mandatory!", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
         });
       }
 
       if (oldPasswords === newPasswords) {
-        return toast.warning(
-          "Old password and New password should not be the same!",
-          {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 3000,
-          }
-        );
+        toast.warning("Old password and New password should not be the same!", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
       }
 
       const data = await axios.post("/change/password", state);
 
       if (data) {
         history.push("/profile");
-        return toast.success("Password Changed Successfully!", {
+        toast.success("Password Changed Successfully!", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
         });
       }
     } catch (error) {
-      return toast.error(error.response.data.message, {
+      toast.error(error.response.data.message, {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
       });

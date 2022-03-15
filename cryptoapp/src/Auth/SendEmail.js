@@ -22,7 +22,7 @@ const SendEmail = () => {
     try {
       const { email } = getEmail;
       if (!email) {
-        return toast.error("Please provide a email!", {
+        toast.error("Please provide a email!", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
         });
@@ -33,13 +33,13 @@ const SendEmail = () => {
 
       if (data) {
         history.push("/login");
-        return toast.success("Password reset link sended, check your email!", {
+        toast.success("Password reset link sended, check your email!", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
         });
       }
     } catch (error) {
-      return toast.error(error.response.data.message, {
+      toast.error(error.response.data.message, {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
       });

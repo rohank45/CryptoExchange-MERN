@@ -41,7 +41,7 @@ const EditProfile = () => {
       console.log(err.message);
 
       history.push("/login");
-      return toast.warning("Login to access profile page!", {
+      toast.warning("Login to access profile page!", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
       });
@@ -75,13 +75,13 @@ const EditProfile = () => {
 
       if (data) {
         history.push("/profile");
-        return toast.success("Profile details updated Successfully!", {
+        toast.success("Profile details updated Successfully!", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
         });
       } else {
         history.push("/");
-        return toast.warning("Something went wrong try later!", {
+        toast.warning("Something went wrong try later!", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
         });

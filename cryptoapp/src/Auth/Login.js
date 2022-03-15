@@ -4,7 +4,6 @@ import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-
 import login from "../Images/signup.png";
 import NavBar from "../Components/NavBar";
 
@@ -88,13 +87,13 @@ const Login = () => {
         });
 
         history.push("/");
-        return toast.success("Login Successful!", {
+        toast.success("Login Successful!", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
         });
       }
     } catch (error) {
-      return toast.error(error.response.data.message, {
+      toast.error(error.response.data.message, {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
       });

@@ -9,20 +9,18 @@ import { toast } from "react-toastify";
 
 const Register = () => {
   const history = useHistory();
-
   const [visible, setVisible] = useState(false);
   const InputType = visible ? "text" : "password";
 
   const [verify, setVerify] = useState();
-
-  const verifyCallback = (checkCaptcha) => {
-    if (!checkCaptcha || checkCaptcha.trim().length === 0) {
-      return toast.error("Captcha is required!", {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 3000,
-      });
-    }
-  };
+  // const verifyCallback = (checkCaptcha) => {
+  //   if (!checkCaptcha || checkCaptcha.trim().length === 0) {
+  //     return toast.error("Captcha is required!", {
+  //       position: toast.POSITION.TOP_CENTER,
+  //       autoClose: 3000,
+  //     });
+  //   }
+  // };
 
   const [user, setUser] = useState({
     fullName: "",
@@ -82,7 +80,7 @@ const Register = () => {
 
       if (data) {
         history.push("/login");
-        return toast.success("Registration Successful!", {
+        toast.success("Registration Successful!", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
         });
@@ -208,11 +206,11 @@ const Register = () => {
                             shadow-md focus:bg-white focus:border-gray-600 focus:outline-none my-4"
                         />
 
-                        <ReCAPTCHA
+                        {/* <ReCAPTCHA
                           sitekey="6LcVynwdAAAAADJFSapf-lAHI7QyiG1RA4bLSDly"
                           type="image"
                           verifyCallback={verifyCallback}
-                        />
+                        /> */}
 
                         <div className="flex flex-col justify-start">
                           <label className="text-gray-500 font-bold my-4 flex flex-col">
@@ -244,6 +242,7 @@ const Register = () => {
                             </div>
                           </label>
                         </div>
+
                         <button
                           type="submit"
                           className="mt-3 text-lg font-semibold hover:text-white hover:bg-black bg-gray-800 

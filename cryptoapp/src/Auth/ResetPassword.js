@@ -28,14 +28,14 @@ const ResetPassword = () => {
       const { newPasswords, confirmPasswords } = state;
 
       if (!newPasswords || !confirmPasswords) {
-        return toast.error("All fields are mandatory!", {
+        toast.error("All fields are mandatory!", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
         });
       }
 
       if (newPasswords !== confirmPasswords) {
-        return toast.error("New Password and confirm password not matching!", {
+        toast.error("New Password and confirm password not matching!", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
         });
@@ -46,13 +46,13 @@ const ResetPassword = () => {
 
       if (data) {
         history.push("/login");
-        return toast.success("Password Changed Successfully!", {
+        toast.success("Password Changed Successfully!", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
         });
       }
     } catch (error) {
-      return toast.error(error.response.data.message, {
+      toast.error(error.response.data.message, {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
       });

@@ -11,13 +11,11 @@ const DeleteProfile = () => {
   const deleteUser = async () => {
     try {
       await axios.delete("/deleteUser");
-
       cookies.remove("isLogin");
-
       localStorage.removeItem("watchlist_data");
 
       history.push("/");
-      return toast.success("Account deleted!", {
+      toast.success("Account deleted!", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
       });

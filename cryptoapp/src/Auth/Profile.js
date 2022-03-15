@@ -12,12 +12,11 @@ const Profile = () => {
   const getUserData = async () => {
     try {
       const res = await axios.get("/profile");
-
       const data = await res.data;
       setUserData(data);
     } catch (err) {
       history.push("/login");
-      return toast.warning("Login to access profile page!", {
+      toast.warning("Login to access profile page!", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
       });
