@@ -54,7 +54,7 @@ const Home = () => {
       </div>
 
       {/* <LimExchanges /> */}
-      <LimNews />
+      {/* <LimNews /> */}
       <BasicQue />
       <CustomerReview />
 
