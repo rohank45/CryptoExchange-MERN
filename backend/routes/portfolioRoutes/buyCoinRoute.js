@@ -25,8 +25,8 @@ router.post("/buy/coins", authMiddleWare, async (req, res) => {
       paymentToken,
     };
 
-    // const order = await User.findOne({ order_uniqueId: order_uniqueId });
-    // console.log("order", order);
+    const order = await User.findOne({ order_uniqueId: order_uniqueId });
+    console.log("order", order);
 
     // await User.findOne(
     //   { "users.myCoins": { $elemMatch: { order_uniqueId: order_uniqueId } } },
@@ -56,5 +56,3 @@ router.post("/buy/coins", authMiddleWare, async (req, res) => {
 });
 
 module.exports = router;
-
-// order_uniqueId: new mongoose.Types.ObjectId(),

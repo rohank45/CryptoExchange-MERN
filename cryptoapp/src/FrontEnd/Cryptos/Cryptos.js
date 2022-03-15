@@ -31,7 +31,7 @@ const Cryptos = () => {
   }, [currency]);
 
   useEffect(() => {
-    return toast.info("Tap to see Deatils!", {
+    toast.info("Tap to see Deatils!", {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 3000,
     });

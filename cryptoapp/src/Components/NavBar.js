@@ -88,42 +88,49 @@ const NavBar = () => {
           <div className="px-10">
             <img src={cImg} alt="app logo png" />
           </div>
+
           <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-500 hover:text-white px-8 py-2 mobile:py-1">
             <span className="text-2xl laptop:text-4xl tablet:text-4xl">
               <VscHome />
             </span>
             <Link to="/">Home</Link>
           </div>
+
           <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-500 hover:text-white px-8 py-2 mobile:py-1">
             <span className="text-2xl laptop:text-4xl tablet:text-4xl">
               <SiApacheecharts />
             </span>
             <Link to="/coins">Buy Crypto's</Link>
           </div>
+
           <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-500 hover:text-white px-8 py-2 mobile:py-1">
             <span className="text-2xl laptop:text-4xl tablet:text-4xl">
               <MdFavoriteBorder />
             </span>
             <Link to="/portfolio">Portfolio</Link>
           </div>
+
           <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-500 hover:text-white px-8 py-2 mobile:py-1">
             <span className="text-2xl laptop:text-4xl tablet:text-4xl">
               <FiEye />
             </span>
             <Link to="/watchlist">WatchList</Link>
           </div>
-          <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-500 hover:text-white px-8 py-2 mobile:py-1">
+
+          {/* <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-500 hover:text-white px-8 py-2 mobile:py-1">
             <span className="text-2xl laptop:text-4xl tablet:text-4xl">
               <RiMoneyCnyCircleLine />
             </span>
             <Link to="/exchanges">Exchanges</Link>
-          </div>
+          </div> */}
+
           <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-500 hover:text-white px-8 py-2 mobile:py-1">
             <span className="text-2xl laptop:text-4xl tablet:text-4xl">
               <BsNewspaper />
             </span>
             <Link to="/news">News</Link>
           </div>
+
           <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-500 hover:text-white px-8 py-2 mobile:py-1">
             <span className="text-2xl laptop:text-4xl tablet:text-4xl">
               <CgProfile />

@@ -29,7 +29,7 @@ const LimCryptos = () => {
 
   return (
     <div className="font-nunito mx-40 laptop:mx-10 tablet:mx-8 mobile:mx-2 select-none">
-      <p className="text-center text-5xl font-bold pt-24 uppercase font-nunito mobile:text-3xl">
+      <p className="text-center text-3xl font-bold pt-24 uppercase font-nunito mobile:text-3xl">
         Crypto Currencies
       </p>
 

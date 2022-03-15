@@ -20,8 +20,11 @@ import ResetPassword from "./Auth/ResetPassword";
 import ChangePassword from "./Auth/ChangePassword";
 
 import ErrorPage from "./Components/ErrorPage";
+import Cookies from "universal-cookie";
 
 const App = () => {
+  const cookies = new Cookies();
+
   return (
     <Router>
       <Switch>

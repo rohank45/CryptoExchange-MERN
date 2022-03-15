@@ -36,7 +36,7 @@ const Footer = () => {
           </div>
         </div>
         <div>
-          <p>copyright © 2021-22 - All right reserved by Armiet BE boys</p>
+          <p>copyright © 2021-22 - All rights reserved by Armiet BE boys</p>
         </div>
       </footer>
     </div>

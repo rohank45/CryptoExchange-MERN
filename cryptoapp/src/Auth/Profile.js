@@ -33,7 +33,7 @@ const Profile = () => {
       <NavBar />
 
       <div className="flex justify-center">
-        <div className="font-nunito w-3/5 py-5 px-8 laptop:w-4/5 tablet:w-full mobile:w-full">
+        <div className="font-nunito w-3/5 py-5 px-8 laptop:w-4/5 tablet:w-full mobile:w-full mobile:px-0">
           <form method="GET">
             <div className="pt-32 pb-20 mobile:pt-24 mobile:pb-10">
               <div className="mx-5 px-5 bg-gray-50 py-10 border-2 border-gray-300 hover:border-black rounded-lg shadow-xl">
@@ -51,7 +51,7 @@ const Profile = () => {
                       <label className="text-lg lowercase text-gray-500">
                         Full Name :
                       </label>
-                      <p className="text-2xl font-medium text-gray-700">
+                      <p className="text-xl font-medium text-gray-700">
                         {userData?.userProfile.fullName}
                       </p>
                     </div>
@@ -59,7 +59,7 @@ const Profile = () => {
                       <label className="text-lg lowercase text-gray-500">
                         Contact No :
                       </label>
-                      <p className="text-2xl font-medium text-gray-700">
+                      <p className="text-xl font-medium text-gray-700">
                         {userData?.userProfile.contactNo}
                       </p>
                     </div>
@@ -67,7 +67,7 @@ const Profile = () => {
                       <label className="text-lg lowercase text-gray-500">
                         Email id :
                       </label>
-                      <p className="text-2xl font-medium text-gray-700">
+                      <p className="text-xl font-medium text-gray-700">
                         {userData?.userProfile.email}
                       </p>
                     </div>

@@ -16,9 +16,12 @@ import BasicQue from "../Components/BasicQue";
 import Middle from "../Components/Middle";
 import CustomerReview from "../Components/CustomerReview";
 import ScrollToTop from "../Components/ScrollToTop";
+import { useHistory } from "react-router";
 
 const Home = () => {
   const cookies = new Cookies();
+  const history = useHistory();
+
   useEffect(() => {
     Aos.init({ duration: 2000 });
   }, []);
@@ -32,23 +35,31 @@ const Home = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (!cookies.get("isLogin")) {
+      history.push("/login");
+    } else {
+      history.push("/");
+    }
+  }, []);
+
   return (
     <div className="font-nunito scrollbar-hide overflow-x-hidden">
       <NavBar />
       <Header />
-      <GlobalStats />
+      {/* <GlobalStats /> */}
       <LimCryptos />
       <div data-aos="flip-up">
         <Middle />
       </div>
 
-      <LimExchanges />
+      {/* <LimExchanges /> */}
       <LimNews />
       <BasicQue />
       <CustomerReview />
 
       <ScrollToTop />
-      <VoiceAss />
+      {/* <VoiceAss /> */}
 
       <Footer />
     </div>

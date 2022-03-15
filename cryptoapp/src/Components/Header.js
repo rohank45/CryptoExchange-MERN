@@ -13,10 +13,10 @@ const Header = () => {
         <div className="p-10 font-nunito">
           <p className="text-5xl font-bold my-5">Welcome to TP-Coin</p>
           <p className="text-lg text-gray-700 mobile:text-base">
-            India's leading Crypto Currency Exchange.
+            Crypto Currency Exchange.
           </p>
           <p className="text-lg text-gray-700 mobile:text-base">
-            Invest in genuine Crypto Currency in One-Click for a better future.
+            Invest in Crypto-Currency in One-Click for a better future.
           </p>
           <div>
             {cookies.get("isLogin") ? (
