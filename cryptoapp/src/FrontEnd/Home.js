@@ -28,16 +28,11 @@ const Home = () => {
 
   useEffect(() => {
     if (!cookies.get("isLogin")) {
-      return toast.warning("Please Login...!", {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 3000,
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!cookies.get("isLogin")) {
       history.push("/login");
+      // toast.warning("Please Login...!", {
+      //   position: toast.POSITION.TOP_CENTER,
+      //   autoClose: 3000,
+      // });
     } else {
       history.push("/");
     }
