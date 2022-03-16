@@ -10,21 +10,25 @@ const GlobalStats = () => {
     try {
       setLoading(true);
 
-      const setHeader = {
+      const options = {
+        method: "GET",
+        url: "https://coinranking1.p.rapidapi.com/stats",
+        params: { referenceCurrencyUuid: "yhjMzLPhuIDl" },
         headers: {
           "x-rapidapi-host": "coinranking1.p.rapidapi.com",
           "x-rapidapi-key":
-            "08295af6edmsh25c9fc24b3b7d6fp1b591ejsn18d6e7fda81d",
+            "3bf8ad2345msh9f75760d2fe9a1dp1ffbb3jsnc1cec33b9615",
         },
       };
 
-      const res = await axios.get(
-        "https://coinranking1.p.rapidapi.com/stats",
-        setHeader
-      );
-
-      const responce = res.data.data;
-      setStats(responce);
+      axios
+        .request(options)
+        .then(function (response) {
+          setStats(response.data.data);
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
 
       setLoading(false);
     } catch (err) {
@@ -38,7 +42,7 @@ const GlobalStats = () => {
 
   return (
     <>
-      <p className="pt-24 pb-10 text-center text-5xl uppercase font-nunito font-semibold mobile:hidden tablet:text-3xl">
+      <p className="pt-24 pb-10 text-center text-3xl uppercase font-nunito font-semibold mobile:hidden tablet:text-3xl">
         Global Stats
       </p>
 
@@ -64,13 +68,13 @@ const GlobalStats = () => {
           <p className="flex flex-col text-2xl capitalize text-gray-700">
             Total Market Cap
             <span className="text-lg py-5 text-indigo-800 font-semibold">
-              $ {stats.totalMarketCap?.toFixed(2)} M
+              {stats.totalMarketCap} M
             </span>
           </p>
           <p className="flex flex-col text-2xl capitalize text-gray-700">
             Total 24h Volume
             <span className="text-lg py-5 text-indigo-800 font-semibold">
-              {stats.total24hVolume?.toFixed(2)} M
+              {stats.total24hVolume} M
             </span>
           </p>
           <p className="flex flex-col text-2xl capitalize text-gray-700">

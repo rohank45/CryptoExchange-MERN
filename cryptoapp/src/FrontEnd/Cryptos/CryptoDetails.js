@@ -27,7 +27,6 @@ function loadScript(src) {
 
 // const __dev__ = document.domain === "localhost";
 const __dev__ = document.domain === "cryptoexchange-webapp.herokuapp.com";
-
 export const CartContext = createContext();
 
 //main function
@@ -41,10 +40,8 @@ const CryptoDetails = () => {
 
   //increment and decrement
   const [counter, setCounter] = useState(1);
-
   const incrementCounter = () => setCounter(counter + 1);
   let decrementCounter = () => setCounter(counter - 1);
-
   if (counter <= 1) {
     decrementCounter = () => setCounter(1);
   }
@@ -73,7 +70,7 @@ const CryptoDetails = () => {
       );
 
       if (!res) {
-        return toast.warning("Payment failed!, check your connection.", {
+        toast.warning("Payment failed, check your connection!", {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
         });
@@ -89,7 +86,7 @@ const CryptoDetails = () => {
       const options = {
         key: __dev__ ? "rzp_test_nvbgBY8uNQpEwZ" : "Production key here",
         name: "TP-Coin",
-        description: "Transaction for buying cryptos.",
+        description: "Transaction for buying coins.",
         image: "https://example.com/your_logo",
         currency: "INR",
         amount: coin?.market_data.current_price.inr * 100 * counter,
@@ -101,25 +98,22 @@ const CryptoDetails = () => {
           // console.log("frontend signature", response.razorpay_signature);
 
           setPaymentToken(response.razorpay_payment_id);
-
           localStorage.setItem("isBuyCoin", "true");
-
           localStorage.setItem("quantity", counter);
 
-          // window.location.reload(false);
-
-          return toast.success("Payment successfull, please Buy a Coin!", {
+          window.location.reload(false);
+          toast.success("Payment successful!", {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 3000,
           });
         },
 
         //remove this seaction while hosting
-        prefill: {
-          name: "rohit",
-          email: "test.rohit@example.com",
-          contact: "9898989898",
-        },
+        // prefill: {
+        //   name: "rohit",
+        //   email: "test.rohit@example.com",
+        //   contact: "9898989898",
+        // },
         theme: {
           color: "#3B3B3B",
         },
@@ -158,20 +152,15 @@ const CryptoDetails = () => {
       });
 
       const data = res.data;
-
       if (data) {
         localStorage.removeItem("isBuyCoin");
-
         localStorage.removeItem("quantity");
 
         history.push("/");
-        return toast.success(
-          `${coin?.name} buy Successfully, please check portfolio!`,
-          {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 3000,
-          }
-        );
+        toast.success(`${coin?.name} buy successfully!`, {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
       }
     } catch (error) {
       console.log(error);
@@ -205,17 +194,13 @@ const CryptoDetails = () => {
 
       if (data) {
         history.push("/");
-        return toast.success(
-          `${coin?.name} added to watchlist, please check watchlist!`,
-          {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 3000,
-          }
-        );
+        toast.success(`${coin?.name} added to watchlist!`, {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 3000,
+        });
       }
     } catch (error) {
       console.log(error);
-
       history.push("/login");
       return toast.warning(`Login to Add a ${coin?.name} to WatchList!`, {
         position: toast.POSITION.TOP_CENTER,

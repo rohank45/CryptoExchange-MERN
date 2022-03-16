@@ -29,10 +29,6 @@ const Home = () => {
   useEffect(() => {
     if (!cookies.get("isLogin")) {
       history.push("/login");
-      // toast.warning("Please Login...!", {
-      //   position: toast.POSITION.TOP_CENTER,
-      //   autoClose: 3000,
-      // });
     } else {
       history.push("/");
     }
@@ -42,20 +38,19 @@ const Home = () => {
     <div className="font-nunito scrollbar-hide overflow-x-hidden">
       <NavBar />
       <Header />
-      {/* <GlobalStats /> */}
+      <GlobalStats />
       <LimCryptos />
+
       <div data-aos="flip-up">
         <Middle />
       </div>
 
-      {/* <LimExchanges /> */}
-      {/* <LimNews /> */}
+      <LimExchanges />
+      <LimNews />
       <BasicQue />
       <CustomerReview />
-
       <ScrollToTop />
       {/* <VoiceAss /> */}
-
       <Footer />
     </div>
   );

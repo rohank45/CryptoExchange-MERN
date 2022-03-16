@@ -1,10 +1,11 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import Spinner from "../../Components/Spinner";
+import React, { useEffect, useState } from "react";
+import Spinner from "../Components/Spinner";
+import NavBar from "../Components/NavBar";
 
-const LimNews = () => {
+const News3 = () => {
   const [news, setNews] = useState([]);
+
   const getData = async () => {
     try {
       const setHeader = {
@@ -33,13 +34,10 @@ const LimNews = () => {
 
   return (
     <>
-      <p className="text-center text-3xl font-bold pt-24 uppercase font-nunito">
-        News
-      </p>
-
-      <div className="flex flex-row flex-wrap justify-around mx-48 mobile:mx-2">
+      <NavBar />
+      <div className="pt-24 flex flex-row flex-wrap justify-around mx-32 tablet:mx-5 laptop:mx-10 mobile:mx-2">
         {news ? (
-          news.slice(0, 6).map((curElm, id) => {
+          news.map((curElm, id) => {
             const { title, url } = curElm;
             return (
               <div
@@ -62,14 +60,8 @@ const LimNews = () => {
           <Spinner />
         )}
       </div>
-
-      <p className="text-center text-gray-500 font-light pt-5 pb-16 font-nunito">
-        <Link to="/news" className="cursor-pointer">
-          view more News
-        </Link>
-      </p>
     </>
   );
 };
 
-export default LimNews;
+export default News3;

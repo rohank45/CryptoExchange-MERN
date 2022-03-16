@@ -21,6 +21,7 @@ import ChangePassword from "./Auth/ChangePassword";
 
 import ErrorPage from "./Components/ErrorPage";
 import Cookies from "universal-cookie";
+import News3 from "./FrontEnd/News3";
 
 const App = () => {
   const cookies = new Cookies();
@@ -32,7 +33,7 @@ const App = () => {
         <Route path="/coins" exact component={Cryptos} />
         <Route path="/coins/:id" exact component={CrtyptoDetails} />
         <Route path="/exchanges" exact component={Exchanges} />
-        <Route path="/news" exact component={News} />
+        <Route path="/news" exact component={News3} />
         <Route path="/watchlist" exact component={WatchList} />
         <Route path="/portfolio" exact component={Portfolio} />
 

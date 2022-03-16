@@ -117,19 +117,19 @@ const NavBar = () => {
             <Link to="/watchlist">WatchList</Link>
           </div>
 
-          {/* <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-500 hover:text-white px-8 py-2 mobile:py-1">
+          <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-500 hover:text-white px-8 py-2 mobile:py-1">
             <span className="text-2xl laptop:text-4xl tablet:text-4xl">
               <RiMoneyCnyCircleLine />
             </span>
             <Link to="/exchanges">Exchanges</Link>
-          </div> */}
+          </div>
 
-          {/* <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-500 hover:text-white px-8 py-2 mobile:py-1">
+          <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-500 hover:text-white px-8 py-2 mobile:py-1">
             <span className="text-2xl laptop:text-4xl tablet:text-4xl">
               <BsNewspaper />
             </span>
             <Link to="/news">News</Link>
-          </div> */}
+          </div>
 
           <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-500 hover:text-white px-8 py-2 mobile:py-1">
             <span className="text-2xl laptop:text-4xl tablet:text-4xl">
