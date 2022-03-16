@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const crypto = require("crypto");
-
 const User = require("../models/userSchema");
 
 router.post("/reset/password/:token", async (req, res, next) => {

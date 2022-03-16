@@ -96,7 +96,7 @@ const EditProfile = () => {
       <NavBar />
 
       <div className="flex justify-center">
-        <div className="font-nunito w-3/5 py-5 px-8 laptop:w-4/5 tablet:w-full mobile:w-full">
+        <div className="font-nunito w-3/5 py-5 px-8 laptop:w-4/5 tablet:w-full mobile:w-full mobile:px-0">
           <form autoComplete="off" onSubmit={submitEditProfileDetails}>
             <div className="pt-40 pb-20 mobile:pt-24 mobile:pb-10">
               <div className="mx-5 px-5 bg-gray-50 py-10 border-2 border-gray-300 hover:border-black rounded-lg shadow-xl">

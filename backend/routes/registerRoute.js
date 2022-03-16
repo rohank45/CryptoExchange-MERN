@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const cloudinary = require("cloudinary");
-
 const User = require("../models/userSchema");
 const mailHelper = require("../utils/mailHelper");
 

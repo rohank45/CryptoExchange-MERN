@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-
 const User = require("../models/userSchema");
 const mailHelper = require("../utils/mailHelper");
 
@@ -32,7 +31,7 @@ router.post("/login", async (req, res, next) => {
 
     //expiry time is 30 mins
     res.status(201).cookie("token", token, {
-      expires: new Date(Date.now() + 1800000),
+      expires: new Date(Date.now() + 3600000),
       httpOnly: true,
     });
 
