@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import { createContext } from "react";
 import Spinner from "../../Components/Spinner";
+import Cookies from "universal-cookie";
 
 //razorpay script
 function loadScript(src) {
@@ -32,11 +33,14 @@ export const CartContext = createContext();
 //main function
 const CryptoDetails = () => {
   const { id } = useParams();
+  const cookies = new Cookies();
+  const history = useHistory();
   const [coin, setCoin] = useState();
   const [loading, setLoading] = useState(false);
-  const history = useHistory();
   const { currency, symbols } = CryptoState();
   const [paymentToken, setPaymentToken] = useState("");
+  const [watchlistCoinArr, setWatchlistCoinArr] = useState([]);
+  const [portfolioCoinArr, setPortfolioCoinArr] = useState([]);
 
   //increment and decrement
   const [counter, setCounter] = useState(1);
@@ -60,6 +64,50 @@ const CryptoDetails = () => {
 
   useEffect(() => {
     getData();
+  }, []);
+
+  // getting coins data from user's portfolio
+  let newPortfolioCoinArr = [];
+  const getPortfolioData = async () => {
+    const res = await axios.get("/portfolio");
+    if (res) {
+      for (
+        let index = 0;
+        index < res.data.userProfile.myCoins.length;
+        index++
+      ) {
+        newPortfolioCoinArr.push({
+          name: res.data.userProfile.myCoins[index]?.name,
+          quantity: res.data.userProfile.myCoins[index]?.quantity,
+        });
+      }
+      setPortfolioCoinArr(newPortfolioCoinArr);
+    }
+  };
+
+  // watchlist data
+  let newWatchlistCoinArr = [];
+  const getWatchlistData = async () => {
+    const res = await axios.get("/watchlist");
+    if (res) {
+      for (
+        let index = 0;
+        index < res.data.userProfile.watchlists.length;
+        index++
+      ) {
+        newWatchlistCoinArr.push(
+          res.data.userProfile.watchlists[index]?.watchlist_name
+        );
+      }
+      setWatchlistCoinArr(newWatchlistCoinArr);
+    }
+  };
+
+  useEffect(() => {
+    if (cookies.get("isLogin")) {
+      getPortfolioData();
+      getWatchlistData();
+    }
   }, []);
 
   //payment
@@ -130,82 +178,134 @@ const CryptoDetails = () => {
     }
   };
 
-  let order_uniqueId = (Math.random() + 1).toString(36).substring(7);
+  // let order_uniqueId = (Math.random() + 1).toString(36).substring(7);
 
-  //buy this coin and saving to db
+  //buy coin process
   const buyCoin = async () => {
-    const myCoins = {
-      order_uniqueId: order_uniqueId,
-      coinId: coin?.id,
-      image: coin?.image.large,
-      symbol: coin?.symbol,
-      name: coin?.name,
-      quantity: localStorage.getItem("quantity"),
-      paymentToken: paymentToken,
-    };
+    const portfolioRes = portfolioCoinArr.find((e) => e.name === coin?.name);
 
-    try {
-      const res = await axios.post("/buy/coins", myCoins, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+    if (portfolioRes) {
+      let myCoins = {
+        coinId: coin?.id,
+        image: coin?.image.large,
+        symbol: coin?.symbol,
+        name: coin?.name,
+        // quantity: portfolioRes?.quantity + counter,
+        quantity: portfolioRes?.quantity + localStorage.getItem("quantity"),
+        paymentToken: paymentToken,
+      };
 
-      const data = res.data;
-      if (data) {
-        localStorage.removeItem("isBuyCoin");
-        localStorage.removeItem("quantity");
+      try {
+        const res = await axios.post(
+          "/buy/coins/update",
+          { myCoins: myCoins },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
-        history.push("/");
-        toast.success(`${coin?.name} buy successfully!`, {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 3000,
-        });
+        const data = res.data;
+        if (data) {
+          localStorage.removeItem("isBuyCoin");
+          localStorage.removeItem("quantity");
+          history.push("/");
+          toast.success(
+            `${localStorage.getItem("quantity")} ${
+              coin?.name
+            } buy successfully!`,
+            {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 3000,
+            }
+          );
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
+    } else {
+      const myCoins = {
+        coinId: coin?.id,
+        image: coin?.image.large,
+        symbol: coin?.symbol,
+        name: coin?.name,
+        quantity: localStorage.getItem("quantity"),
+        paymentToken: paymentToken,
+      };
+
+      try {
+        const res = await axios.post(
+          "/buy/coins",
+          { myCoins: myCoins },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        const data = res.data;
+        if (data) {
+          localStorage.removeItem("isBuyCoin");
+          localStorage.removeItem("quantity");
+          history.push("/");
+          toast.success(
+            `${localStorage.getItem("quantity")} ${
+              coin?.name
+            } buy successfully!`,
+            {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 3000,
+            }
+          );
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
-  //add to watchlist
+  //add to watchlist process
   const addWatchlist = async () => {
-    // if () {
-    //  return toast.warning(`${coin?.name} is already present in a watchlist!`, {
-    //     position: toast.POSITION.TOP_CENTER,
-    //     autoClose: 3000,
-    //   });
-    // }
-
-    const coinData = {
-      watchlist_coinId: coin?.id,
-      watchlist_image: coin?.image.large,
-      watchlist_symbol: coin?.symbol,
-      watchlist_name: coin?.name,
-    };
-
-    try {
-      const res = await axios.post("/add/coins/watchlist", coinData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
+    const watchListRes = watchlistCoinArr.find((e) => e === coin?.name);
+    if (watchListRes) {
+      toast.warning(`${coin?.name} already present in watchlist!`, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
       });
+    } else {
+      const coinData = {
+        watchlist_coinId: coin?.id,
+        watchlist_image: coin?.image.large,
+        watchlist_symbol: coin?.symbol,
+        watchlist_name: coin?.name,
+      };
 
-      const data = res.data;
+      try {
+        const res = await axios.post("/add/coins/watchlist", coinData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-      if (data) {
-        history.push("/");
-        toast.success(`${coin?.name} added to watchlist!`, {
+        const data = res.data;
+
+        if (data) {
+          history.push("/");
+          toast.success(`${coin?.name} added to watchlist!`, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+          });
+        }
+      } catch (error) {
+        console.log(error);
+        history.push("/login");
+        return toast.warning(`Login to Add a ${coin?.name} to WatchList!`, {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 3000,
         });
       }
-    } catch (error) {
-      console.log(error);
-      history.push("/login");
-      return toast.warning(`Login to Add a ${coin?.name} to WatchList!`, {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 3000,
-      });
     }
   };
 

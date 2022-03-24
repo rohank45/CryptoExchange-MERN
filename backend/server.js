@@ -84,6 +84,10 @@ app.use("/", razorpayPayment);
 const buyCoinRoute = require("./routes/portfolioRoutes/buyCoinRoute");
 app.use("/", buyCoinRoute);
 
+//updating only buy coins to db
+const updateCoinRoute = require("./routes/portfolioRoutes/updateCoinRoute");
+app.use("/", updateCoinRoute);
+
 //removing only sell coins from db
 const sellCoinRoute = require("./routes/portfolioRoutes/sellCoinRoute");
 app.use("/", sellCoinRoute);

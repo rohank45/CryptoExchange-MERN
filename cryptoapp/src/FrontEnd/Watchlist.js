@@ -16,10 +16,8 @@ const Watchlist = () => {
   const getPortfolioData = async () => {
     try {
       setLoading(true);
-
       const res = await axios.get("/watchlist");
       setCoin(res.data.userProfile.watchlists);
-
       setLoading(false);
     } catch (error) {
       history.push("/login");
@@ -37,9 +35,8 @@ const Watchlist = () => {
   const emptyWatchlist = async () => {
     try {
       await axios.get("/empty/watchlist");
-
       history.push("/");
-      return toast.success("Watchlist is empty now!", {
+      toast.success("Watchlist is empty now!", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
       });
@@ -51,7 +48,6 @@ const Watchlist = () => {
   return (
     <>
       <NavBar />
-
       <div className="flex justify-center pt-32">
         <div
           className="font-nunito w-3/5 shadow-xl hover:border-black rounded-lg border-2
@@ -80,7 +76,7 @@ const Watchlist = () => {
                           >
                             <button
                               onClick={emptyWatchlist}
-                              className="bg-red-700 text-white px-2 py-1 rounded-lg shadow-lg"
+                              className="bg-red-700 text-white px-2 py-1 rounded-lg shadow-md"
                             >
                               RemoveAll
                             </button>

@@ -12,40 +12,6 @@ const Login = () => {
   const history = useHistory();
   const [visible, setVisible] = useState(false);
   const InputType = visible ? "text" : "password";
-  // const [errors, setErrors] = useState({
-  //   email: null,
-  //   passwords: null,
-  // });
-
-  // const validate = () => {
-  //   return new Promise(async (resolve, reject) => {
-  //     let bool = true;
-
-  //     if (!userLogin.email) {
-  //       errors.email = `email is required`;
-  //       bool = false;
-  //     }
-
-  //     if (!userLogin.passwords) {
-  //       errors.passwords = `password is required`;
-  //       bool = false;
-  //     }
-
-  //     setErrors(errors);
-  //     resolve(bool);
-  //   });
-  // };
-
-  useEffect(() => {
-    axios
-      .get("/profile")
-      .then((res) => {
-        if (res) history.push("/");
-      })
-      .catch(() => {
-        history.push("/login");
-      });
-  }, []);
 
   const [userLogin, setUserLogin] = useState({
     email: "",
@@ -55,24 +21,10 @@ const Login = () => {
   const handleInputs = (e) => {
     const { name, value } = e.target;
     setUserLogin({ ...userLogin, [name]: value });
-
-    // if (e.target.value && e.target.value.length > 0) {
-    //   setErrors({
-    //     ...errors,
-    //     email: null,
-    //     passwords: null,
-    //   });
-    // }
   };
 
   const submitLoginForm = async (e) => {
     e.preventDefault();
-
-    // validate().then((isValid) => {
-    //   if (!isValid) {
-    //     history.push("/login");
-    //   }
-    // });
 
     try {
       const res = await axios.post("/login", userLogin);

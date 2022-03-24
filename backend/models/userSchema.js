@@ -39,9 +39,6 @@ const userSchema = new mongoose.Schema({
   },
   myCoins: [
     {
-      order_uniqueId: {
-        type: String,
-      },
       coinId: {
         type: String,
       },

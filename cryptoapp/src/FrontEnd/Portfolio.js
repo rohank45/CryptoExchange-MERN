@@ -15,10 +15,8 @@ const Portfolio = () => {
   const getPortfolioData = async () => {
     try {
       setLoading(true);
-
       const res = await axios.get("/portfolio");
       setCoin(res.data.userProfile.myCoins);
-
       setLoading(false);
     } catch (error) {
       history.push("/login");
@@ -36,7 +34,6 @@ const Portfolio = () => {
   return (
     <>
       <NavBar />
-
       <div className="flex justify-center pt-32">
         <div
           className="font-nunito w-3/5 shadow-xl hover:border-black rounded-lg border-2 
@@ -76,7 +73,7 @@ const Portfolio = () => {
                             return (
                               <>
                                 <tr key={id}>
-                                  <td className="flex justify-between items-center px-6 py-5 whitespace-nowrap mobile:px-8 tablet:px-2">
+                                  <td className="flex justify-evenly items-center px-6 py-5 whitespace-nowrap mobile:px-8 tablet:px-2">
                                     <div
                                       className="flex items-center cursor-pointer"
                                       onClick={() =>
@@ -100,12 +97,12 @@ const Portfolio = () => {
                                       </div>
                                     </div>
 
-                                    <div className="mobile:text-sm text-lg font-bold text-gray-900 uppercase px-5">
+                                    <div className="mobile:text-sm text-lg font-bold text-gray-900 uppercase px-10">
                                       {quantity}
                                     </div>
 
                                     <button
-                                      className="py-2 whitespace-nowrap mobile:pl-2 text-2xl bg-red-700 text-white font-semibold font-nunito mobile:text-sm mobile:px-2 px-4 mx-6 mobile:mx-0 rounded-md"
+                                      className="py-1 whitespace-nowrap mobile:pl-2 text-lg bg-red-700 text-white font-semibold font-nunito mobile:text-sm mobile:px-2 px-4 rounded-md"
                                       onClick={async () => {
                                         const coins = {
                                           order_uniqueId:
@@ -143,7 +140,7 @@ const Portfolio = () => {
                                         }
                                       }}
                                     >
-                                      Sell Coin
+                                      sell coin
                                     </button>
                                   </td>
                                 </tr>
@@ -165,5 +162,3 @@ const Portfolio = () => {
 };
 
 export default Portfolio;
-
-// coin?.length === 0 ? "Your Cart is empty!" :
