@@ -147,7 +147,7 @@ const CryptoDetails = () => {
 
           setPaymentToken(response.razorpay_payment_id);
           localStorage.setItem("isBuyCoin", "true");
-          localStorage.setItem("quantity", parseInt(counter));
+          localStorage.setItem("quantity", counter);
 
           window.location.reload(false);
           toast.success("Payment successful!", {
@@ -191,7 +191,8 @@ const CryptoDetails = () => {
         symbol: coin?.symbol,
         name: coin?.name,
         // quantity: portfolioRes?.quantity + counter,
-        quantity: portfolioRes?.quantity + localStorage.getItem("quantity"),
+        quantity:
+          portfolioRes?.quantity + parseInt(localStorage.getItem("quantity")),
         paymentToken: paymentToken,
       };
 
@@ -211,15 +212,10 @@ const CryptoDetails = () => {
           localStorage.removeItem("isBuyCoin");
           localStorage.removeItem("quantity");
           history.push("/");
-          toast.success(
-            `${localStorage.getItem("quantity")} ${
-              coin?.name
-            } buy successfully!`,
-            {
-              position: toast.POSITION.TOP_CENTER,
-              autoClose: 3000,
-            }
-          );
+          toast.success(`${coin?.name} buy successfully!`, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+          });
         }
       } catch (error) {
         console.log(error);
