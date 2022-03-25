@@ -8,19 +8,6 @@ const News3 = () => {
 
   const getData = async () => {
     try {
-      const setHeader = {
-        headers: {
-          "x-rapidapi-host": "crypto-news-live3.p.rapidapi.com",
-          "x-rapidapi-key":
-            "08295af6edmsh25c9fc24b3b7d6fp1b591ejsn18d6e7fda81d",
-        },
-      };
-
-      const res = await axios.get(
-        "https://crypto-news-live3.p.rapidapi.com/news",
-        setHeader
-      );
-
       const responce = res.data;
       setNews(responce);
     } catch (err) {
