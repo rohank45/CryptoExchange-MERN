@@ -49,10 +49,7 @@ const Watchlist = () => {
     <>
       <NavBar />
       <div className="flex justify-center pt-32">
-        <div
-          className="font-nunito w-3/5 shadow-xl hover:border-black rounded-lg border-2
-            border-gray-200 py-5 px-8 mobile:px-0 laptop:w-4/5 tablet:w-full mobile:w-full mobile:rounded-none"
-        >
+        <div className="font-nunito w-3/5 shadow-xl rounded-lg border-2 py-5 px-8 mobile:px-0 laptop:w-4/5 tablet:w-full mobile:w-full mobile:rounded-none">
           <div className="flex items-center justify-around p-5 mobile:px-0 mobile:py-2">
             <div className="p-10 mobile:hidden tablet:hidden">
               <img src={ShoppingCart} alt="login svg" />

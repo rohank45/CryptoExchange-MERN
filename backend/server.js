@@ -92,6 +92,10 @@ app.use("/", updateCoinRoute);
 const sellCoinRoute = require("./routes/portfolioRoutes/sellCoinRoute");
 app.use("/", sellCoinRoute);
 
+//removing only sell coins whose qty less than one from db
+const removeCoins = require("./routes/portfolioRoutes/removeCoins");
+app.use("/", removeCoins);
+
 //sending data of saved coins to client
 const getPortfolioData = require("./routes/portfolioRoutes/getPortfolioData");
 app.use("/", getPortfolioData);

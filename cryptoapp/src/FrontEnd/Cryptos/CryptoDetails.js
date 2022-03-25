@@ -171,7 +171,7 @@ const CryptoDetails = () => {
       paymentObject.open();
     } catch (error) {
       history.push("/login");
-      return toast.warning("Login to Make a Payment!", {
+      return toast.warning("Login to make a Payment!", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
       });
