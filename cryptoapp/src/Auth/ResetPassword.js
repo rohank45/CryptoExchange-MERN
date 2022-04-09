@@ -9,7 +9,9 @@ import { toast } from "react-toastify";
 const ResetPassword = () => {
   const history = useHistory();
   const [visible, setVisible] = useState(false);
+  const [visibleConfirm, setVisibleConfirm] = useState(false);
   const InputType = visible ? "text" : "password";
+  const InputConfirmType = visibleConfirm ? "text" : "password";
 
   const [state, setstate] = useState({
     newPasswords: "",
@@ -110,7 +112,7 @@ const ResetPassword = () => {
 
                         <span className="flex items-center">
                           <input
-                            type={InputType}
+                            type={InputConfirmType}
                             minLength="8"
                             maxLength="10"
                             name="confirmPasswords"
@@ -123,10 +125,10 @@ const ResetPassword = () => {
                           <span
                             className="text-2xl cursor-pointer -ml-8"
                             onClick={() =>
-                              setVisible((visibilty) => !visibilty)
+                              setVisibleConfirm((visibilty) => !visibilty)
                             }
                           >
-                            {visible ? (
+                            {visibleConfirm ? (
                               <AiOutlineEyeInvisible />
                             ) : (
                               <AiOutlineEye />

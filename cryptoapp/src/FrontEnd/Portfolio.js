@@ -10,9 +10,7 @@ import Spinner from "../Components/Spinner";
 const Portfolio = () => {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
-  const [showInputQTY, setShowInputQTY] = useState(false);
   const [coin, setCoin] = useState([]);
-  const [QTY, setQTY] = useState(1);
   const [portfolioCoinArr, setPortfolioCoinArr] = useState([]);
 
   let newPortfolioCoinArr = [];
@@ -118,97 +116,81 @@ const Portfolio = () => {
 
                                       <div className="flex justify-evenly items-center">
                                         <div className="mobile:text-sm text-lg font-bold text-gray-900 uppercase px-10">
-                                          {quantity}
+                                          QTY: {quantity}
                                         </div>
 
                                         <div className="flex flex-col w-1/2">
                                           <button
                                             className="py-1 whitespace-nowrap mobile:pl-2 text-lg bg-red-700 text-white font-semibold font-nunito mobile:text-md mobile:px-2 px-4 rounded-md"
                                             onClick={async () => {
+                                              const sellQty = prompt(
+                                                "Enter Quantity you want to sell.",
+                                                1
+                                              );
+
                                               const portfolioRes =
                                                 portfolioCoinArr.find(
                                                   (e) =>
                                                     e.name === curElem?.name
                                                 );
 
-                                              const coins = {
-                                                coinId: curElem?.id,
-                                                image: curElem?.image.large,
-                                                symbol: curElem?.symbol,
-                                                name: curElem?.name,
-                                                quantity:
-                                                  QTY <= 0 ||
-                                                  QTY > portfolioRes?.quantity
-                                                    ? toast.warning(
-                                                        "Invalid Quantity",
-                                                        {
-                                                          position:
-                                                            toast.POSITION
-                                                              .TOP_CENTER,
-                                                          autoClose: 2000,
-                                                        }
-                                                      )
-                                                    : portfolioRes?.quantity -
-                                                      QTY,
-                                                paymentToken: null,
-                                              };
+                                              if (sellQty !== null) {
+                                                const coins = {
+                                                  coinId: curElem?.id,
+                                                  image: curElem?.image.large,
+                                                  symbol: curElem?.symbol,
+                                                  name: curElem?.name,
+                                                  quantity:
+                                                    sellQty <= 0 ||
+                                                    sellQty >
+                                                      portfolioRes?.quantity
+                                                      ? toast.warning(
+                                                          "Invalid Quantity",
+                                                          {
+                                                            position:
+                                                              toast.POSITION
+                                                                .TOP_CENTER,
+                                                            autoClose: 2000,
+                                                          }
+                                                        )
+                                                      : portfolioRes?.quantity -
+                                                        sellQty,
+                                                  paymentToken: null,
+                                                };
 
-                                              try {
-                                                // if (QTY === quantity) {
-                                                //   await axios.post(
-                                                //     "/remove/coins",
-                                                //     name,
-                                                //     {
-                                                //       headers: {
-                                                //         "Content-Type":
-                                                //           "application/json",
-                                                //       },
-                                                //     }
-                                                //   );
-                                                // } else {
-                                                const res = await axios.post(
-                                                  "/sell/coins",
-                                                  { coins: coins },
-                                                  {
-                                                    headers: {
-                                                      "Content-Type":
-                                                        "application/json",
-                                                    },
-                                                  }
-                                                );
-
-                                                const data = res.data;
-                                                if (data) {
-                                                  history.push("/");
-                                                  toast.success(
-                                                    "Coin selled, refund will get in 3 working days!",
+                                                try {
+                                                  const res = await axios.post(
+                                                    "/sell/coins",
+                                                    { coins: coins },
                                                     {
-                                                      position:
-                                                        toast.POSITION
-                                                          .TOP_CENTER,
-                                                      autoClose: 3000,
+                                                      headers: {
+                                                        "Content-Type":
+                                                          "application/json",
+                                                      },
                                                     }
                                                   );
+
+                                                  const data = res.data;
+                                                  if (data) {
+                                                    history.push("/");
+                                                    toast.success(
+                                                      "Coin selled, refund will get in 3 working days!",
+                                                      {
+                                                        position:
+                                                          toast.POSITION
+                                                            .TOP_CENTER,
+                                                        autoClose: 3000,
+                                                      }
+                                                    );
+                                                  }
+                                                } catch (error) {
+                                                  console.log(error.message);
                                                 }
-                                                // }
-                                              } catch (error) {
-                                                console.log(error.message);
                                               }
                                             }}
                                           >
                                             sell coin
                                           </button>
-
-                                          <input
-                                            type="number"
-                                            minLength="1"
-                                            maxLength="3"
-                                            value={QTY}
-                                            onChange={(e) =>
-                                              setQTY(e.target.value)
-                                            }
-                                            className="text-md block px-2 py-1 rounded-lg w-full border-2 border-gray-300 focus:bg-white focus:border-gray-600 focus:outline-none my-4"
-                                          />
                                         </div>
                                       </div>
                                     </td>

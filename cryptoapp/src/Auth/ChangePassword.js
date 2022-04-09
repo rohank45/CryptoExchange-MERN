@@ -9,6 +9,8 @@ import { toast } from "react-toastify";
 const ChangePassword = () => {
   const history = useHistory();
   const [visible, setVisible] = useState(false);
+  const [visibleConfirm, setVisibleConfirm] = useState(false);
+  const InputConfirmType = visibleConfirm ? "text" : "password";
   const InputType = visible ? "text" : "password";
 
   const [state, setstate] = useState({
@@ -108,7 +110,7 @@ const ChangePassword = () => {
 
                         <span className="flex items-center">
                           <input
-                            type={InputType}
+                            type={InputConfirmType}
                             name="newPasswords"
                             value={state.newPasswords}
                             onChange={handleInputs}
@@ -122,10 +124,10 @@ const ChangePassword = () => {
                           <span
                             className="text-2xl cursor-pointer -ml-8"
                             onClick={() =>
-                              setVisible((visibilty) => !visibilty)
+                              setVisibleConfirm((visibilty) => !visibilty)
                             }
                           >
-                            {visible ? (
+                            {visibleConfirm ? (
                               <AiOutlineEyeInvisible />
                             ) : (
                               <AiOutlineEye />
