@@ -4,16 +4,19 @@ import Winners from "../Images/Winners.png";
 
 const Middle = () => {
   return (
-    <div className="flex justify-center mt-20 select-none">
-      <div className="font-nunito w-3/5 shadow-xl rounded-lg border-2 border-gray-200 py-5 px-8 laptop:w-4/5 tablet:w-full mobile:w-full">
+    <div className="flex justify-center mt-14 select-none">
+      <div
+        className="font-nunito w-3/5 shadow-md rounded-lg border-2 border-gray-200 
+          py-5 px-8 laptop:w-4/5 tablet:w-full mobile:w-full"
+      >
         <div className="flex items-center gap-10">
           <div className="w-full tablet:w-1/2 mobile:hidden">
             <img src={Analyticsteam} alt="team" />
           </div>
 
           <div className="flex flex-col gap-4 tablet:w-4/5">
-            <h1 className="text-3xl font-bold capitalize mobile:text-2xl">
-              Why trade in Crypto ?
+            <h1 className="text-3xl font-bold mobile:text-2xl">
+              Why trade in crypto?
             </h1>
             <p>
               In general, the cryptocurrency market is considered illiquid
@@ -31,7 +34,7 @@ const Middle = () => {
               your trading journey now!
             </p>
 
-            <button className="text-center text-xl font-semibold bg-gray-900 text-white w-40 py-2 rounded-lg">
+            <button className="text-center font-semibold bg-gray-900 text-white w-32 py-1 rounded-md">
               <a
                 target="_blank"
                 rel="noopener noreferrer"
@@ -45,8 +48,8 @@ const Middle = () => {
 
         <div className="flex items-center gap-10 pb-2 pt-14">
           <div className="flex flex-col gap-4 tablet:w-4/5">
-            <h1 className="text-3xl font-bold capitalize mobile:text-2xl">
-              Why to use TP-Coin ?
+            <h1 className="text-3xl font-bold mobile:text-2xl">
+              Why to use TP-COIN?
             </h1>
             <p>
               You can start trading in cryptocurrencies as low as ₹100 with

@@ -12,10 +12,10 @@ const Header = () => {
       <div className="bg-taj-mahal bg-no-repeat bg-right bg-opacity-0">
         <div className="p-10 font-nunito">
           <p className="text-5xl font-bold my-5">Welcome to TP-Coin</p>
-          <p className="text-lg text-gray-700 mobile:text-base">
+          <p className="text-gray-700 mobile:text-sm">
             Crypto Currency Exchange.
           </p>
-          <p className="text-lg text-gray-700 mobile:text-base">
+          <p className="text-gray-700 mobile:text-sm">
             Invest in Crypto-Currency in One-Click for a better future.
           </p>
           <div>

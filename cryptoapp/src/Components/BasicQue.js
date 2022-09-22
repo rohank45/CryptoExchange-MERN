@@ -2,7 +2,7 @@ import React from "react";
 
 const BasicQue = () => {
   return (
-    <div className="font-nunito select-none shadow-lg mx-60 mb-20 p-2 laptop:mx-10 tablet:mx-10 mobile:mx-2 mobile:p-0 mobile:shadow-md">
+    <div className="font-nunito select-none shadow-md mx-60 mb-14 p-2 laptop:mx-10 tablet:mx-10 mobile:mx-2 mobile:p-0 mobile:shadow-md">
       <p className="text-center font-bold text-2xl py-5 pb-10 mobile:text-xl">
         Frequently Asked Questions.
       </p>

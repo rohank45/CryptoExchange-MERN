@@ -213,7 +213,7 @@ const Cryptos = () => {
                                     onClick={() =>
                                       history.push(`/coins/${curElem.id}`)
                                     }
-                                    className="text-indigo-600 hover:underline"
+                                    className="text-indigo-600 hover:underline text-sm"
                                   >
                                     View Details
                                   </button>

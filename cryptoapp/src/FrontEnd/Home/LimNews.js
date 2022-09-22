@@ -33,7 +33,7 @@ const LimNews = () => {
 
   return (
     <>
-      <p className="text-center text-3xl font-bold pt-24 uppercase font-nunito">
+      <p className="text-center text-3xl font-bold pt-14 uppercase font-nunito">
         News
       </p>
 
@@ -45,7 +45,7 @@ const LimNews = () => {
               <div
                 key={id}
                 className="flex flex-col my-5 overflow-x-hidden w-96 h-48 p-2 border border-gray-400 
-                    rounded-lg shadow-md bg-gray-100 outline-none scrollbar-hide"
+                    rounded-lg shadow-md bg-gray-100 outline-none scrollbar-hide mx-2"
               >
                 <div className="h-1/2 w-full flex flex-col gap-5 font-nunito">
                   <p className="text-xl font-semibold">{title}</p>
@@ -63,9 +63,9 @@ const LimNews = () => {
         )}
       </div>
 
-      <p className="text-center text-gray-500 font-light pt-5 pb-16 font-nunito">
+      <p className="text-center text-gray-500 font-light pt-5 pb-5 font-nunito">
         <Link to="/news" className="cursor-pointer">
-          view more News
+          view more news
         </Link>
       </p>
     </>

@@ -23,7 +23,7 @@ const NavBar = () => {
     <>
       <div
         className="fixed select-none font-nunito w-full py-6 flex justify-between items-center z-40
-          shadow-lg text-xl bg-gray-400 text-gray-800 mobile:py-5 overflow-x-hidden"
+          shadow-md text-xl bg-gray-400 text-gray-800 mobile:py-5 overflow-x-hidden border-b"
       >
         <div className="flex gap-4 items-center text-3xl px-2 mobile:text-xl mobile:gap-2">
           <span className="w-10 ml-10 mobile:ml-1 tablet:ml-2">
@@ -34,48 +34,52 @@ const NavBar = () => {
           </p>
         </div>
 
-        {/* login logout toggle */}
-        <div
-          className="flex gap-4 items-center text-lg absolute right-24 
-            mobile:gap-1 mobile:right-0 mobile:relative mobile:text-sm"
-        >
-          <div>
+        <div className="flex items-center text-lg absolute right-10 mobile:right-0 mobile:relative mobile:text-sm">
+          <div className="mr-5">
             {cookies.get("isLogin") ? (
-              <button className="px-1 py-2 font-semibold text-gray-800 hover:underline">
+              <button className="px-1 py-2 font-bold text-gray-800 hover:underline uppercase text-sm">
                 <Link to="/logout">Log out</Link>
               </button>
             ) : (
-              <button className="px-1 py-2 font-semibold text-gray-800 hover:underline">
+              <button className="px-1 py-2 font-bold text-gray-800 hover:underline uppercase text-sm">
                 <Link to="/login">Log In</Link>
               </button>
             )}
           </div>
 
-          <select
-            name="currencies"
-            className="bg-gray-400 outline-none font-semibold cursor-pointer"
-            value={currency}
-            onChange={(e) => {
-              setCurrency(e.target.value);
-            }}
-          >
-            <option value="INR">INR</option>
-            <option value="USD">USD</option>
-          </select>
+          {cookies.get("isLogin") ? (
+            <select
+              name="currencies"
+              className="bg-gray-400 outline-none font-semibold cursor-pointer mr-5"
+              value={currency}
+              onChange={(e) => {
+                setCurrency(e.target.value);
+              }}
+            >
+              <option value="INR">INR</option>
+              <option value="USD">USD</option>
+            </select>
+          ) : (
+            ""
+          )}
         </div>
 
+        {/* {cookies.get("isLogin") ? ( */}
         <button
           className="menu-button overflow-x-hidden text-2xl mr-5"
           onClick={() => setMenu(true)}
         >
           <GiHamburgerMenu />
         </button>
+        {/* ) : (
+          ""
+        )} */}
       </div>
 
       <Drawer anchor="left" open={menu} onClose={() => setMenu(false)}>
         <Box width="100%" role="presentation">
-          <div className="fixed font-nunito h-screen bg-gray-400 pt-10 w-1/5 mobile:w-2/3 tablet:w-2/5 laptop:w-2/5">
-            <ul className="menu-list font-semibold flex flex-col gap-3 pt-6 laptop:pt-14 tablet:pt-8 mobile:pt-2 tablet:gap-5">
+          <div className="fixed font-nunito h-screen bg-gray-400 pt-10 w-1/5 mobile:w-2/3 tablet:w-2/5 laptop:w-1/4">
+            <ul className="menu-list font-semibold flex flex-col gap-3 pt-6 laptop:pt-0 tablet:pt-8 mobile:pt-2 tablet:gap-5">
               <div className="px-10">
                 <img src={cImg} alt="app logo png" />
               </div>
@@ -108,12 +112,12 @@ const NavBar = () => {
                 <Link to="/watchlist">WatchList</Link>
               </div>
 
-              <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-500 hover:text-white px-8 py-2 mobile:py-1">
+              {/* <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-500 hover:text-white px-8 py-2 mobile:py-1">
                 <span className="text-2xl laptop:text-4xl tablet:text-4xl">
                   <RiMoneyCnyCircleLine />
                 </span>
                 <Link to="/exchanges">Exchanges</Link>
-              </div>
+              </div> */}
 
               <div className="flex items-center gap-3 cursor-pointer hover:bg-gray-500 hover:text-white px-8 py-2 mobile:py-1">
                 <span className="text-2xl laptop:text-4xl tablet:text-4xl">

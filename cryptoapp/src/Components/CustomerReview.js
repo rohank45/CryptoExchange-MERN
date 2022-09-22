@@ -4,12 +4,16 @@ import imgas from "../Images/user.jpg";
 const CustomerReview = () => {
   return (
     <>
-      <div className="my-20 font-nunito select-none">
-        <p className="font-semibold text-center text-2xl pb-5 mobile:text-xl">
+      <div className="my-10 font-nunito select-none">
+        <p className="font-semibold text-center text-2xl mobile:text-xl">
           Here’s what our customer's think :
         </p>
+
         <div className="min-w-full flex items-center gap-10 py-10 whitespace-nowrap scrollbar-hide animated-scroll">
-          <div className="p-2 h-60 min-w-1/3 laptop:min-w-2/5 tablet:min-w-full mobile:min-w-full flex items-center bg-gray-200 rounded-lg shadow-xl border border-gray-300">
+          <div
+            className="p-2 h-52 min-w-1/3 laptop:min-w-2/5 tablet:min-w-full mobile:min-w-full 
+              flex items-center bg-gray-200 rounded-lg shadow-xl border border-gray-300"
+          >
             <img
               className="h-40 w-40 rounded-full"
               src={imgas}
@@ -26,7 +30,10 @@ const CustomerReview = () => {
             </div>
           </div>
 
-          <div className="p-2 h-60 min-w-1/3 laptop:min-w-2/5 tablet:min-w-full mobile:min-w-full flex items-center bg-gray-200 rounded-lg shadow-xl border border-gray-300">
+          <div
+            className="p-2 h-52 min-w-1/3 laptop:min-w-2/5 tablet:min-w-full mobile:min-w-full 
+              flex items-center bg-gray-200 rounded-lg shadow-xl border border-gray-300"
+          >
             <img
               className="h-40 w-40 rounded-full"
               src={imgas}
@@ -44,7 +51,10 @@ const CustomerReview = () => {
             </div>
           </div>
 
-          <div className="p-2 h-60 min-w-1/3 laptop:min-w-2/5 tablet:min-w-full mobile:min-w-full flex items-center bg-gray-200 rounded-lg shadow-xl border border-gray-300">
+          <div
+            className="p-2 h-52 min-w-1/3 laptop:min-w-2/5 tablet:min-w-full mobile:min-w-full 
+              flex items-center bg-gray-200 rounded-lg shadow-xl border border-gray-300"
+          >
             <img
               className="h-40 w-40 rounded-full"
               src={imgas}
@@ -61,7 +71,10 @@ const CustomerReview = () => {
             </div>
           </div>
 
-          <div className="p-2 h-60 min-w-1/3 laptop:min-w-2/5 tablet:min-w-full mobile:min-w-full flex items-center bg-gray-200 rounded-lg shadow-xl border border-gray-200">
+          <div
+            className="p-2 h-52 min-w-1/3 laptop:min-w-2/5 tablet:min-w-full mobile:min-w-full 
+              flex items-center bg-gray-200 rounded-lg shadow-xl border border-gray-200"
+          >
             <img
               className="h-40 w-40 rounded-full"
               src={imgas}
@@ -79,7 +92,10 @@ const CustomerReview = () => {
             </div>
           </div>
 
-          <div className="p-2 h-60 min-w-1/3 laptop:min-w-2/5 tablet:min-w-full mobile:min-w-full flex items-center bg-gray-200 rounded-lg shadow-xl border border-gray-200">
+          <div
+            className="p-2 h-52 min-w-1/3 laptop:min-w-2/5 tablet:min-w-full mobile:min-w-full 
+              flex items-center bg-gray-200 rounded-lg shadow-xl border border-gray-200"
+          >
             <img
               className="h-40 w-40 rounded-full"
               src={imgas}
@@ -98,7 +114,10 @@ const CustomerReview = () => {
             </div>
           </div>
 
-          <div className="p-2 h-60 min-w-1/3 laptop:min-w-2/5 tablet:min-w-full mobile:min-w-full flex items-center bg-gray-200 rounded-lg shadow-xl border border-gray-200">
+          <div
+            className="p-2 h-52 min-w-1/3 laptop:min-w-2/5 tablet:min-w-full mobile:min-w-full 
+              flex items-center bg-gray-200 rounded-lg shadow-xl border border-gray-200"
+          >
             <img
               className="h-40 w-40 rounded-full"
               src={imgas}

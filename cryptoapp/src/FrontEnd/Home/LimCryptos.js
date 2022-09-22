@@ -29,7 +29,7 @@ const LimCryptos = () => {
 
   return (
     <div className="font-nunito mx-40 laptop:mx-10 tablet:mx-8 mobile:mx-2 select-none">
-      <p className="text-center text-3xl font-bold pt-24 uppercase font-nunito mobile:text-3xl">
+      <p className="text-center text-3xl font-bold pt-14 uppercase font-nunito mobile:text-3xl">
         Crypto Currencies
       </p>
 
@@ -162,7 +162,7 @@ const LimCryptos = () => {
                                 onClick={() =>
                                   history.push(`/coins/${curElem.id}`)
                                 }
-                                className="text-indigo-600 hover:underline"
+                                className="text-indigo-600 hover:underline text-sm"
                               >
                                 View Details
                               </button>
@@ -181,7 +181,7 @@ const LimCryptos = () => {
 
       <p className="text-center text-gray-500 font-light py-2 font-nunito">
         <Link to="/coins" className="cursor-pointer">
-          view more Crypto Currencies
+          view more crypto's
         </Link>
       </p>
     </div>

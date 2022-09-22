@@ -34,7 +34,7 @@ const LimExchanges = () => {
 
   return (
     <>
-      <p className="text-center text-3xl font-bold pt-24 uppercase font-nunito select-none">
+      <p className="text-center text-3xl font-bold pt-14 uppercase font-nunito select-none">
         Exchanges
       </p>
 
@@ -54,7 +54,7 @@ const LimExchanges = () => {
           return (
             <div
               key={id}
-              className="collapse border border-base-300 rounded-md shadow-lg my-5 py-4 mx-52 
+              className="collapse border border-base-300 rounded-md shadow-md my-5 py-4 mx-52 
                     laptop:mx-10 tablet:mx-10 mobile:mx-2"
             >
               <input type="checkbox" />
@@ -113,7 +113,7 @@ const LimExchanges = () => {
 
       <p className="text-center text-gray-500 font-light pt-5 font-nunito">
         <Link to="/exchanges" className="cursor-pointer">
-          view more Exchanges
+          view more exchanges
         </Link>
       </p>
     </>

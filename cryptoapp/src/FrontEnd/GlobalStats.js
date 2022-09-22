@@ -42,7 +42,7 @@ const GlobalStats = () => {
 
   return (
     <>
-      <p className="pt-24 pb-10 text-center text-3xl uppercase font-nunito font-semibold mobile:hidden tablet:text-3xl">
+      <p className="pt-24 pb-5 text-center text-3xl uppercase font-nunito font-bold mobile:hidden tablet:text-3xl">
         Global Stats
       </p>
 
@@ -50,34 +50,35 @@ const GlobalStats = () => {
         <Spinner />
       ) : (
         <div
-          className="shadow-md py-5 rounded-xl bg-gray-50 flex justify-around items-center flex-wrap mx-40 font-semibold laptop:mx-5 tablet:mx-10 mobile:hidden"
+          className="shadow-md py-5 rounded-xl bg-gray-50 flex justify-around items-center flex-wrap mx-40 
+              font-semibold laptop:mx-5 tablet:mx-10 mobile:hidden"
           key={stats.id}
         >
-          <p className="flex flex-col text-2xl capitalize text-gray-700">
+          <p className="flex flex-col uppercase text-gray-700">
             Total CryptoCurrencies
             <span className="text-lg py-5 text-indigo-800 font-semibold">
               {stats.totalCoins}
             </span>
           </p>
-          <p className="flex flex-col text-2xl capitalize text-gray-700">
+          <p className="flex flex-col uppercase text-gray-700">
             Total Exchanges
             <span className="text-lg py-5 text-indigo-800 font-semibold">
               {stats.totalExchanges}
             </span>
           </p>
-          <p className="flex flex-col text-2xl capitalize text-gray-700">
+          <p className="flex flex-col uppercase text-gray-700">
             Total Market Cap
             <span className="text-lg py-5 text-indigo-800 font-semibold">
               {stats.totalMarketCap} M
             </span>
           </p>
-          <p className="flex flex-col text-2xl capitalize text-gray-700">
+          <p className="flex flex-col uppercase text-gray-700">
             Total 24h Volume
             <span className="text-lg py-5 text-indigo-800 font-semibold">
               {stats.total24hVolume} M
             </span>
           </p>
-          <p className="flex flex-col text-2xl capitalize text-gray-700">
+          <p className="flex flex-col uppercase text-gray-700">
             Total Markets
             <span className="text-lg py-5 text-indigo-800 font-semibold">
               {stats?.totalMarkets}

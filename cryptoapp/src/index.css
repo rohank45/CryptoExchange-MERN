@@ -16,6 +16,10 @@
   animation: 40s scroll alternate infinite;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 @keyframes scroll {
   from {
     transform: translateX(0);

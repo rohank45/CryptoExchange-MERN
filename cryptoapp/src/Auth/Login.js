@@ -57,9 +57,9 @@ const Login = () => {
       <NavBar />
 
       <div className="flex justify-center pt-32">
-        <div className="font-nunito w-3/5 shadow-xl rounded-lg border-2 border-gray-200 py-5 px-8 laptop:w-4/5 tablet:w-full mobile:w-full">
+        <div className="font-nunito w-3/5 shadow-lg rounded-lg border-2 border-gray-200 py-5 px-8 laptop:w-4/5 tablet:w-full mobile:w-full">
           <div className="text-center font-bold text-4xl py-5 uppercase text-black">
-            Login form
+            Login
           </div>
           <div className="flex items-center justify-around p-10 mobile:px-0 mobile:py-2">
             <div className="mobile:hidden tablet:hidden">
@@ -70,7 +70,7 @@ const Login = () => {
                 <div className="relative flex flex-wrap">
                   <div className="w-full relative">
                     <form autoComplete="off" onSubmit={submitLoginForm}>
-                      <div className="py-1">
+                      <div className="">
                         <span className="px-1 text-lg font-semibold text-gray-700">
                           Email
                         </span>
@@ -82,7 +82,7 @@ const Login = () => {
                           value={userLogin.email}
                           onChange={handleInputs}
                           className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
-                            shadow-md focus:bg-white focus:border-gray-600 focus:outline-none my-4"
+                            shadow-md focus:bg-white focus:border-gray-600 focus:outline-none my-2"
                         />
 
                         {/* {errors.email ? (
@@ -94,7 +94,7 @@ const Login = () => {
                         )} */}
                       </div>
 
-                      <div className="py-1">
+                      <div className="my-3">
                         <span className="px-1 text-lg font-semibold text-gray-700">
                           Password
                         </span>
@@ -109,7 +109,7 @@ const Login = () => {
                             value={userLogin.passwords}
                             onChange={handleInputs}
                             className="text-md block px-3 py-2 rounded-lg w-full border-2 border-gray-300
-                            shadow-md focus:bg-white focus:border-gray-600 focus:outline-none my-4"
+                            shadow-md focus:bg-white focus:border-gray-600 focus:outline-none my-2"
                           />
                           <span
                             className="text-2xl cursor-pointer -ml-8"
@@ -136,8 +136,8 @@ const Login = () => {
 
                       <button
                         type="submit"
-                        className="mt-3 text-lg font-semibold hover:text-white hover:bg-black bg-gray-800 
-                            w-full text-white rounded-lg px-6 py-3 block shadow-xl mobile:py-2 mobile:mt-0"
+                        className="mt-2 text-lg font-semibold hover:text-white hover:bg-black bg-gray-800 
+                            w-full text-white rounded-lg px-6 py-2 block shadow-md mobile:mt-0 uppercase"
                       >
                         Login
                       </button>
@@ -145,13 +145,13 @@ const Login = () => {
 
                     <div className="text-gray-700 text-sm font-semibold px-2 my-6 flex flex-col justify-center items-center gap-2">
                       <Link to="/register" className="border-b border-gray-200">
-                        didn't registered yet ? Register
+                        didn't registered yet? CLICK ME
                       </Link>
                       <Link
                         to="/sendotp"
                         className="text-red-700 border-b border-gray-200"
                       >
-                        forget password ?
+                        forget password?
                       </Link>
                     </div>
                   </div>

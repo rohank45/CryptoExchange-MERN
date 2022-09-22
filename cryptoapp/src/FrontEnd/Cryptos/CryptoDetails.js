@@ -26,8 +26,8 @@ function loadScript(src) {
   });
 }
 
-// const __dev__ = document.domain === "localhost";
-const __dev__ = document.domain === "cryptoexchange-webapp.herokuapp.com";
+const __dev__ = document.domain === "localhost";
+// const __dev__ = document.domain === "cryptoexchange-webapp.herokuapp.com";
 export const CartContext = createContext();
 
 //main function
@@ -329,25 +329,25 @@ const CryptoDetails = () => {
                   {coin?.description.en}.
                 </p>
                 <p className="font-nunito font-bold flex gap-1 text-lg py-1">
-                  <p className="font-bold text-xl lowercase">Rank:</p>
+                  <p className="font-bold text-xl">Rank:</p>
                   {coin?.market_cap_rank}
                 </p>
                 <p className="font-nunito font-semibold flex gap-1 text-lg py-1">
-                  <p className="font-bold flex gap-3 text-xl lowercase">
-                    <p>Current Price:</p>₹
+                  <p className="font-bold flex gap-3 text-xl">
+                    <p>Current price:</p>₹
                   </p>
                   {coin?.market_data.current_price.inr}
                 </p>
                 <p className="font-nunito font-semibold flex gap-1 text-lg py-1">
-                  <p className="font-bold flex gap-3 text-xl lowercase">
-                    <p>Market Cap:</p>
+                  <p className="font-bold flex gap-3 text-xl">
+                    <p>Market cap:</p>
                     {symbols}
                   </p>
                   {coin?.market_data.market_cap[currency.toLowerCase()]}M
                 </p>
 
                 <p className="font-nunito font-semibold flex gap-1 text-lg py-1">
-                  <p className="font-bold flex gap-3 text-xl lowercase">
+                  <p className="font-bold flex gap-3 text-xl">
                     <p>Change:</p>
                     {symbols}
                   </p>
@@ -370,15 +370,15 @@ const CryptoDetails = () => {
                 </p>
 
                 <p className="font-nunito font-semibold flex gap-1 text-lg py-1">
-                  <p className="font-bold flex gap-3 text-xl lowercase">
-                    <p>volume:</p>
+                  <p className="font-bold flex gap-3 text-xl">
+                    <p>Volume:</p>
                     {symbols}
                   </p>
                   {coin?.market_data.total_volume[currency.toLowerCase()]}
                 </p>
                 <p className="font-nunito font-semibold flex gap-1 text-lg py-1 text-blue-600">
-                  <p className="font-bold flex gap-3 text-xl text-gray-900 lowercase">
-                    <p>LINK:</p>
+                  <p className="font-bold flex gap-3 text-xl text-gray-900">
+                    <p>Link:</p>
                   </p>
                   <a
                     target="_blank"
@@ -389,7 +389,7 @@ const CryptoDetails = () => {
                   </a>
                 </p>
                 <p className="font-nunito font-semibold flex gap-1 text-lg py-1">
-                  <p className="font-bold flex gap-3 text-lg lowercase">
+                  <p className="font-bold flex gap-3 text-lg">
                     <p>Last updated time:</p>
                   </p>
                   {coin?.last_updated}
@@ -431,16 +431,16 @@ const CryptoDetails = () => {
             {localStorage.getItem("isBuyCoin") ? (
               <button
                 onClick={buyCoin}
-                className="font-bold text-xl w-52 rounded-lg bg-green-400 py-3 border-2 border-gray-900 mobile:rounded-none 
-                mobile:w-1/2 mobile:px-0 mobile:border-none hover:bg-green-600 hover:text-white mobile:py-4"
+                className="font-bold text-lg w-52 rounded-lg bg-green-400 border-2 border-gray-900 mobile:rounded-none 
+                mobile:w-1/2 mobile:px-0 mobile:border-none hover:bg-green-600 hover:text-white"
               >
                 Buy Now
               </button>
             ) : (
               <button
                 onClick={displayRazorPay}
-                className="font-bold text-xl w-52 rounded-lg bg-blue-400 py-3 border-2 border-indigo-900 mobile:rounded-none 
-                mobile:w-1/2 mobile:px-0 mobile:border-none hover:bg-blue-600 hover:text-white mobile:py-4"
+                className="font-bold text-lg w-52 rounded-lg bg-blue-400 border-2 border-indigo-900 mobile:rounded-none 
+                mobile:w-1/2 mobile:px-0 mobile:border-none hover:bg-blue-600 hover:text-white"
               >
                 Make Payment
               </button>
@@ -449,7 +449,7 @@ const CryptoDetails = () => {
             <div className="flex justify-center items-center gap-2 mobile:hidden">
               <button
                 onClick={decrementCounter}
-                className="bg-red-700 text-white text-5xl font-black rounded-lg shadow-md text-center px-5 py-3"
+                className="bg-red-700 text-white text-5xl font-black rounded-lg shadow-md text-center px-5 py-1"
               >
                 -
               </button>
@@ -460,12 +460,12 @@ const CryptoDetails = () => {
                     ? localStorage.getItem("quantity")
                     : counter
                 }
-                className="border-2 border-gray-600 w-14 h-14 px-5 py-3 font-bold font-nunito rounded-lg"
+                className="border-2 border-gray-600 w-14 h-14 px-5 py-1 font-bold font-nunito rounded-lg"
               />
 
               <button
                 onClick={incrementCounter}
-                className="bg-green-700 text-white text-5xl font-black rounded-lg shadow-md text-center px-4 py-3"
+                className="bg-green-700 text-white text-5xl font-black rounded-lg shadow-md text-center px-4 py-1"
               >
                 +
               </button>
@@ -473,8 +473,8 @@ const CryptoDetails = () => {
 
             <button
               onClick={addWatchlist}
-              className="font-bold text-xl w-52 rounded-lg bg-gray-300 border-2 border-gray-600 mobile:rounded-none 
-                mobile:w-1/2 py-3 mobile:px-0 mobile:border-none hover:bg-gray-600 hover:text-white mobile:py-4"
+              className="font-bold text-lg w-52 rounded-lg bg-gray-300 border-2 border-gray-600 mobile:rounded-none 
+                mobile:w-1/2 mobile:px-0 mobile:border-none hover:bg-gray-600 hover:text-white"
             >
               Add to Watchlist
             </button>

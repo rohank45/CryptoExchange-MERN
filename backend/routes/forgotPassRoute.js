@@ -22,7 +22,7 @@ router.post("/forgot/password", async (req, res, next) => {
     const url = `https://cryptoexchange-webapp.herokuapp.com/reset/password/${forgotToken}`;
 
     // const message = `Copy-Paste this link and hit enter to reset password. \n\n ${url}`;
-    const message = `<h2><a target="_blank" rel="noopener noreferrer" href=${url} > Click </a> to reset a password.</h2>`;
+    const message = `<h2><a target="_blank" rel="noopener noreferrer" href=${url} > Click </a> here to reset a password.</h2>`;
 
     //sending token through email
     try {

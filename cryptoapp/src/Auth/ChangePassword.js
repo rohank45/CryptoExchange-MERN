@@ -64,7 +64,10 @@ const ChangePassword = () => {
     <>
       <NavBar />
       <div className="flex justify-center pt-40">
-        <div className="font-nunito w-3/5 shadow-xl rounded-lg border-2 border-gray-200 py-5 px-8 laptop:w-4/5 tablet:w-full mobile:w-full">
+        <div
+          className="font-nunito w-3/5 shadow-lg rounded-lg border-2 border-gray-200 
+            py-5 px-8 laptop:w-4/5 tablet:w-full mobile:w-full"
+        >
           <div className="text-center font-bold text-4xl py-5 uppercase text-black mobile:text-2xl">
             Reset Password form
           </div>
@@ -78,8 +81,8 @@ const ChangePassword = () => {
                   <div className="w-full relative">
                     <form autoComplete="off" onSubmit={changePassword}>
                       <div className="py-1">
-                        <p className="text-sm text-red-700 font-nunito">
-                          at least 1 (Uppercase, Lowercase, Number, Symbol)
+                        <p className="text-sm text-red-600 font-nunito">
+                          *at least 1 (Uppercase, Lowercase, Number, Symbol)
                         </p>
                         <span className="flex items-center">
                           <input
@@ -138,7 +141,7 @@ const ChangePassword = () => {
                         <button
                           type="submit"
                           className="mt-3 text-lg font-semibold hover:text-white hover:bg-black bg-gray-800 
-                            w-full text-white rounded-lg px-6 py-3 block shadow-xl mobile:py-2 mobile:mt-0"
+                            w-full text-white rounded-lg px-6 py-2 block shadow-md mobile:mt-0 uppercase"
                         >
                           Change Password
                         </button>

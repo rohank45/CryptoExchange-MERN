@@ -48,6 +48,7 @@ const Watchlist = () => {
   return (
     <>
       <NavBar />
+
       <div className="flex justify-center pt-32">
         <div className="font-nunito w-3/5 shadow-xl rounded-lg border-2 py-5 px-8 mobile:px-0 laptop:w-4/5 tablet:w-full mobile:w-full mobile:rounded-none">
           <div className="flex items-center justify-around p-5 mobile:px-0 mobile:py-2">
@@ -73,15 +74,15 @@ const Watchlist = () => {
                           >
                             <button
                               onClick={emptyWatchlist}
-                              className="bg-red-700 text-white px-2 py-1 rounded-lg shadow-md"
+                              className="bg-red-700 text-white px-2 py-1 rounded-lg shadow-md text-xs"
                             >
-                              RemoveAll
+                              Remove All
                             </button>
                           </th>
                         </tr>
                       </thead>
 
-                      <tbody className="bg-white divide-y divide-gray-200">
+                      <tbody className="bg-white divide-y divide-gray-200 min-w-full">
                         {loading ? (
                           <Spinner />
                         ) : (
@@ -94,7 +95,11 @@ const Watchlist = () => {
                             return (
                               <>
                                 <tr key={id}>
-                                  <td className="flex justify-between items-center px-6 py-5 whitespace-nowrap mobile:px-10 tablet:px-10">
+                                  <td
+                                    // style={{ width: "100%" }}
+                                    className="min-w-full flex justify-between items-center px-6 py-5 
+                                      whitespace-nowrap mobile:px-10 tablet:px-10"
+                                  >
                                     <div
                                       className="flex items-center cursor-pointer"
                                       onClick={() =>
