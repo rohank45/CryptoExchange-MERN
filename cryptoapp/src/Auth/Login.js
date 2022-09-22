@@ -145,7 +145,7 @@ const Login = () => {
 
                     <div className="text-gray-700 text-sm font-semibold px-2 my-6 flex flex-col justify-center items-center gap-2">
                       <Link to="/register" className="border-b border-gray-200">
-                        didn't registered yet? CLICK ME
+                        didn't register? CLICK ME
                       </Link>
                       <Link
                         to="/sendotp"
