@@ -15,10 +15,6 @@ const News = () => {
         },
       };
       let day = date.getDate();
-      const res = await fetch(
-        `https://newsapi.org/v2/everything?q=cryptocoins&from=2022-02-${day}&sortBy=publishedAt&apiKey=4c9a117cba154963a69fc2aa982e4ce1`,
-        setHeader
-      );
 
       const data = await res.json();
       setNews(data.articles);

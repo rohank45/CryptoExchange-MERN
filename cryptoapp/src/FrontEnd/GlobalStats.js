@@ -10,17 +10,6 @@ const GlobalStats = () => {
     try {
       setLoading(true);
 
-      const options = {
-        method: "GET",
-        url: "https://coinranking1.p.rapidapi.com/stats",
-        params: { referenceCurrencyUuid: "yhjMzLPhuIDl" },
-        headers: {
-          "x-rapidapi-host": "coinranking1.p.rapidapi.com",
-          "x-rapidapi-key":
-            "3bf8ad2345msh9f75760d2fe9a1dp1ffbb3jsnc1cec33b9615",
-        },
-      };
-
       axios
         .request(options)
         .then(function (response) {

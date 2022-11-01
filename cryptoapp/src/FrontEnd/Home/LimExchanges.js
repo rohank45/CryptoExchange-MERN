@@ -8,19 +8,6 @@ const LimExchanges = () => {
 
   const getData = async () => {
     try {
-      const setHeader = {
-        headers: {
-          "x-rapidapi-host": "coinranking1.p.rapidapi.com",
-          "x-rapidapi-key":
-            "3bf8ad2345msh9f75760d2fe9a1dp1ffbb3jsnc1cec33b9615",
-        },
-      };
-
-      const res = await axios.get(
-        "https://coinranking1.p.rapidapi.com/coin/Qwsogvtv82FCd/exchanges",
-        setHeader
-      );
-
       const responce = res.data.data.exchanges;
       setLimitedExchanges(responce);
     } catch (err) {

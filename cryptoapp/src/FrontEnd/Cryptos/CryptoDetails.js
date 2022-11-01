@@ -132,7 +132,7 @@ const CryptoDetails = () => {
       const { order } = convertRes;
 
       const options = {
-        key: __dev__ ? "rzp_test_nvbgBY8uNQpEwZ" : "Production key here",
+        key: __dev__ ? "" : "Production key here",
         name: "TP-Coin",
         description: "Transaction for buying coins.",
         image: "https://example.com/your_logo",

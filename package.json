@@ -10,7 +10,7 @@
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix cryptoapp && npm run build --prefix cryptoapp"
   },
   "keywords": [],
-  "author": "rohan",
+  "author": "rohan kurane",
   "license": "ISC",
   "dependencies": {
     "@emotion/react": "^11.9.0",
